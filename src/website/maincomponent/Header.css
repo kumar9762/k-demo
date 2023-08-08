@@ -1,0 +1,14 @@
+/* Header.css */
+
+/* Style for the header menu items */
+.header-menu {
+  padding: 10px;
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.header-menu:hover {
+  color: #ff5733; /* Change color on hover */
+}
