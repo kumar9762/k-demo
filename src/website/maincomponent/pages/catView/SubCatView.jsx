@@ -1,10 +1,7 @@
 import React from 'react'
-import Slider from '../Slider'
 import { useState } from 'react';
 import { useEffect } from 'react';
-import Slider2 from './Slider2';
-import Sli3 from './Sli3';
-import CatSlider from './catsli/CatSlider';
+
 import { Carousel } from 'react-bootstrap';
 
 const SubCatView = () => {
