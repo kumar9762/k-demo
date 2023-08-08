@@ -264,21 +264,21 @@ const Header = () => {
                         }}
                       >
                         <div className="row">
-                          {Category.slice(0, 10).map((category) => (
+                          {Category.slice(0, 10).map((el) => (
                             <div
-                              key={category.category_id}
+                              key={el.category_id}
                               className="col-sm-3"
                             >
                               <h5 className="font-weight-bold pt-2 text-info text-center">
                                 <Link to="/shop_grid">
-                                  {category.category_name}
+                                  {el.category_name}
                                 </Link>
                               </h5>
                               <ul>
                                 {SubCategory.filter(
                                   (subcategory) =>
                                     subcategory.subcategory_category_id ===
-                                    category.category_id
+                                    el.category_id
                                 )
                                   .slice(0, 6)
                                   .map((category) => (
@@ -286,7 +286,7 @@ const Header = () => {
                                       key={category.subcategory_id}
                                       className="ms-4"
                                     >
-                                      <Link to="/shop_grid">
+                                      <Link to={`/subcatview/${el.category_id}/${category.subcategory_id}`}>
                                         {category.subcategory_name}
                                       </Link>
                                     </li>
