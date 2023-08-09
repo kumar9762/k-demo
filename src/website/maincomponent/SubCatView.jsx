@@ -8,7 +8,6 @@ import { FaHome } from "react-icons/fa";
 
 const SubCatView = () => {
   let { cat_id, sub_id } = useParams();
-  console.log(cat_id);
 
   //Product
   const [Category, setCategory] = useState([]);
@@ -43,7 +42,7 @@ const SubCatView = () => {
 
   useEffect(() => {
     getSubCat();
-  }, []);
+  }, [cat_id, sub_id]);
 
   return (
     <>
@@ -74,7 +73,7 @@ const SubCatView = () => {
                   <h4>
                     {/* <FaHome /> */}
                     <Link to="/" style={{ color: "black" }}>
-                      Home
+                      <FaHome /> Home
                     </Link>
                     /{SubCategory_.subcategory_name}
                   </h4>
@@ -114,12 +113,16 @@ const SubCatView = () => {
                     style={{ maxHeight: "300px", overflowY: "auto" }}
                   >
                     {Cat.map((cat) => (
-                      <ul>
+                      <ul key={cat.category_id}>
                         <li className="btn btn-danger">
                           <input type="checkbox" />
                           {cat.category_name}
-                          {/* {Count.filter((count) =>count.product_category_id == cat.category_id).
-                          map((count) => count.cat_count)} */}
+
+                          {Sub.filter((subcategory)=>(
+                            subcategory.subcategory_category_id===Cat.category_id
+                          )).map((subcategory)=>(
+                            {cat.subcategory_name}
+                          ))}
                         </li>
                       </ul>
                     ))}
