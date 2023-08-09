@@ -10,6 +10,7 @@ import ContactUs from './website/maincomponent/pages/ContactUs';
 import AboutUs from './website/maincomponent/pages/AboutUs';
 import Blogs from './website/maincomponent/pages/Blogs';
 import './App.css';
+import SubCatView from './website/maincomponent/SubCatView';
 
 
 
@@ -20,7 +21,7 @@ const Allroutes = () => {
                 <Routes>
                     <Route path="/" element={ <Master Rcf={Home}/>} />
                     <Route path="/shop_grid" element={ <Master Rcf={Shop_grid}/>} />
-                    <Route path="/subcatview/:category_id/:subcategory_id" element={ <Master Rcf={Shop_grid}/>} />
+                    <Route path="/subcatview/:cat_id/:sub_id" element={ <Master Rcf={SubCatView}/>} />
 
                     <Route path="/brands" element={ <Master Rcf={Brands}/>} />
                     <Route path="/contactus" element={ <Master Rcf={ContactUs}/>} />
