@@ -40,6 +40,18 @@ const SubCatView = () => {
       });
   };
 
+
+  const [expandedCategory, setExpandedCategory] = useState(null);
+
+  const toggleCategory = (categoryId) => {
+    if (expandedCategory === categoryId) {
+      setExpandedCategory(null);
+    } else {
+      setExpandedCategory(categoryId);
+    }
+  };
+
+
   useEffect(() => {
     getSubCat();
   }, [cat_id, sub_id]);
@@ -106,23 +118,29 @@ const SubCatView = () => {
                 <div className="sidebar border-1">
                   <h4>Filter By Category</h4>
                   <div className="sidebar__item bg-warning rounded-2 text-bg-success" style={{ maxHeight: "300px", overflowY: "auto" }}>
-  {Cat.map((cat) => (
-    <div key={cat.category_id} className="category">
-      <label className="btn btn-danger category-label">
-        <input type="checkbox" className="category-checkbox" />
-        {cat.category_name}
-      </label>
+      {Cat.map((cat) => (
+        <div key={cat.category_id} className="category">
+          <label className="btn btn-danger category-label">
+            <input
+              type="checkbox"
+              className="category-checkbox"
+              onClick={() => toggleCategory(cat.category_id)}
+            />
+            {cat.category_name}
+          </label>
 
-      <ul className="subcategory-list">
-        {Sub.filter((subcategory) => subcategory.subcategory_category_id === cat.category_id).map((subcategory) => (
-          <li key={subcategory.subcategory_id} className="subcategory">
-            <Link to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`} className="subcategory-name">{subcategory.subcategory_name}</Link>
-          </li>
-        ))}
-      </ul>
+          {expandedCategory === cat.category_id && (
+            <ul className="subcategory-list">
+              {Sub.filter((subcategory) => subcategory.subcategory_category_id === cat.category_id).map((subcategory) => (
+                <li key={subcategory.subcategory_id} className="subcategory">
+                  <Link to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`} className="subcategory-name">{subcategory.subcategory_name}</Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
     </div>
-  ))}
-</div>
                   <h4>Filter By Brand</h4>
                   <div
                     className="sidebar__item bg-info rounded-2"
