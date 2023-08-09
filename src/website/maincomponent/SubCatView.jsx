@@ -28,7 +28,7 @@ const SubCatView = () => {
         setCategory(data.category.data);
         setCategory_(data.category_);
         setSubCategory_(data.subcategory_);
-        console.log('hi');
+        console.log("hi");
         console.log(data.subcategory_);
         setCat(data.cat);
         setBrand(data.brand);
@@ -48,7 +48,12 @@ const SubCatView = () => {
   return (
     <>
       <div>
-        <div id="header-carousel" className="carousel slide align-center" data-ride="carousel" style={{marginLeft:'100px'}}>
+        <div
+          id="header-carousel"
+          className="carousel slide align-center"
+          data-ride="carousel"
+          style={{ marginLeft: "100px" }}
+        >
           <div class="carousel-inner">
             <div className="img">
               <img
@@ -113,6 +118,8 @@ const SubCatView = () => {
                         <li className="btn btn-danger">
                           <input type="checkbox" />
                           {cat.category_name}
+                          {/* {Count.filter((count) =>count.product_category_id == cat.category_id).
+                          map((count) => count.cat_count)} */}
                         </li>
                       </ul>
                     ))}
@@ -261,19 +268,20 @@ const SubCatView = () => {
                   <div className="row">
                     {Category.map((item) => {
                       return (
-                        <div className="col-lg-4 col-md-6 col-sm-6">
-                          <div className="product__item">
+                        <div className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
+                          <div className="product__discount__item">
                             <div
-                              className="product__item__pic set-bg"
-                              data-setbg="img/product/product-1.jpg"
+                              className="product__discount__item__pic set-bg"
+                              data-setbg="img/product/discount/pd-1.jpg"
                               style={{
                                 backgroundImage: `url(${item.product_image})`,
                                 border: "1px solid #ccc",
+                                width: "300px",
                               }}
                             >
-                            <div className="product__discount__percent">
-                                            {item.mrp_price - item.sale_price}
-                                          </div>
+                              <div className="product__discount__percent">
+                                {item.mrp_price - item.sale_price}
+                              </div>
                               <ul className="product__item__pic__hover">
                                 <li>
                                   <a href="#">
@@ -292,11 +300,23 @@ const SubCatView = () => {
                                 </li>
                               </ul>
                             </div>
-                            <div className="product__item__text">
-                              <h6>
-                                <a href="#">{item.product_name}</a>
-                              </h6>
-                              <h5>{item.mrp_price}</h5>
+                            <div className="product__discount__item__text">
+                              <span>{item.category_name}</span>
+                              <h5>
+                                <a href="#">{item.english_name}</a>
+                              </h5>
+                              <div className="product__item__price">
+                                <b>
+                                  MRP
+                                  <del className="text-danger">
+                                    {item.mrp_price}
+                                  </del>{" "}
+                                  <span className="text-success">
+                                    {item.sale_price}
+                                    <small>/only</small>
+                                  </span>
+                                </b>
+                              </div>
                             </div>
                           </div>
                         </div>
