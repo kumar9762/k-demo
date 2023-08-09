@@ -51,32 +51,29 @@ const SubCatView = () => {
           id="header-carousel"
           className="carousel slide align-center"
           data-ride="carousel"
-          style={{ marginLeft: "100px" }}
         >
-          <div class="carousel-inner">
+          <div className="carousel-inner">
             <div className="img">
               <img
                 src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
                 style={{
-                  height: "500px",
-                  width: "1300px",
+                  height: "300px", // Adjust the height as needed
+                  width: "100%",
                   opacity: "0.5",
                   color: "green",
                 }}
+                className="d-block w-100"
+                alt="Carousel Image"
               />
-              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <div
-                  className="container"
-                  style={{ paddingBottom: "150px", color: "black" }}
-                >
-                  <h2>{Category_.category_name}</h2>
-                  <h4>
-                    {/* <FaHome /> */}
+              <div className="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                <div className="container text-center text-dark font-weight-bold">
+                  <h1 style={{ fontWeight: "bold", fontSize: "35px" }}>{Category_.category_name}</h1>
+                  <h3 style={{ fontWeight: "normal", fontSize: "30px" }}>
                     <Link to="/" style={{ color: "black" }}>
                       <FaHome /> Home
                     </Link>
-                    /{SubCategory_.subcategory_name}
-                  </h4>
+                    /<b>{SubCategory_.subcategory_name}</b>
+                  </h3>
                 </div>
               </div>
             </div>
@@ -108,25 +105,24 @@ const SubCatView = () => {
               <div className="col-lg-3 col-md-5">
                 <div className="sidebar border-1">
                   <h4>Filter By Category</h4>
-                  <div
-                    className="sidebar__item bg-warning rounded-2 text-bg-success"
-                    style={{ maxHeight: "300px", overflowY: "auto" }}
-                  >
-                    {Cat.map((cat) => (
-                      <ul key={cat.category_id}>
-                        <li className="btn btn-danger">
-                          <input type="checkbox" />
-                          {cat.category_name}
+                  <div className="sidebar__item bg-warning rounded-2 text-bg-success" style={{ maxHeight: "300px", overflowY: "auto" }}>
+  {Cat.map((cat) => (
+    <div key={cat.category_id} className="category">
+      <label className="btn btn-danger category-label">
+        <input type="checkbox" className="category-checkbox" />
+        {cat.category_name}
+      </label>
 
-                          {Sub.filter((subcategory)=>(
-                            subcategory.subcategory_category_id===Cat.category_id
-                          )).map((subcategory)=>(
-                            {cat.subcategory_name}
-                          ))}
-                        </li>
-                      </ul>
-                    ))}
-                  </div>
+      <ul className="subcategory-list">
+        {Sub.filter((subcategory) => subcategory.subcategory_category_id === cat.category_id).map((subcategory) => (
+          <li key={subcategory.subcategory_id} className="subcategory">
+            <Link to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`} className="subcategory-name">{subcategory.subcategory_name}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</div>
                   <h4>Filter By Brand</h4>
                   <div
                     className="sidebar__item bg-info rounded-2"
@@ -192,7 +188,9 @@ const SubCatView = () => {
                                           }}
                                         >
                                           <div className="product__discount__percent">
-                                            {item.mrp_price - item.sale_price}
+                                            <i className="fa fa-inr"></i>{" "}
+                                            {item.mrp_price - item.sale_price}{" "}
+                                            Off
                                           </div>
                                           <ul className="product__item__pic__hover">
                                             <li>
@@ -283,7 +281,8 @@ const SubCatView = () => {
                               }}
                             >
                               <div className="product__discount__percent">
-                                {item.mrp_price - item.sale_price}
+                                <i className="fa fa-inr"></i>{" "}
+                                {item.mrp_price - item.sale_price} off
                               </div>
                               <ul className="product__item__pic__hover">
                                 <li>
