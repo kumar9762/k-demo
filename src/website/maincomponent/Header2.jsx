@@ -280,7 +280,7 @@ const Header = () => {
                                     subcategory.subcategory_category_id ===
                                     el.category_id
                                 )
-                                  .slice(0, 6)
+                                  .slice(0, 50)
                                   .map((category) => (
                                     <li
                                       key={category.subcategory_id}
