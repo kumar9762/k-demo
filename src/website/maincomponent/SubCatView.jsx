@@ -5,6 +5,8 @@ import { Carousel } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Slider2 from "./pages/Slider2";
 import { FaHome } from "react-icons/fa";
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
 
 const SubCatView = () => {
   let { cat_id, sub_id } = useParams();
@@ -27,8 +29,8 @@ const SubCatView = () => {
         setCategory(data.category.data);
         setCategory_(data.category_);
         setSubCategory_(data.subcategory_);
-        console.log("hi");
-        console.log(data.subcategory_);
+        //console.log("hi");
+        //console.log(data.subcategory_);
         setCat(data.cat);
         setBrand(data.brand);
         setSub(data.sub);
@@ -40,7 +42,6 @@ const SubCatView = () => {
       });
   };
 
-
   const [expandedCategory, setExpandedCategory] = useState(null);
 
   const toggleCategory = (categoryId) => {
@@ -51,6 +52,13 @@ const SubCatView = () => {
     }
   };
 
+  // const handleDragStart = (e) => e.preventDefault();
+
+  // const items = [
+  //   <img src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg" onDragStart={handleDragStart} role="presentation" />,
+  //   <img src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg" onDragStart={handleDragStart} role="presentation" />,
+  //   <img src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg" onDragStart={handleDragStart} role="presentation" />,
+  // ];
 
   useEffect(() => {
     getSubCat();
@@ -79,10 +87,12 @@ const SubCatView = () => {
               />
               <div className="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
                 <div className="container text-center text-dark font-weight-bold">
-                  <h1 style={{ fontWeight: "bold", fontSize: "35px" }}>{Category_.category_name}</h1>
+                  <h1 style={{ fontWeight: "bold", fontSize: "35px" }}>
+                    {Category_.category_name}
+                  </h1>
                   <h3 style={{ fontWeight: "normal", fontSize: "30px" }}>
                     <Link to="/" style={{ color: "black" }}>
-                      <FaHome /> Home
+                       Home
                     </Link>
                     /<b>{SubCategory_.subcategory_name}</b>
                   </h3>
@@ -92,7 +102,75 @@ const SubCatView = () => {
           </div>
         </div>
 
-        <div className="container-fluid"></div>
+        <div className="container-fluid mt-3 rounded-circle">
+          {/* <AliceCarousel mouseTracking items={items}
+         /> */}
+          {/* <AliceCarousel 
+            duration={400}
+            autoPlay={true}
+            startIndex={1}
+            fadeOutAnimation={true}
+            mouseDragEnabled={true}
+            playButtonEnabled={true}
+            autoPlayInterval={2000}
+          >
+            <img
+              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
+              className=" rounded-pill"
+            />
+            <img
+              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
+              className=" rounded-pill"
+            />
+            <img
+              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
+              className=" rounded-pill"
+            />
+            <img
+              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
+              className=" rounded-pill"
+            />
+            <img
+              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
+              className=" rounded-pill"
+            />
+          </AliceCarousel> */}
+        </div>
+        <div className="container align-center carousel-inner" style={{ marginTop: "30px", marginLeft: "auto",backgroundColor:'darkgray' }}>
+          <AliceCarousel className='ms-2'
+            mouseTracking
+            items={Sub.map((subslider) => (
+              <div
+                key={subslider.subcategory_image}
+                className="slider-image-container ms-5" 
+              >
+                <button className="btn btn-outline-success hover mt-5">
+                <img
+                  src={subslider.subcategory_image}
+                  alt={subslider.Iceream}
+                  height={"100px"}
+                  width={"150px"}
+                  className="slider-image  "
+                />
+                </button>
+                <div className="carousel-caption text-danger">
+                  {subslider.subcategory_name}
+                </div>
+              </div>
+            ))}
+           
+            responsive={{
+              0: { items: 1 },
+              576: { items: 2 },
+              768: { items: 3 },
+              992: { items: 4 },
+              1200: { items: 5 },
+            }}
+            autoPlay
+            autoPlayInterval={3000}
+            infinite
+          />
+        </div>
         {/* Breadcrumb Section Begin */}
         {/* <section className="breadcrumb-section set-bg" style={{ backgroundImage: "url('img/background.jpg')" }}>
     <div className="container">
@@ -117,30 +195,45 @@ const SubCatView = () => {
               <div className="col-lg-3 col-md-5">
                 <div className="sidebar border-1">
                   <h4>Filter By Category</h4>
-                  <div className="sidebar__item bg-warning rounded-2 text-bg-success" style={{ maxHeight: "300px", overflowY: "auto" }}>
-      {Cat.map((cat) => (
-        <div key={cat.category_id} className="category">
-          <label className="btn btn-danger category-label">
-            <input
-              type="checkbox"
-              className="category-checkbox"
-              onClick={() => toggleCategory(cat.category_id)}
-            />
-            {cat.category_name}
-          </label>
+                  <div
+                    className="sidebar__item bg-warning rounded-2 text-bg-success"
+                    style={{ maxHeight: "300px", overflowY: "auto" }}
+                  >
+                    {Cat.map((cat) => (
+                      <div key={cat.category_id} className="category">
+                        <label className="btn btn-danger category-label">
+                          <input
+                            type="checkbox"
+                            className="category-checkbox"
+                            onClick={() => toggleCategory(cat.category_id)}
+                          />
+                          {cat.category_name}
+                        </label>
 
-          {expandedCategory === cat.category_id && (
-            <ul className="subcategory-list">
-              {Sub.filter((subcategory) => subcategory.subcategory_category_id === cat.category_id).map((subcategory) => (
-                <li key={subcategory.subcategory_id} className="subcategory">
-                  <Link to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`} className="subcategory-name">{subcategory.subcategory_name}</Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ))}
-    </div>
+                        {expandedCategory === cat.category_id && (
+                          <ul className="subcategory-list">
+                            {Sub.filter(
+                              (subcategory) =>
+                                subcategory.subcategory_category_id ===
+                                cat.category_id
+                            ).map((subcategory) => (
+                              <li
+                                key={subcategory.subcategory_id}
+                                className="subcategory"
+                              >
+                                <Link
+                                  to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`}
+                                  className="subcategory-name"
+                                >
+                                  {subcategory.subcategory_name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                   <h4>Filter By Brand</h4>
                   <div
                     className="sidebar__item bg-info rounded-2"
