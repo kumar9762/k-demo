@@ -7,7 +7,7 @@ const Login = () => {
     
     email: "",
    password: "",
-   device_name:"Kumar"
+   //device_name:"Kumar"
   });
 
   console.log(loginmData);
