@@ -10,6 +10,7 @@ import {
   Container,
 } from "react-bootstrap";
 import "./Header.css";
+import "./Cart.css";
 
 const Header = () => {
   const [Category, setCategory] = useState([]);
@@ -40,6 +41,26 @@ const Header = () => {
 
   const handleBrandMouseLeave = () => {
     setShowMegaBrand(false);
+  };
+
+  const [showMegaCart, setShowMegaCart] = useState(false);
+
+  const handleCartMouseEnter = () => {
+    setShowMegaCart(true);
+  };
+
+  const handleCartMouseLeave = () => {
+    setShowMegaCart(false);
+  };
+
+  const [showMegaWish, setShowMegaWish] = useState(false);
+
+  const handleWishMouseEnter = () => {
+    setShowMegaWish(true);
+  };
+
+  const handleWishMouseLeave = () => {
+    setShowMegaWish(false);
   };
 
   const getCategory = async () => {
@@ -184,7 +205,7 @@ const Header = () => {
                   <ul>
                     <li>
                       <i className="fa fa-envelope" />
-                       hello@colorlib.com
+                      hello@colorlib.com
                     </li>
                     <li>Free Shipping for all Order of $99</li>
                   </ul>
@@ -265,14 +286,9 @@ const Header = () => {
                       >
                         <div className="row">
                           {Category.slice(0, 10).map((el) => (
-                            <div
-                              key={el.category_id}
-                              className="col-sm-3"
-                            >
+                            <div key={el.category_id} className="col-sm-3">
                               <h5 className="font-weight-bold pt-2 text-info text-center">
-                                <Link to="/shop_grid">
-                                  {el.category_name}
-                                </Link>
+                                <Link to="/shop_grid">{el.category_name}</Link>
                               </h5>
                               <ul>
                                 {SubCategory.filter(
@@ -286,7 +302,9 @@ const Header = () => {
                                       key={category.subcategory_id}
                                       className="ms-4"
                                     >
-                                      <Link to={`/subcatview/${el.category_id}/${category.subcategory_id}`}>
+                                      <Link
+                                        to={`/subcatview/${el.category_id}/${category.subcategory_id}`}
+                                      >
                                         {category.subcategory_name}
                                       </Link>
                                     </li>
@@ -329,7 +347,7 @@ const Header = () => {
                           {Brand.slice(0, 20).map((brand) => (
                             <div key={brand.brand_id} className="col-sm-2">
                               <h5 className="font-weight-medium  text-info">
-                                <Link to='/brands'>{brand.brand_name}</Link>
+                                <Link to="/brands">{brand.brand_name}</Link>
                               </h5>
                             </div>
                           ))}
@@ -353,14 +371,120 @@ const Header = () => {
             <div className="col-lg-2 col-md-5 col-sm-6">
               <div className="header__cart">
                 <ul>
-                  <li>
+                <li>
                     <a href="#">
-                      <i className="fa fa-heart" /> <span>1</span>
+                      <li className="navbar-item dropdown-megamenu">
+                        <Dropdown
+                          show={showMegaWish}
+                          onClick={handleWishMouseEnter}
+                          onMouseLeave={handleWishMouseLeave}
+                        >
+                          <i className="fa fa-heart" />
+                          <Dropdown.Menu
+                            className="mega-menu"
+                            style={{
+                              height: "auto",
+                              width: "auto",
+                              marginLeft: "-350px",
+                              paddingLeft: "30px",
+                            }}
+                          >
+                            <div class="row">
+                              <div class="">
+                                <table class="table table-image">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Day</th>
+                                      <th scope="col">Image</th>
+                                      <th scope="col">Article Name</th>
+                                      <th scope="col">Author</th>
+                                      <th scope="col">Words</th>
+                                      <th scope="col">Shares</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td class="w-25">
+                                        <img
+                                          src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
+                                          class="img-fluid img-thumbnail"
+                                          alt="Sheep"
+                                        />
+                                      </td>
+                                      <td>
+                                        Bootstrap 4 CDN and Starter Template
+                                      </td>
+                                      <td>Cristina</td>
+                                      <td>913</td>
+                                      <td>2.846</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </li>
+                      <li></li> <span>3</span>
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <i className="fa fa-shopping-bag" /> <span>3</span>
+                      <li className="navbar-item dropdown-megamenu">
+                        <Dropdown
+                          show={showMegaCart}
+                          onClick={handleCartMouseEnter}
+                          onMouseLeave={handleCartMouseLeave}
+                        >
+                          <i className="fa fa-shopping-bag"/><li></li><span>3</span>
+                          <Dropdown.Menu
+                            className="mega-menu"
+                            style={{
+                              height: "auto",
+                              width: "auto",
+                              marginLeft: "-350px",
+                              paddingLeft: "30px",
+                            }}
+                          >
+                            <div class="row">
+                              <div class="">
+                                <table class="table table-image">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Day</th>
+                                      <th scope="col">Image</th>
+                                      <th scope="col">Article Name</th>
+                                      <th scope="col">Author</th>
+                                      <th scope="col">Words</th>
+                                      <th scope="col">Shares</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td class="w-25">
+                                        <img
+                                          src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
+                                          class="img-fluid img-thumbnail"
+                                          alt="Sheep"
+                                        />
+                                      </td>
+                                      <td>
+                                        Bootstrap 4 CDN and Starter Template
+                                      </td>
+                                      <td>Cristina</td>
+                                      <td>913</td>
+                                      <td>2.846</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </li>
+                     
                     </a>
                   </li>
                 </ul>
@@ -484,7 +608,7 @@ const Header = () => {
           <ul>
             <li>
               <i className="fa fa-envelope" />
-               hello@colorlib.com
+              hello@colorlib.com
             </li>
             <li>Free Shipping for all Order of $99</li>
           </ul>

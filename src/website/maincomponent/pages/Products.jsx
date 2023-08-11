@@ -4,15 +4,17 @@ const Products = () => {
   const [product, setproduct] = useState([]);
   // const[Cat,SetCat]=useState([]);
 
-
-  useEffect(() => {
-    fetch('https://vsmart.ajspire.com/api/products').then(response => {
+const getProd=()=>{
+  fetch('https://vsmart.ajspire.com/api/products').then(response => {
       return response.json();
 
     }).then(data => {
       setproduct(data.products.data);
       //console.log(data.products.data);
     });
+}
+  useEffect(() => {
+    getProd();
   }, []);
   return (
     <div>

@@ -5,8 +5,7 @@ const FeaturedProducts = () => {
     const [product, setproduct] = useState([]);
     // const[Cat,SetCat]=useState([]);
 
-
-    useEffect(() => {
+    const getPro=()=>{
         fetch('https://vsmart.ajspire.com/api/products').then(response => {
             return response.json();
 
@@ -14,6 +13,10 @@ const FeaturedProducts = () => {
             setproduct(data.products.data);
             //console.log(data.products.data);
         });
+}
+
+    useEffect(() => {
+       getPro();
     }, []);
     return (
         <div>
