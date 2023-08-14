@@ -421,6 +421,7 @@ const Header = () => {
                                     </tr>
                                   </tbody>
                                 </table>
+                                <Link to='#'> <button className="btn btn-info">View All</button></Link>
                               </div>
                             </div>
                           </Dropdown.Menu>
@@ -479,6 +480,7 @@ const Header = () => {
                                     </tr>
                                   </tbody>
                                 </table>
+                                <Link to='/cartdetails'> <button className="btn btn-info">View All</button></Link>
                               </div>
                             </div>
                           </Dropdown.Menu>

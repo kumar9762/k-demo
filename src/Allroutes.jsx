@@ -11,6 +11,7 @@ import AboutUs from './website/maincomponent/pages/AboutUs';
 import Blogs from './website/maincomponent/pages/Blogs';
 import './App.css';
 import SubCatView from './website/maincomponent/SubCatView';
+import CartDetails from './website/maincomponent/pages/catView/CartDetails';
 
 
 
@@ -22,8 +23,9 @@ const Allroutes = () => {
                     <Route path="/" element={ <Master Rcf={Home}/>} />
                     <Route path="/shop_grid" element={ <Master Rcf={Shop_grid}/>} />
                     <Route path="/subcatview/:cat_id/:sub_id" element={ <Master Rcf={SubCatView}/>} />
-
                     <Route path="/brands" element={ <Master Rcf={Brands}/>} />
+
+                    <Route path="/cartdetails" element={ <Master Rcf={CartDetails}/>} />
                     <Route path="/contactus" element={ <Master Rcf={ContactUs}/>} />
                     <Route path="/aboutus" element={ <Master Rcf={AboutUs}/>} />
                     <Route path="/blogs" element={ <Master Rcf={Blogs}/>} />

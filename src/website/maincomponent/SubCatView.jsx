@@ -75,18 +75,18 @@ const SubCatView = () => {
           <div className="carousel-inner">
             <div className="img">
               <img
-                src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
+                src="https://img.freepik.com/free-photo/notebook-with-tomatoes-wooden-bottom_23-2148505641.jpg?w=2000"
                 style={{
                   height: "300px", // Adjust the height as needed
                   width: "100%",
-                  opacity: "0.5",
+                   opacity: "0.9",
                   color: "green",
                 }}
                 className="d-block w-100"
                 alt="Carousel Image"
               />
               <div className="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
-                <div className="container text-center text-dark font-weight-bold">
+                <div className="container  text-dark font-weight-bold" style={{marginLeft:'-200px'}}>
                   <h1 style={{ fontWeight: "bold", fontSize: "35px" }}>
                     {Category_.category_name}
                   </h1>
