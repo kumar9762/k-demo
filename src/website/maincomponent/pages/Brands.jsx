@@ -191,7 +191,7 @@ const Brands = () => {
                           return (
                             <Carousel.Item key={index}>
                               <div className="row">
-                                {brand.slice(index, index + 3).map(
+                                {brand.slice(index, index + 3).filter.map(
                                   (item, subIndex) => (
                                     <div
                                       className="col-lg-4 col-lg-3 col-md-4 col-sm-4"
