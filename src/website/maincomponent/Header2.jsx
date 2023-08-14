@@ -333,7 +333,7 @@ const Header = () => {
                       onMouseEnter={handleBrandMouseEnter}
                       onMouseLeave={handleBrandMouseLeave}
                     >
-                      <a href="">Brands</a>
+                      <a className="nav-link">Brands</a>
                       <Dropdown.Menu
                         className="mega-menu"
                         style={{
@@ -347,7 +347,7 @@ const Header = () => {
                           {Brand.slice(0, 20).map((brand) => (
                             <div key={brand.brand_id} className="col-sm-2">
                               <h5 className="font-weight-medium  text-info">
-                                <Link to="/brands">{brand.brand_name}</Link>
+                                <Link to={`/brands/${brand.brand_id}`}>{brand.brand_name}</Link>
                               </h5>
                             </div>
                           ))}

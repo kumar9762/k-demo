@@ -15,10 +15,10 @@ const WishlistDetail = () => {
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="breadcrumb__text">
-                <h2>Shopping Cart</h2>
+                <h2>Whishlist Cart</h2>
                 <div className="breadcrumb__option">
                   <Link to="/">Home</Link>
-                  <span>Shopping Cart</span>
+                  <span>Whishlist Cart</span>
                 </div>
               </div>
             </div>
@@ -74,18 +74,18 @@ const WishlistDetail = () => {
                 </a>
                 <a href="#" className="primary-btn cart-btn cart-btn-right">
                   <span className="icon_loading" />
-                  Upadate Cart
+                  Upadate wishlist
                 </a>
               </div>
             </div>
             <div className="col-lg-6">
               <div className="shoping__continue">
                 <div className="shoping__discount">
-                  <h5>Discount Codes</h5>
+                  {/* <h5>Discount Codes</h5> */}
                   <form action="#">
                     <input type="text" placeholder="Enter your coupon code" />
                     <button type="submit" className="site-btn">
-                      APPLY COUPON
+                      {/* APPLY COUPON */}
                     </button>
                   </form>
                 </div>
@@ -93,7 +93,7 @@ const WishlistDetail = () => {
             </div>
             <div className="col-lg-6">
               <div className="shoping__checkout">
-                <h5>Cart Total</h5>
+                <h5>Wish Total</h5>
                 <ul>
                   <li>
                     Subtotal <span>$454.98</span>

@@ -1,64 +1,404 @@
-import React, { useEffect, useState } from 'react';
-import { Carousel } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import AliceCarousel from "react-alice-carousel";
+import { Carousel } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 
 const Brands = () => {
-    const [Brand, SetBrand] = useState([]);
-
+    const [brand, setBrand] = useState([]);
+    const [brands, setBrands] = useState([]);
+    const [brands_, setBrands_] = useState({});
+    const [featured, setFeatured] = useState([]);
+    const [cat, setCat] = useState([]);
+    const [brandss, setBrandss] = useState([]);
+    const [id, setId] = useState("208");
+    const [count, setCount] = useState({});
+    const [count1, setCount1] = useState({});
+    let { brand_id } = useParams();
+  
     const getBrand = async () => {
-        try {
-            const response = await fetch('https://vsmart.ajspire.com/api/brands');
-            const data = await response.json();
-            SetBrand(data.brands);
-            console.log(data.brands);
-        } catch (error) {
-            console.error('Error fetching categories:', error);
-        }
+      try {
+        const response = await fetch(
+          `https://vsmart.ajspire.com/api/product-shop/${brand_id}`
+        );
+        const data = await response.json();
+        setBrand(data.brand);
+        setCat(data.cat);
+        setBrands_(data.brands_);
+        setBrandss(data.brandss);
+        setFeatured(data.featured);
+       // console.log("brands:",data.brandss);
+    
+        console.log("featured:", data.featured);
+    
+          
+       // console.log("id:", data.id);
+        //console.log("count:", data.count);
+      //  console.log("count1:", data.count1);
+
+        //console.log(data.brand);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
+  
+    const [expandedCategory, setExpandedCategory] = useState(null);
 
+  const toggleCategory = (categoryId) => {
+    if (expandedCategory === categoryId) {
+      setExpandedCategory(null);
+    } else {
+      setExpandedCategory(categoryId);
+    }
+  };
     useEffect(() => {
-        getBrand();
-    }, []);
-
-    return (
-        <div>
-    <section className="">
-        <div className="container">
-            <div className="section-title">
-                <h2>Brands</h2>
+      getBrand();
+    }, [brand_id]);
+  return (
+    <>
+      <div>
+        <div
+          id="header-carousel"
+          className="carousel slide align-center"
+          data-ride="carousel"
+        >
+          <div className="carousel-inner">
+            <div className="img">
+              <img
+                src="https://img.freepik.com/free-photo/notebook-with-tomatoes-wooden-bottom_23-2148505641.jpg?w=2000"
+                style={{
+                  height: "300px", // Adjust the height as needed
+                  width: "100%",
+                  opacity: "0.9",
+                  color: "green",
+                }}
+                className="d-block w-100"
+                alt="Carousel Image"
+              />
+              <div className="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
+                <div
+                  className="container  text-dark font-weight-bold"
+                  style={{ marginLeft: "-200px" }}
+                >
+                  <h1 style={{ fontWeight: "bold", fontSize: "25px" }}>
+                    {brands_ && brands_.brand_name}
+                  </h1>
+                  <h3 style={{ fontWeight: "normal", fontSize: "20px" }}>
+                    <Link to="/" style={{ color: "black" }}>
+                      Home
+                    </Link>
+                    /<b>{brands_ && brands_.brand_name}</b>
+                  </h3>
+                </div>
+              </div>
             </div>
-            <Carousel interval={2000}>
-                {Brand.map((brands, index) => (
-                    <Carousel.Item key={index}>
-                        <div className="d-flex justify-content-around">
-                            {Brand.slice(index, index + 5).map((brands) => (
-                                <div key={brands.brand_id} className="d-flex flex-column align-items-center">
-                                    <a
-                                        className="suggest-card shadow my-2 rounded-circle"
-                                        href={`/product-shop/${brands.brand_id}/0`}
-                                    >
-                                        <img
-                                            className="rounded-circle align-center"
-                                            style={{ width: "200px", height: "101px" }}
-                                            src={brands.brand_banner}
-                                            alt="1658902579category.jpg"
-                                        />
-                                    </a>
-                                    <div>
-                                        <h6 className="text-center text-bg-success mt-3">
-                                            {brands.brand_name}
-                                        </h6>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </Carousel.Item>
-                ))}
-            </Carousel>
+          </div>
         </div>
-    </section>
-</div>
 
-    );
+        
+       
+        
+        {/* Product Section Begin */}
+       <section className="product spad">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-3 col-md-5">
+                <div className="sidebar border-1">
+                  <h4>Filter By Category</h4>
+                  <div
+                    className="sidebar__item bg-warning rounded-2 text-bg-success"
+                    style={{ maxHeight: "300px", overflowY: "auto" }}
+                  >
+                    {cat.map((cat) => (
+                      <div key={cat.category_id} className="category">
+                        <label className="btn btn-danger category-label">
+                          <input
+                            type="checkbox"
+                            className="category-checkbox"
+                            onClick={() => toggleCategory(cat.category_id)}
+                          />
+                          {cat.category_name}
+                        </label>
+
+                        {expandedCategory === cat.category_id && (
+                          <ul className="subcategory-list">
+                            {cat.filter(
+                              (subcategory) =>
+                                subcategory.subcategory_category_id ===
+                                cat.category_id
+                            ).map((subcategory) => (
+                              <li
+                                key={subcategory.subcategory_id}
+                                className="subcategory"
+                              >
+                                <Link
+                                  to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`}
+                                  className="subcategory-name"
+                                >
+                                  {subcategory.subcategory_name}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <h4>Filter By Brand</h4>
+                  <div
+                    className="sidebar__item bg-info rounded-2"
+                    style={{ maxHeight: "300px", overflowY: "auto" }}
+                  >
+                    {brandss.map((el) => (
+                      <ul key={el.brand_id}>
+                        <li className="btn btn-success">
+                          <input type="checkbox" />
+                          <Link to={`/brands/${el.brand_id}`}>{el.brand_name}</Link>
+                        </li>
+                      </ul>
+                    ))}
+                  </div>
+
+                  <div className="sidebar__item">
+                    <div className="latest-product__text">
+                      <h4>Latest Products</h4>
+                      <div className="latest-product__slider ">
+                        <div className="latest-prdouct__slider__item">
+                          <a href="#" className="latest-product__item">
+                            <div className="latest-product__item__pic">
+                              <img src="img/latest-product/lp-1.jpg" alt />
+                            </div>
+                            <div className="latest-product__item__text">
+                              <h6>Crab Pool Security</h6>
+                              <span>$30.00</span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-lg-9 col-md-7 ps-1">
+                <div className="product__discount">
+                  <div className="section-title product__discount__title">
+                    <h2>Sale Off</h2>
+                  </div>
+
+                  <div className="row">
+                    <Carousel interval={3000}>
+                      {brand.map((item, index) => {
+                        if (index % 3 === 0) {
+                          return (
+                            <Carousel.Item key={index}>
+                              <div className="row">
+                                {brand.slice(index, index + 3).map(
+                                  (item, subIndex) => (
+                                    <div
+                                      className="col-lg-4 col-lg-3 col-md-4 col-sm-4"
+                                      key={index + subIndex}
+                                    >
+                                      <div className="product__discount__item">
+                                        <div
+                                          className="product__discount__item__pic set-bg"
+                                          data-setbg="img/product/discount/pd-1.jpg"
+                                          style={{
+                                            backgroundImage: `url(${item.product_image})`,
+                                            border: "1px solid #ccc",
+                                            width: "300px",
+                                          }}
+                                        >
+                                          <div className="product__discount__percent">
+                                            <i className="fa fa-inr"></i>{" "}
+                                            {item.mrp_price - item.sale_price}{" "}
+                                            Off
+                                          </div>
+                                          <ul className="product__item__pic__hover">
+                                            <li>
+                                              <a href="#">
+                                                <i className="fa fa-heart" />
+                                              </a>
+                                            </li>
+                                            <li>
+                                              <a href="#">
+                                                <i className="fa fa-retweet" />
+                                              </a>
+                                            </li>
+                                            <li>
+                                              <a href="#">
+                                                <i className="fa fa-shopping-cart" />
+                                              </a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                        <div className="product__discount__item__text">
+                                          <span>{item.category_name}</span>
+                                          <h5>
+                                            <a href="#">{item.english_name}</a>
+                                          </h5>
+                                          <div className="product__item__price">
+                                            <b>
+                                              MRP
+                                              <del className="text-danger">
+                                                {item.mrp_price}
+                                              </del>{" "}
+                                              <span className="text-success">
+                                                {item.sale_price}
+                                                <small>/only</small>
+                                              </span>
+                                            </b>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )
+                                )}
+                              </div>
+                            </Carousel.Item>
+                          );
+                        }
+                        return null;
+                      })}
+                    </Carousel>
+                  </div>
+                  <div className="filter__item">
+                    <div className="row">
+                      <div className="col-lg-4 col-md-5">
+                        <div className="filter__sort">
+                          <span>Sort By</span>
+                          <select>
+                            <option value={0}>Default</option>
+                            <option value={0}>Default</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="col-lg-4 col-md-4">
+                        <div className="filter__found">
+                          <h6>
+                            <span>{brand.length}</span> Products found
+                          </h6>
+                        </div>
+                      </div>
+                      <div className="col-lg-4 col-md-3">
+                        <div className="filter__option">
+                          <span className="icon_grid-2x2" />
+                          <span className="icon_ul" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
+                    {brand.map((item) => {
+                      return (
+                        <div className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
+                          <div className="product__discount__item">
+                            <div
+                              className="product__discount__item__pic set-bg"
+                              data-setbg="img/product/discount/pd-1.jpg"
+                              style={{
+                                backgroundImage: `url(${item.product_image})`,
+                                border: "1px solid #ccc",
+                                width: "300px",
+                              }}
+                            >
+                              <div className="product__discount__percent">
+                                <i className="fa fa-inr"></i>{" "}
+                                {item.mrp_price - item.sale_price} off
+                              </div>
+                              <ul className="product__item__pic__hover">
+                                <li>
+                                  <a href="#">
+                                    <i className="fa fa-heart" />
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#">
+                                    <i className="fa fa-retweet" />
+                                  </a>
+                                </li>
+                                <li>
+                                  <a href="#">
+                                    <i className="fa fa-shopping-cart" />
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                            <div className="product__discount__item__text">
+                              <span>{item.category_name}</span>
+                              <h5>
+                                <a href="#">{item.english_name}</a>
+                              </h5>
+                              <div className="product__item__price">
+                                <b>
+                                  MRP
+                                  <del className="text-danger">
+                                    {item.mrp_price}
+                                  </del>{" "}
+                                  <span className="text-success">
+                                    {item.sale_price}
+                                    <small>/only</small>
+                                  </span>
+                                </b>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <div className="product__pagination">
+                    <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">
+                      <i className="fa fa-long-arrow-right" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Product Section End */}
+      </div>
+    </>
+    //         <div>
+    //     <section className="">
+    //         <div className="container">
+    //             <div className="section-title">
+    //                 <h2>Brands</h2>
+    //             </div>
+    //             <Carousel interval={2000}>
+    //                 {Brand.map((brands, index) => (
+    //                     <Carousel.Item key={index}>
+    //                         <div className="d-flex justify-content-around">
+    //                             {Brand.slice(index, index + 5).map((brands) => (
+    //                                 <div key={brands.brand_id} className="d-flex flex-column align-items-center">
+    //                                     <a
+    //                                         className="suggest-card shadow my-2 rounded-circle"
+    //                                         href={`/product-shop/${brands.brand_id}/0`}
+    //                                     >
+    //                                         <img
+    //                                             className="rounded-circle align-center"
+    //                                             style={{ width: "200px", height: "101px" }}
+    //                                             src={brands.brand_banner}
+    //                                             alt="1658902579category.jpg"
+    //                                         />
+    //                                     </a>
+    //                                     <div>
+    //                                         <h6 className="text-center text-bg-success mt-3">
+    //                                             {brands.brand_name}
+    //                                         </h6>
+    //                                     </div>
+    //                                 </div>
+    //                             ))}
+    //                         </div>
+    //                     </Carousel.Item>
+    //                 ))}
+    //             </Carousel>
+    //         </div>
+    //     </section>
+    // </div>
+  );
 };
 
 export default Brands;
