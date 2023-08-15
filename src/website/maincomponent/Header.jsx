@@ -1,14 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { Button } from 'react-bootstrap';
-
+import React, { useEffect, useState } from "react";
+import { FaHome, FaShoppingCart, FaBlog, FaEnvelope } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import {
+  Dropdown,
+  Button,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Container,
+} from "react-bootstrap";
+import "./Header.css";
+import "./Cart.css";
 
 const Header = () => {
   const [Category, setCategory] = useState([]);
   const [SubCategory, setSubCategory] = useState([]);
   const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
 
+  const handleHamburgerClick = () => {
+    setShowHamburgerMenu(true);
+  };
+
+  const handleHamburgerOverlayClick = () => {
+    setShowHamburgerMenu(false);
+  };
   const handleMouseEnter = () => {
     setShowMegaMenu(true);
   };
@@ -16,7 +32,6 @@ const Header = () => {
   const handleMouseLeave = () => {
     setShowMegaMenu(false);
   };
-
 
   const [showMegaBrand, setShowMegaBrand] = useState(false);
 
@@ -27,10 +42,30 @@ const Header = () => {
   const handleBrandMouseLeave = () => {
     setShowMegaBrand(false);
   };
-  
+
+  const [showMegaCart, setShowMegaCart] = useState(false);
+
+  const handleCartMouseEnter = () => {
+    setShowMegaCart(true);
+  };
+
+  const handleCartMouseLeave = () => {
+    setShowMegaCart(false);
+  };
+
+  const [showMegaWish, setShowMegaWish] = useState(false);
+
+  const handleWishMouseEnter = () => {
+    setShowMegaWish(true);
+  };
+
+  const handleWishMouseLeave = () => {
+    setShowMegaWish(false);
+  };
+
   const getCategory = async () => {
     try {
-      const response = await fetch('https://vsmart.ajspire.com/api/categories');
+      const response = await fetch("https://vsmart.ajspire.com/api/categories");
       const data = await response.json();
       setCategory(data.categories);
       //console.log(data.categories);
@@ -40,41 +75,46 @@ const Header = () => {
         getSubcategories(category.category_id);
       }
     } catch (error) {
-      console.error('Error fetching categories:', error);
+      console.error("Error fetching categories:", error);
     }
   };
 
   const getSubcategories = async (category_id) => {
     try {
-      const response = await fetch(`https://vsmart.ajspire.com/api/subcategories/${category_id}`);
+      const response = await fetch(
+        `https://vsmart.ajspire.com/api/subcategories/${category_id}`
+      );
       if (!response.ok) {
-        throw new Error('API request failed');
+        throw new Error("API request failed");
       }
       const data = await response.json();
       const newSubcategory = data.subcategories;
 
       setSubCategory((prevSubCategory) => {
         const filterSubcategory = newSubcategory.filter(
-          (newSub) => !prevSubCategory.some((prev) => prev.subcategory_id === newSub.subcategory_id)
+          (newSub) =>
+            !prevSubCategory.some(
+              (prev) => prev.subcategory_id === newSub.subcategory_id
+            )
         );
         return [...prevSubCategory, ...filterSubcategory];
       });
     } catch (error) {
-      console.error('Error fetching subcategories:', error);
+      console.error("Error fetching subcategories:", error);
     }
   };
 
   const [Brand, SetBrand] = useState([]);
 
-    const getBrand = async () => {
-        try {
-            const response = await fetch('https://vsmart.ajspire.com/api/brands');
-            const data = await response.json();
-            SetBrand(data.brands);
-        } catch (error) {
-            console.error('Error fetching categories:', error);
-        }
-    };
+  const getBrand = async () => {
+    try {
+      const response = await fetch("https://vsmart.ajspire.com/api/brands");
+      const data = await response.json();
+      SetBrand(data.brands);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
 
   useEffect(() => {
     getCategory();
@@ -82,177 +122,504 @@ const Header = () => {
   }, []);
 
   return (
-    <div>
-      <div>
-        {/* Header Section Begin */}
-        <header className="header">
-          {/* Header Top Section Begin */}
-          <div className="header__top">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-6 col-md-6 col-lg-3 col-md-4 col-sm-6">
-                  <div className="header__top__left">
+    <>
+      {/* Humberger Begin */}
+      <div className="humberger__menu__overlay" />
+      <div className="humberger__menu__wrapper">
+        <div className="humberger__menu__logo">
+          <a href="#">
+            <img src="img/logo.png" alt />
+          </a>
+        </div>
+        <div className="humberger__menu__cart">
+          <ul>
+            <li>
+              <a href="#">
+                <i className="fa fa-heart" /> <span>1</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i className="fa fa-shopping-bag" /> <span>3</span>
+              </a>
+            </li>
+          </ul>
+          <div className="header__cart__price">
+            item: <span>$150.00</span>
+          </div>
+        </div>
+        <div className="humberger__menu__widget">
+          <div className="header__top__right__language">
+            <img src="img/language.png" alt />
+            <div>English</div>
+            <span className="arrow_carrot-down" />
+            <ul>
+              <li>
+                <a href="#">Spanis</a>
+              </li>
+              <li>
+                <a href="#">English</a>
+              </li>
+            </ul>
+          </div>
+          <div className="header__top__right__auth">
+            <Link to="/login">
+              <i className="fa fa-user" /> Login
+            </Link>
+          </div>
+        </div>
+
+        <div id="mobile-menu-wrap" />
+        <div className="header__top__right__social">
+          <a href="#">
+            <i className="fa fa-facebook" />
+          </a>
+          <a href="#">
+            <i className="fa fa-twitter" />
+          </a>
+          <a href="#">
+            <i className="fa fa-linkedin" />
+          </a>
+          <a href="#">
+            <i className="fa fa-pinterest-p" />
+          </a>
+        </div>
+        <div className="humberger__menu__contact">
+          <ul>
+            <li>
+              <i className="fa fa-envelope" />
+              hiiio hello@colorlib.com
+            </li>
+            <li>Free Shipping for all Order of $99</li>
+          </ul>
+        </div>
+      </div>
+      {/* Humberger End */}
+      {/* Header Section Begin */}
+      <header className="header">
+        <div className="header__top">
+          <div className="" style={{height:'60px'}}>
+            <div className="row">
+              <div className="col-lg-6 col-md-6">
+                <div className="header__top__left">
+                  <ul>
+                    <li>
+                      <i className="fa fa-envelope" />
+                      hello@colorlib.com
+                    </li>
+                    <li>Free Shipping for all Order of $99</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="col-lg-6 col-md-6">
+                <div className="header__top__right">
+                  <div className="header__top__right__social">
+                    <a href="#">
+                      <i className="fa fa-facebook" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-twitter" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-linkedin" />
+                    </a>
+                    <a href="#">
+                      <i className="fa fa-pinterest-p" />
+                    </a>
+                  </div>
+                  <div className="header__top__right__language">
+                    <img src="img/language.png" alt />
+                    <div>English</div>
+                    <span className="arrow_carrot-down" />
                     <ul>
                       <li>
-                        <i className="fa fa-envelope" /> hello@colorlib.com
+                        <a href="#">Spanis</a>
                       </li>
-                      <li>Welcome to VS Mart in Your Dream Online Store!</li>
+                      <li>
+                        <a href="#">English</a>
+                      </li>
                     </ul>
                   </div>
-                </div>
-                <div className="col-lg-6 col-md-6">
-                  <div className="header__top__right">
-                    <div className="header__top__right__social">
-                      <a href="#">
-                        <i className="fa fa-facebook" />
-                      </a>
-                      <a href="#">
-                        <i className="fa fa-twitter" />
-                      </a>
-                      <a href="#">
-                        <i className="fa fa-linkedin" />
-                      </a>
-                      <a href="#">
-                        <i className="fa fa-pinterest-p" />
-                      </a>
-                    </div>
-                    <div className="header__top__right__language">
-                      <img src="img/language.png" alt="" />
-                      <div>English</div>
-                      <span className="arrow_carrot-down" />
-                      <ul>
-                        <li>
-                          <a href="#">Spanis</a>
-                        </li>
-                        <li>
-                          <a href="#">English</a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div className="header__top__right__auth">
-                     <Link to='/login'><i className="fa fa-user" /> Login</Link>
-                    </div>
+                  <div className="header__top__right__auth">
+                    <Link to="/login">
+                      <i className="fa fa-user" /> Login
+                    </Link>
                   </div>
                 </div>
               </div>
             </div>
-           
           </div>
-          {/* Header Top Section End */}
-
-          {/* Header Bottom Section Begin */}
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-lg-2 col-md-6">
-                <div className="header__logo">
-                  <a href="./index.html">
-                    <img src="https://vsmart.ajspire.com/images/logo1.png" alt="" />
-                  </a>
-                </div>
+        </div>
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-2 col-md-4 col-sm-6">
+              <div className="header__logo ms-2">
+                <a href="./index.html">
+                  <img src="img/logo.png" alt  className="img-fluid"/>
+                </a>
               </div>
-              <div className="col-lg-8 col-md-12 col-sm-2">
-              
-                <nav className="navbar header__menu na">
-                  <ul>
-                    <li className=" nav-item">
-                    
-                      <Link className="nav-link" to="/">Home</Link>
-                    </li>
+            </div>
+            <div className="col-lg-8 col-md-12 col-sm-12">
+              <nav className="header__menu d-md-flex align-items-center justify-content-md-between">
+                <ul className="d-flex align-items-center">
+                  <li className=" nav-item">
+                    <Link className="nav-link" to="/">
+                      Home
+                    </Link>
+                  </li>
 
-                    <li className="navbar-item dropdown-megamenu">
-                      <Dropdown show={showMegaMenu} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                        <a className="nav-link">Categories</a>
-                        <Dropdown.Menu className="mega-menu" style={{ height: 'auto', width: '1000px', marginLeft: '-220px', paddingLeft: '30px' }}>
-                          <div className="row">
-                            {Category.slice(0, 10).map((category) => (
-                              <div key={category.category_id} className="col-sm-3">
-                                <h5 className="font-weight-bold pt-2 text-info text-center"><Link to='/shop_grid'>{category.category_name}</Link></h5>
-                                <ul>
-                                  {SubCategory.filter((subcategory) => subcategory.subcategory_category_id === category.category_id)
-                                    .slice(0, 6)
-                                    .map((category) => (
-                                      <li key={category.subcategory_id} className="ms-4">
-                                        <Link to='/shop_grid'>{category.subcategory_name}</Link>
-                                      </li>
-                                    ))}
-                                  <Link to="/shop_grid">
-                                    <Button variant="outline-primary">View All</Button>
-                                  </Link>
-                                </ul>
+                  <li className="navbar-item dropdown-megamenu">
+                    <Dropdown
+                      show={showMegaMenu}
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <a className="nav-link">Categories</a>
+                      <Dropdown.Menu
+                        className="mega-menu"
+                        style={{
+                          height: "auto",
+                          width: "1000px",
+                          marginLeft: "-220px",
+                          paddingLeft: "30px",
+                        }}
+                      >
+                        <div className="row">
+                          {Category.slice(0, 10).map((el) => (
+                            <div key={el.category_id} className="col-sm-3">
+                              <h5 className="font-weight-bold pt-2 text-info text-center">
+                                <Link to="/shop_grid">{el.category_name}</Link>
+                              </h5>
+                              <ul>
+                                {SubCategory.filter(
+                                  (subcategory) =>
+                                    subcategory.subcategory_category_id ===
+                                    el.category_id
+                                )
+                                  .slice(0, 50)
+                                  .map((category) => (
+                                    <li
+                                      key={category.subcategory_id}
+                                      className="ms-4"
+                                    >
+                                      <Link
+                                        to={`/subcatview/${el.category_id}/${category.subcategory_id}`}
+                                      >
+                                        {category.subcategory_name}
+                                      </Link>
+                                    </li>
+                                  ))}
+                                <Link to="/shop_grid">
+                                  <Button variant="outline-primary">
+                                    View All
+                                  </Button>
+                                </Link>
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                        <a href="">Categories</a>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </li>
+
+                  <li>
+                    <Link to="/shop_grid">Shop</Link>
+                  </li>
+
+                  <li className="navbar-item dropdown-megamenu">
+                    <Dropdown
+                      show={showMegaBrand}
+                      onMouseEnter={handleBrandMouseEnter}
+                      onMouseLeave={handleBrandMouseLeave}
+                    >
+                      <a className="nav-link">Brands</a>
+                      <Dropdown.Menu
+                        className="mega-menu"
+                        style={{
+                          height: "auto",
+                          width: "1000px",
+                          marginLeft: "-520px",
+                          paddingLeft: "30px",
+                        }}
+                      >
+                        <div className="row">
+                          {Brand.slice(0, 20).map((brand) => (
+                            <div key={brand.brand_id} className="col-sm-2">
+                              <h5 className="font-weight-medium  text-info">
+                                <Link to={`/brands/${brand.brand_id}`}>{brand.brand_name}</Link>
+                              </h5>
+                            </div>
+                          ))}
+                        </div>
+                        <Link to="/brands">Brands</Link>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </li>
+                  <li>
+                    <Link to="/blogs">Blogs</Link>
+                  </li>
+                  <li>
+                    <Link to="/contactus">Contact</Link>
+                  </li>
+                  <li>
+                    <Link to="/aboutus">About</Link>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div className="col-lg-2 col-md-5 col-sm-6">
+              <div className="header__cart">
+                <ul>
+                <li>
+                    <a href="#">
+                      <li className="navbar-item dropdown-megamenu">
+                        <Dropdown
+                          show={showMegaWish}
+                          onClick={handleWishMouseEnter}
+                          onMouseLeave={handleWishMouseLeave}
+                        >
+                          <i className="fa fa-heart" />
+                          <Dropdown.Menu
+                            className="mega-menu"
+                            style={{
+                              height: "auto",
+                              width: "auto",
+                              marginLeft: "-350px",
+                              paddingLeft: "30px",
+                            }}
+                          >
+                            <div class="row">
+                              <div class="">
+                                <table class="table table-image">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Day</th>
+                                      <th scope="col">Image</th>
+                                      <th scope="col">Article Name</th>
+                                      <th scope="col">Author</th>
+                                      <th scope="col">Words</th>
+                                      <th scope="col">Shares</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">1</th>
+                                      <td class="w-25">
+                                        <img
+                                          src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
+                                          class="img-fluid img-thumbnail"
+                                          alt="Sheep"
+                                        />
+                                      </td>
+                                      <td>
+                                        Bootstrap 4 CDN and Starter Template
+                                      </td>
+                                      <td>Cristina</td>
+                                      <td>913</td>
+                                      <td>2.846</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <Link to='#'> <button className="btn btn-info">View All</button></Link>
                               </div>
-                            ))}
-                          </div>
-                          <Link to='/shop_grid'>Categories</Link>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </li>
-
-                    <li>
-                      <Link to="/shop_grid">Shop_grid</Link>
-                    </li>
-
-
-                    <li className="navbar-item dropdown-megamenu">
-                      <Dropdown show={showMegaBrand} onMouseEnter={handleBrandMouseEnter} onMouseLeave={handleBrandMouseLeave}>
-                        <a href="" className='nav-link'>Brands</a>
-                        <Dropdown.Menu className="mega-menu" style={{ height: 'auto', width: '1000px', marginLeft: '-520px', paddingLeft: '30px' }}>
-                          <div className="row">
-                            {Brand.slice(0,15).map((items) => (
-                              <div key={items.product_id} className="col-sm-2">
-                              <Link to='/shop_grid'><h5 className=" font-weight-medium pt-2 text-info">
-                                {items.brand_name}
-                                </h5></Link>
-                                
+                            </div>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </li>
+                      <li></li> <span>3</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <li className="navbar-item dropdown-megamenu">
+                        <Dropdown
+                          show={showMegaCart}
+                          onClick={handleCartMouseEnter}
+                          onMouseLeave={handleCartMouseLeave}
+                        >
+                          <i className="fa fa-shopping-bag"/><li></li><span>3</span>
+                          <Dropdown.Menu
+                            className="mega-menu"
+                            style={{
+                              height: "auto",
+                              width: "auto",
+                              marginLeft: "-350px",
+                              paddingLeft: "30px",
+                            }}
+                          >
+                            <div class="row">
+                              <div class="">
+                                <table class="table table-image">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Day</th>
+                                      <th scope="col">Image</th>
+                                      <th scope="col">Article Name</th>
+                                      <th scope="col">Author</th>
+                                      <th scope="col">Words</th>
+                                      <th scope="col">Shares</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">2</th>
+                                      <td class="w-25">
+                                        <img
+                                          src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
+                                          class="img-fluid img-thumbnail"
+                                          alt="Sheep"
+                                        />
+                                      </td>
+                                      <td>
+                                        Bootstrap 4 CDN and Starter Template
+                                      </td>
+                                      <td>Cristina</td>
+                                      <td>913</td>
+                                      <td>2.846</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <Link to='/cartdetails'> <button className="btn btn-info">View All</button></Link>
                               </div>
-                            ))}
-                          </div>
-                          <Link to="/shop_grid">
-                                    <Button variant="outline-primary">View All</Button>
-                                  </Link>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </li>
-                    <li>
-                      <Link to='/blogs'>Blogs</Link>
-                    </li>
-                    <li>
-                      <Link to='/contactus'>Contact Us</Link>
-                    </li>
-                    <li>
-                      <Link to='/aboutus'>About Us</Link>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
-              <div className="col-lg-2">
-                <div className="header__cart">
-                  <ul>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-heart" /> <span>1</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <i className="fa fa-shopping-bag" /> <span>3</span>
-                      </a>
-                    </li>
-                  </ul>
-                  <div className="header__cart__price">
-                    item: <span>$150.00</span>
-                  </div>
+                            </div>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </li>
+                     
+                    </a>
+                  </li>
+                </ul>
+                <div className="header__cart__price">
+                  item: <span>$150.00</span>
                 </div>
               </div>
             </div>
-            <div className="humberger__open">
-              <i className="fa fa-bars" />
+          </div>
+          <div
+            className={`humberger__open ${showHamburgerMenu ? "active" : ""}`}
+            onClick={handleHamburgerClick} // Handle hamburger icon click to toggle the menu
+          >
+            <i className="fa fa-bars" />
+          </div>
+        </div>
+      </header>
+      {/* Header Section End */}
+      <div
+        className={`humberger__menu__overlay ${
+          showHamburgerMenu ? "active" : ""
+        }`}
+        onClick={handleHamburgerOverlayClick}
+      />
+      <div
+        className={`humberger__menu__wrapper ${
+          showHamburgerMenu ? "show__humberger__menu__wrapper" : ""
+        }`}
+      >
+        {/* Hamburger menu content */}
+        <div className="humberger__menu__logo">
+          <a href="#">
+            <img src="img/logo.png" alt />
+          </a>
+        </div>
+        <div className="humberger__menu__cart">
+          <ul>
+            <li>
+              <a href="#">
+                <i className="fa fa-heart" /> <span>1</span>
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i className="fa fa-shopping-bag" /> <span>3</span>
+              </a>
+            </li>
+          </ul>
+          <div className="header__cart__price">
+            item: <span>$150.00</span>
+          </div>
+        </div>
+
+        <div className="humberger__menu__widget">
+          <div className="header__top__right__language">
+            <img src="img/language.png" alt />
+            <div>English</div>
+            <span className="arrow_carrot-down" />
+            <ul>
+              <li>
+                <a href="#">Spanis</a>
+              </li>
+              <li>
+                <a href="#">English</a>
+              </li>
+            </ul>
+          </div>
+          <div className="header__top__right__auth">
+            <a href="#">
+              <i className="fa fa-user" /> Login
+            </a>
+          </div>
+
+          <div className="row">
+            <div className="col-lg-6">
+              <nav className="">
+                <ul className="list-unstyled header-menu">
+                  <li className="active">
+                    <Link to="/">
+                      <FaHome /> Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/shop_grid">
+                      <FaShoppingCart /> Shop
+                    </Link>
+                  </li>
+                  {/* ... Other menu items ... */}
+                  <li>
+                    <Link to="/blog">
+                      <FaBlog /> Blog
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/contact">
+                      <FaEnvelope /> Contact
+                    </Link>
+                  </li>
+                </ul>
+              </nav>
             </div>
           </div>
-          {/* Header Bottom Section End */}
-        </header>
-        {/* Header Section End */}
+        </div>
+
+        <div id="mobile-menu-wrap" />
+        <div className="header__top__right__social">
+          <a href="#">
+            <i className="fa fa-facebook" />
+          </a>
+          <a href="#">
+            <i className="fa fa-twitter" />
+          </a>
+          <a href="#">
+            <i className="fa fa-linkedin" />
+          </a>
+          <a href="#">
+            <i className="fa fa-pinterest-p" />
+          </a>
+        </div>
+        <div className="humberger__menu__contact">
+          <ul>
+            <li>
+              <i className="fa fa-envelope" />
+              hello@colorlib.com
+            </li>
+            <li>Free Shipping for all Order of $99</li>
+          </ul>
+        </div>
+
+        {/* ... Add your content here ... */}
       </div>
-    </div>
+      {/* ... Other header content ... */}
+    </>
   );
 };
 

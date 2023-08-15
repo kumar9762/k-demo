@@ -21,7 +21,7 @@ const Slider = () => {
             return (
               <Carousel.Item>
                 <img
-                  style={{ width: "auto", height: "400px" }}
+                  style={{ width: "auto", height: "500px" }}
                   className="d-block w-100"
                   src={banners.slider_image}
                   alt="First slide"

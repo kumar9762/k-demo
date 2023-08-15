@@ -76,7 +76,10 @@ const Brands = () => {
               <div className="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
                 <div
                   className="container  text-dark font-weight-bold"
-                  style={{ marginLeft: "-200px" }}
+                  style={{
+                    marginLeft: "-200px",
+                    textShadow: "5px 8px 3px rgba(255, 105, 300, 0.9)",
+                  }}
                 >
                   <h1 style={{ fontWeight: "bold", fontSize: "25px" }}>
                     {brands_ && brands_.brand_name}
@@ -148,9 +151,25 @@ const Brands = () => {
                   >
                     {brandss.map((el) => (
                       <ul key={el.brand_id}>
-                        <li className="btn btn-success">
-                          <input type="checkbox" />
-                          <Link to={`/brands/${el.brand_id}`}>
+                        <li
+                          className="btn btn-success"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "180px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <input
+                            type="checkbox"
+                            style={{ marginRight: "10px" }}
+                          />
+                          <Link
+                            to={`/brands/${el.brand_id}`}
+                            style={{ flex: "1", }}
+                          >
                             {el.brand_name}
                           </Link>
                         </li>
@@ -199,11 +218,17 @@ const Brands = () => {
                                     if (diff !== 0) {
                                       return (
                                         <div
-                                          className="col-lg-4 col-md-4 col-sm-4 mt-5 bt-3"
+                                          className="col-lg-4 col-md-4 col-sm-4 mt-4 mb-3"
                                           key={index + subIndex}
                                         >
-                                        
-                                          <div className="product__discount__item" style={{transform:'skewY(-1deg)',border:'2px solid orange',borderRadius:'10px'}}>
+                                          <div
+                                            className="product__discount__item"
+                                            style={{
+                                              transform: "skewY(-1deg)",
+                                              border: "2px solid orange",
+                                              borderRadius: "10px",
+                                            }}
+                                          >
                                             <div
                                               className="product__discount__item__pic set-bg ms-1"
                                               data-setbg="img/product/discount/pd-1.jpg"
@@ -211,15 +236,15 @@ const Brands = () => {
                                                 backgroundImage: `url(${item.product_image})`,
                                                 border: "1px solid #ccc",
                                                 width: "300px",
-                                                borderRadius:'10px',
-                                                border:'none'
+                                                borderRadius: "10px",
+                                                border: "none",
                                               }}
                                             >
                                               <div className="product__discount__percent ">
                                                 <i className="fa fa-inr"></i>
                                                 {item.mrp_price -
-                                                  item.sale_price} off
-                                                
+                                                  item.sale_price}{" "}
+                                                off
                                               </div>
                                               <ul className="product__item__pic__hover">
                                                 <li>
@@ -242,7 +267,14 @@ const Brands = () => {
                                             <div className="product__discount__item__text">
                                               <span>{item.category_name}</span>
                                               <h5>
-                                                <a href="#" className="text-primary"  style={{ textShadow: '5px 8px 3px rgba(255, 105, 180, 0.9)'}}>
+                                                <a
+                                                  href="#"
+                                                  className="text-primary"
+                                                  style={{
+                                                    textShadow:
+                                                      "5px 8px 3px rgba(255, 105, 180, 0.9)",
+                                                  }}
+                                                >
                                                   {item.english_name}
                                                 </a>
                                               </h5>
@@ -304,7 +336,16 @@ const Brands = () => {
                     {brand.map((item) => {
                       return (
                         <div className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
-                          <div className="product__discount__item mt-5 mb-3 " style={{transform:'skewY(-3deg)', border: '1px solid green', width: '100%',borderRadius:'20px',boxShadow: '0px 4px 6px rgba(255, 105, 180, 0.3)'}}>
+                          <div
+                            className="product__discount__item mt-5 mb-3 "
+                            style={{
+                              transform: "skewY(-3deg)",
+                              border: "1px solid green",
+                              width: "100%",
+                              borderRadius: "20px",
+                              boxShadow: "0px 4px 6px rgba(255, 105, 180, 0.3)",
+                            }}
+                          >
                             <div
                               className="product__discount__item__pic set-bg ms-1"
                               data-setbg="img/product/discount/pd-1.jpg"
@@ -312,7 +353,8 @@ const Brands = () => {
                                 backgroundImage: `url(${item.product_image})`,
                                 border: "1px solid #ccc",
                                 width: "300px",
-                                borderRadius:'20px', boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.3)',
+                                borderRadius: "20px",
+                                boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.3)",
                               }}
                             >
                               <div className="product__discount__percent">
@@ -340,7 +382,9 @@ const Brands = () => {
                             <div className="product__discount__item__text">
                               <span>{item.category_name}</span>
                               <h5>
-                                <a href="#" className="text-info">{item.english_name}</a>
+                                <a href="#" className="text-info">
+                                  {item.english_name}
+                                </a>
                               </h5>
                               <div className="product__item__price">
                                 <b>

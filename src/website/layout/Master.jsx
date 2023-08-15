@@ -8,8 +8,8 @@ import Header2 from '../maincomponent/Header2'
 const Master = ({Rcf}) => {
   return (
     <>
-        {/* <Header/> */}
-        <Header2/>
+        <Header/>
+        {/* <Header2/> */}
         
        
         
