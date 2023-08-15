@@ -4,44 +4,43 @@ import { Carousel } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 
 const Brands = () => {
-    const [brand, setBrand] = useState([]);
-    const [brands, setBrands] = useState([]);
-    const [brands_, setBrands_] = useState({});
-    const [featured, setFeatured] = useState([]);
-    const [cat, setCat] = useState([]);
-    const [brandss, setBrandss] = useState([]);
-    const [id, setId] = useState("208");
-    const [count, setCount] = useState({});
-    const [count1, setCount1] = useState({});
-    let { brand_id } = useParams();
-  
-    const getBrand = async () => {
-      try {
-        const response = await fetch(
-          `https://vsmart.ajspire.com/api/product-shop/${brand_id}`
-        );
-        const data = await response.json();
-        setBrand(data.brand);
-        setCat(data.cat);
-        setBrands_(data.brands_);
-        setBrandss(data.brandss);
-        setFeatured(data.featured);
-       // console.log("brands:",data.brandss);
-    
-        console.log("featured:", data.featured);
-    
-          
-       // console.log("id:", data.id);
-        //console.log("count:", data.count);
+  const [brand, setBrand] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [brands_, setBrands_] = useState({});
+  const [featured, setFeatured] = useState([]);
+  const [cat, setCat] = useState([]);
+  const [brandss, setBrandss] = useState([]);
+  const [id, setId] = useState("208");
+  const [count, setCount] = useState({});
+  const [count1, setCount1] = useState({});
+  let { brand_id } = useParams();
+
+  const getBrand = async () => {
+    try {
+      const response = await fetch(
+        `https://vsmart.ajspire.com/api/product-shop/${brand_id}`
+      );
+      const data = await response.json();
+      setBrand(data.brand);
+      setCat(data.cat);
+      setBrands_(data.brands_);
+      setBrandss(data.brandss);
+      setFeatured(data.featured);
+      // console.log("brands:",data.brandss);
+
+      console.log("featured:", data.featured);
+
+      // console.log("id:", data.id);
+      //console.log("count:", data.count);
       //  console.log("count1:", data.count1);
 
-        //console.log(data.brand);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-  
-    const [expandedCategory, setExpandedCategory] = useState(null);
+      //console.log(data.brand);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  const [expandedCategory, setExpandedCategory] = useState(null);
 
   const toggleCategory = (categoryId) => {
     if (expandedCategory === categoryId) {
@@ -50,9 +49,9 @@ const Brands = () => {
       setExpandedCategory(categoryId);
     }
   };
-    useEffect(() => {
-      getBrand();
-    }, [brand_id]);
+  useEffect(() => {
+    getBrand();
+  }, [brand_id]);
   return (
     <>
       <div>
@@ -94,11 +93,8 @@ const Brands = () => {
           </div>
         </div>
 
-        
-       
-        
         {/* Product Section Begin */}
-       <section className="product spad">
+        <section className="product spad">
           <div className="container">
             <div className="row">
               <div className="col-lg-3 col-md-5">
@@ -121,23 +117,25 @@ const Brands = () => {
 
                         {expandedCategory === cat.category_id && (
                           <ul className="subcategory-list">
-                            {cat.filter(
-                              (subcategory) =>
-                                subcategory.subcategory_category_id ===
-                                cat.category_id
-                            ).map((subcategory) => (
-                              <li
-                                key={subcategory.subcategory_id}
-                                className="subcategory"
-                              >
-                                <Link
-                                  to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`}
-                                  className="subcategory-name"
+                            {cat
+                              .filter(
+                                (subcategory) =>
+                                  subcategory.subcategory_category_id ===
+                                  cat.category_id
+                              )
+                              .map((subcategory) => (
+                                <li
+                                  key={subcategory.subcategory_id}
+                                  className="subcategory"
                                 >
-                                  {subcategory.subcategory_name}
-                                </Link>
-                              </li>
-                            ))}
+                                  <Link
+                                    to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`}
+                                    className="subcategory-name"
+                                  >
+                                    {subcategory.subcategory_name}
+                                  </Link>
+                                </li>
+                              ))}
                           </ul>
                         )}
                       </div>
@@ -152,7 +150,9 @@ const Brands = () => {
                       <ul key={el.brand_id}>
                         <li className="btn btn-success">
                           <input type="checkbox" />
-                          <Link to={`/brands/${el.brand_id}`}>{el.brand_name}</Link>
+                          <Link to={`/brands/${el.brand_id}`}>
+                            {el.brand_name}
+                          </Link>
                         </li>
                       </ul>
                     ))}
@@ -191,67 +191,80 @@ const Brands = () => {
                           return (
                             <Carousel.Item key={index}>
                               <div className="row">
-                                {brand.slice(index, index + 3).filter.map(
-                                  (item, subIndex) => (
-                                    <div
-                                      className="col-lg-4 col-lg-3 col-md-4 col-sm-4"
-                                      key={index + subIndex}
-                                    >
-                                      <div className="product__discount__item">
+                                {brand
+                                  .slice(index, index + 3)
+                                  .map((item, subIndex) => {
+                                    const diff =
+                                      item.mrp_price - item.sale_price;
+                                    if (diff !== 0) {
+                                      return (
                                         <div
-                                          className="product__discount__item__pic set-bg"
-                                          data-setbg="img/product/discount/pd-1.jpg"
-                                          style={{
-                                            backgroundImage: `url(${item.product_image})`,
-                                            border: "1px solid #ccc",
-                                            width: "300px",
-                                          }}
+                                          className="col-lg-4 col-md-4 col-sm-4 mt-5 bt-3"
+                                          key={index + subIndex}
                                         >
-                                          <div className="product__discount__percent">
-                                            <i className="fa fa-inr"></i>{" "}
-                                            {item.mrp_price - item.sale_price}{" "}
-                                            Off
+                                        
+                                          <div className="product__discount__item" style={{transform:'skewY(-1deg)',border:'2px solid orange',borderRadius:'10px'}}>
+                                            <div
+                                              className="product__discount__item__pic set-bg ms-1"
+                                              data-setbg="img/product/discount/pd-1.jpg"
+                                              style={{
+                                                backgroundImage: `url(${item.product_image})`,
+                                                border: "1px solid #ccc",
+                                                width: "300px",
+                                                borderRadius:'10px',
+                                                border:'none'
+                                              }}
+                                            >
+                                              <div className="product__discount__percent ">
+                                                <i className="fa fa-inr"></i>
+                                                {item.mrp_price -
+                                                  item.sale_price} off
+                                                
+                                              </div>
+                                              <ul className="product__item__pic__hover">
+                                                <li>
+                                                  <a href="#">
+                                                    <i className="fa fa-heart" />
+                                                  </a>
+                                                </li>
+                                                <li>
+                                                  <a href="#">
+                                                    <i className="fa fa-retweet" />
+                                                  </a>
+                                                </li>
+                                                <li>
+                                                  <a href="#">
+                                                    <i className="fa fa-shopping-cart" />
+                                                  </a>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                            <div className="product__discount__item__text">
+                                              <span>{item.category_name}</span>
+                                              <h5>
+                                                <a href="#" className="text-primary"  style={{ textShadow: '5px 8px 3px rgba(255, 105, 180, 0.9)'}}>
+                                                  {item.english_name}
+                                                </a>
+                                              </h5>
+                                              <div className="product__item__price">
+                                                <b>
+                                                  MRP.
+                                                  <del className="text-danger">
+                                                    {item.mrp_price}
+                                                  </del>
+                                                  <span className="text-success">
+                                                    {item.sale_price}
+                                                    <small>/only</small>
+                                                  </span>
+                                                </b>
+                                              </div>
+                                            </div>
                                           </div>
-                                          <ul className="product__item__pic__hover">
-                                            <li>
-                                              <a href="#">
-                                                <i className="fa fa-heart" />
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a href="#">
-                                                <i className="fa fa-retweet" />
-                                              </a>
-                                            </li>
-                                            <li>
-                                              <a href="#">
-                                                <i className="fa fa-shopping-cart" />
-                                              </a>
-                                            </li>
-                                          </ul>
                                         </div>
-                                        <div className="product__discount__item__text">
-                                          <span>{item.category_name}</span>
-                                          <h5>
-                                            <a href="#">{item.english_name}</a>
-                                          </h5>
-                                          <div className="product__item__price">
-                                            <b>
-                                              MRP
-                                              <del className="text-danger">
-                                                {item.mrp_price}
-                                              </del>{" "}
-                                              <span className="text-success">
-                                                {item.sale_price}
-                                                <small>/only</small>
-                                              </span>
-                                            </b>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  )
-                                )}
+                                      );
+                                    }
+                                    return null;
+                                  })}
                               </div>
                             </Carousel.Item>
                           );
@@ -260,7 +273,8 @@ const Brands = () => {
                       })}
                     </Carousel>
                   </div>
-                  <div className="filter__item">
+
+                  <div className="filter__item mt-3">
                     <div className="row">
                       <div className="col-lg-4 col-md-5">
                         <div className="filter__sort">
@@ -286,22 +300,23 @@ const Brands = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="row">
+                  <div className="row ">
                     {brand.map((item) => {
                       return (
                         <div className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
-                          <div className="product__discount__item">
+                          <div className="product__discount__item mt-5 mb-3 " style={{transform:'skewY(-3deg)', border: '1px solid green', width: '100%',borderRadius:'20px',boxShadow: '0px 4px 6px rgba(255, 105, 180, 0.3)'}}>
                             <div
-                              className="product__discount__item__pic set-bg"
+                              className="product__discount__item__pic set-bg ms-1"
                               data-setbg="img/product/discount/pd-1.jpg"
                               style={{
                                 backgroundImage: `url(${item.product_image})`,
                                 border: "1px solid #ccc",
                                 width: "300px",
+                                borderRadius:'20px', boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.3)',
                               }}
                             >
                               <div className="product__discount__percent">
-                                <i className="fa fa-inr"></i>{" "}
+                                <i className="fa fa-inr"></i>
                                 {item.mrp_price - item.sale_price} off
                               </div>
                               <ul className="product__item__pic__hover">
@@ -325,14 +340,14 @@ const Brands = () => {
                             <div className="product__discount__item__text">
                               <span>{item.category_name}</span>
                               <h5>
-                                <a href="#">{item.english_name}</a>
+                                <a href="#" className="text-info">{item.english_name}</a>
                               </h5>
                               <div className="product__item__price">
                                 <b>
-                                  MRP
+                                  MRP.
                                   <del className="text-danger">
                                     {item.mrp_price}
-                                  </del>{" "}
+                                  </del>
                                   <span className="text-success">
                                     {item.sale_price}
                                     <small>/only</small>
