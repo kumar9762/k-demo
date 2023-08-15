@@ -118,29 +118,7 @@ const Brands = () => {
                           {cat.category_name}
                         </label>
 
-                        {expandedCategory === cat.category_id && (
-                          <ul className="subcategory-list">
-                            {cat
-                              .filter(
-                                (subcategory) =>
-                                  subcategory.subcategory_category_id ===
-                                  cat.category_id
-                              )
-                              .map((subcategory) => (
-                                <li
-                                  key={subcategory.subcategory_id}
-                                  className="subcategory"
-                                >
-                                  <Link
-                                    to={`/subcatview/${cat.category_id}/${subcategory.subcategory_id}`}
-                                    className="subcategory-name"
-                                  >
-                                    {subcategory.subcategory_name}
-                                  </Link>
-                                </li>
-                              ))}
-                          </ul>
-                        )}
+                        
                       </div>
                     ))}
                   </div>
@@ -243,7 +221,7 @@ const Brands = () => {
                                               <div className="product__discount__percent ">
                                                 <i className="fa fa-inr"></i>
                                                 {item.mrp_price -
-                                                  item.sale_price}{" "}
+                                                  item.sale_price}
                                                 off
                                               </div>
                                               <ul className="product__item__pic__hover">
@@ -420,43 +398,7 @@ const Brands = () => {
         {/* Product Section End */}
       </div>
     </>
-    //         <div>
-    //     <section className="">
-    //         <div className="container">
-    //             <div className="section-title">
-    //                 <h2>Brands</h2>
-    //             </div>
-    //             <Carousel interval={2000}>
-    //                 {Brand.map((brands, index) => (
-    //                     <Carousel.Item key={index}>
-    //                         <div className="d-flex justify-content-around">
-    //                             {Brand.slice(index, index + 5).map((brands) => (
-    //                                 <div key={brands.brand_id} className="d-flex flex-column align-items-center">
-    //                                     <a
-    //                                         className="suggest-card shadow my-2 rounded-circle"
-    //                                         href={`/product-shop/${brands.brand_id}/0`}
-    //                                     >
-    //                                         <img
-    //                                             className="rounded-circle align-center"
-    //                                             style={{ width: "200px", height: "101px" }}
-    //                                             src={brands.brand_banner}
-    //                                             alt="1658902579category.jpg"
-    //                                         />
-    //                                     </a>
-    //                                     <div>
-    //                                         <h6 className="text-center text-bg-success mt-3">
-    //                                             {brands.brand_name}
-    //                                         </h6>
-    //                                     </div>
-    //                                 </div>
-    //                             ))}
-    //                         </div>
-    //                     </Carousel.Item>
-    //                 ))}
-    //             </Carousel>
-    //         </div>
-    //     </section>
-    // </div>
+    
   );
 };
 

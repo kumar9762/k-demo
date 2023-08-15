@@ -254,7 +254,7 @@ const Header = () => {
           <div className="row">
             <div className="col-lg-2 col-md-4 col-sm-6">
               <div className="header__logo ms-2">
-                <a href="./index.html">
+                <a href="#">
                   <img src="img/logo.png" alt  className="img-fluid"/>
                 </a>
               </div>

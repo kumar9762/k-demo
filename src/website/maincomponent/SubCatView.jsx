@@ -169,6 +169,8 @@ const SubCatView = () => {
             autoPlay
             autoPlayInterval={3000}
             infinite
+            disableDotsControls
+              disableButtonsControls
           />
         </div>
         {/* Breadcrumb Section Begin */}
@@ -241,9 +243,27 @@ const SubCatView = () => {
                   >
                     {Brand.map((brand) => (
                       <ul>
-                        <li className="btn btn-success">
-                          <input type="checkbox" />
-                          {brand.brand_name}
+                      <li
+                          className="btn btn-success"
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "180px",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                          }}
+                        >
+                          <input
+                            type="checkbox"
+                            style={{ marginRight: "10px" }}
+                          />
+                          <Link
+                            to={`/brands/${brand.brand_id}`}
+                            style={{ flex: "1", }}
+                          >
+                            {brand.brand_name}
+                          </Link>
                         </li>
                       </ul>
                     ))}
@@ -285,10 +305,14 @@ const SubCatView = () => {
                                 {Category.slice(index, index + 3).map(
                                   (item, subIndex) => (
                                     <div
-                                      className="col-lg-4 col-lg-3 col-md-4 col-sm-4"
+                                      className="col-lg-4 col-lg-3 col-md-4 col-sm-4 mt-4 mb-3"
                                       key={index + subIndex}
                                     >
-                                      <div className="product__discount__item">
+                                      <div className="product__discount__item"  style={{
+                                              transform: "skewY(-1deg)",
+                                              border: "2px solid orange",
+                                              borderRadius: "10px",
+                                            }}>
                                         <div
                                           className="product__discount__item__pic set-bg"
                                           data-setbg="img/product/discount/pd-1.jpg"
@@ -381,7 +405,13 @@ const SubCatView = () => {
                     {Category.map((item) => {
                       return (
                         <div className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
-                          <div className="product__discount__item">
+                          <div className="product__discount__item mt-5 mb-3"  style={{
+                              transform: "skewY(-3deg)",
+                              border: "1px solid green",
+                              width: "100%",
+                              borderRadius: "20px",
+                              boxShadow: "0px 4px 6px rgba(255, 105, 180, 0.3)",
+                            }}>
                             <div
                               className="product__discount__item__pic set-bg"
                               data-setbg="img/product/discount/pd-1.jpg"
