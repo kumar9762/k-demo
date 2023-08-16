@@ -11,8 +11,11 @@ import {
 } from "react-bootstrap";
 import "./Header.css";
 import "./Cart.css";
+import Auth_user from "../authentication/Auth_user";
 
 const Header = () => {
+  const { http, user } = Auth_user();
+  
   const [Category, setCategory] = useState([]);
   const [SubCategory, setSubCategory] = useState([]);
   const [showMegaMenu, setShowMegaMenu] = useState(false);
@@ -64,56 +67,40 @@ const Header = () => {
   };
 
   const getCategory = async () => {
-    try {
-      const response = await fetch("https://vsmart.ajspire.com/api/categories");
-      const data = await response.json();
-      setCategory(data.categories);
-      //console.log(data.categories);
-
-      for (const category of data.categories) {
-        await new Promise((resolve) => setTimeout(resolve, 1000)); // Add a 1-second delay before fetching subcategories
-        getSubcategories(category.category_id);
-      }
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
+    http.get(`/categories`)
+    .then((res)=>{
+      setCategory(res.data.categories);
+      res.data.categories.forEach((categories)=>{
+        getSubcategories(categories.category_id);
+      })
+    })
   };
 
-  const getSubcategories = async (category_id) => {
-    try {
-      const response = await fetch(
-        `https://vsmart.ajspire.com/api/subcategories/${category_id}`
-      );
-      if (!response.ok) {
-        throw new Error("API request failed");
-      }
-      const data = await response.json();
-      const newSubcategory = data.subcategories;
+  const getSubcategories =  (category_id) => {
+    http.get(`/subcategories/${category_id}`)
+    .then((res) => {
+      const newsubcategory = res.data.subcategories;
+      setSubCategory((previssubcat) => {
+        const filtersubcategory = newsubcategory.filter(
+          (newsubcategory) => !previssubcat.some((previs) => previs.subcategory_id === newsubcategory.subcategory_id));
 
-      setSubCategory((prevSubCategory) => {
-        const filterSubcategory = newSubcategory.filter(
-          (newSub) =>
-            !prevSubCategory.some(
-              (prev) => prev.subcategory_id === newSub.subcategory_id
-            )
-        );
-        return [...prevSubCategory, ...filterSubcategory];
+        return [...previssubcat, ...filtersubcategory];
       });
-    } catch (error) {
-      console.error("Error fetching subcategories:", error);
-    }
+  }).catch((e) => {
+      console.log(e);
+  });
   };
 
   const [Brand, SetBrand] = useState([]);
 
   const getBrand = async () => {
-    try {
-      const response = await fetch("https://vsmart.ajspire.com/api/brands");
-      const data = await response.json();
-      SetBrand(data.brands);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
+    http.get(`/categories`)
+    .then((res)=>{
+      setCategory(res.data.categories);
+      res.data.categories.forEach((categories)=>{
+        getSubcategories(categories.category_id);
+      })
+    });
   };
 
   useEffect(() => {
@@ -324,7 +311,7 @@ const Header = () => {
                   </li>
 
                   <li>
-                    <Link to="/shop_grid">Shop</Link>
+                    <Link to="/all_prodshop">Shop</Link>
                   </li>
 
                   <li className="navbar-item dropdown-megamenu">

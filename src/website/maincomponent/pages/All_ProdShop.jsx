@@ -238,18 +238,17 @@ const All_ProdShop = () => {
                                         }}
                                       >
                                         <div
-                                          className="product__discount__item__pic set-bg"
+                                          className="product__discount__item__pic set-bg ms-1"
                                           data-setbg="img/product/discount/pd-1.jpg"
                                           style={{
                                             backgroundImage: `url(${item.product_image})`,
-                                            border: "1px solid #ccc",
+                                            border: "none",
                                             width: "300px",
+                                            borderRadius:'10px'
                                           }}
                                         >
                                           <div className="product__discount__percent">
-                                            <i className="fa fa-inr"></i>{" "}
-                                            {item.mrp_price - item.sale_price}{" "}
-                                            Off
+                                          <button className='btn btn-primary  text-white'><i className='fa fa-inr'></i>{item.mrp_price - item.sale_price} Off</button>
                                           </div>
                                           <ul className="product__item__pic__hover">
                                             <li>
@@ -333,24 +332,24 @@ const All_ProdShop = () => {
                             className="product__discount__item mt-5 mb-3"
                             style={{
                               transform: "skewY(-3deg)",
-                              border: "1px solid green",
+                              border: "1px solid #FF0000",
                               width: "100%",
                               borderRadius: "20px",
-                              boxShadow: "0px 4px 6px rgba(255, 105, 180, 0.3)",
+                              boxShadow: "0px 4px 6px rgba(255, 105, 180, 0.9)",
                             }}
                           >
                             <div
-                              className="product__discount__item__pic set-bg"
+                              className="product__discount__item__pic set-bg ms-1 mt-1"
                               data-setbg="img/product/discount/pd-1.jpg"
                               style={{
                                 backgroundImage: `url(${item.product_image})`,
-                                border: "1px solid #ccc",
+                                border: "none",
                                 width: "300px",
+                                borderRadius:'10px'
                               }}
                             >
                               <div className="product__discount__percent">
-                                <i className="fa fa-inr"></i>{" "}
-                                {item.mrp_price - item.sale_price} off
+                              <button className='btn btn-primary  text-white'><i className='fa fa-inr'></i>{item.mrp_price - item.sale_price} Off</button>
                               </div>
                               <ul className="product__item__pic__hover">
                                 <li>
@@ -380,7 +379,7 @@ const All_ProdShop = () => {
                                   MRP
                                   <del className="text-danger">
                                     {item.mrp_price}
-                                  </del>{" "}
+                                  </del>
                                   <span className="text-success">
                                     {item.sale_price}
                                     <small>/only</small>
@@ -401,7 +400,8 @@ const All_ProdShop = () => {
                       )
                     })
                   } */}
-                    {/* <Link to="/all_prodshop/1">
+                  {/* <div>Showing {Product.from} to {Links.total}</div> */}
+                    <Link to="/all_prodshop/1">
                       1
                     </Link>
                     
@@ -410,7 +410,7 @@ const All_ProdShop = () => {
                     </Link>
                     <Link to="/https://vsmart.ajspire.com/api/shop?page=88">
                       <i className="fa fa-long-arrow-right" />
-                    </Link> */}
+                    </Link>
                   </div>
                 </div>
               </div>
