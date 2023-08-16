@@ -3,23 +3,23 @@ import { Link } from 'react-router-dom'
 
 const Login = () => {
 
-  const [loginmData, setloginData] = useState({
+  const [loginData, setloginData] = useState({
     
     email: "",
    password: "",
    //device_name:"Kumar"
   });
 
-  console.log(loginmData);
+  console.log(loginData);
   const onInputChange = (e) => {
-    setloginData({ ...loginmData, [e.target.name]: e.target.value });
+    setloginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
     fetch("https://vsmart.ajspire.com/api/user/login", {
       method: "POST",
-      body: JSON.stringify(loginmData), // Convert formData to JSON string
+      body: JSON.stringify(loginData), // Convert formData to JSON string
       headers: {
         "Content-Type": "application/json", // Specify content type as JSON
         // Include other headers if needed

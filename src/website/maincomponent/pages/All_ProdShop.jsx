@@ -394,18 +394,23 @@ const All_ProdShop = () => {
                     })}
                   </div>
                   <div className="product__pagination">
-                    <Link to="/all_prodshop/1">
+                  {/* {
+                    Links.map((links)=>{
+                      return(
+                        <Link to='/'>1</Link>
+                      )
+                    })
+                  } */}
+                    {/* <Link to="/all_prodshop/1">
                       1
                     </Link>
-                    {/* <Link to={`/all_prodshop/${page=2}`}>
-                      2
-                    </Link> */}
+                    
                     <Link to="/all_prodshop/3">
                       3
                     </Link>
                     <Link to="/https://vsmart.ajspire.com/api/shop?page=88">
                       <i className="fa fa-long-arrow-right" />
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </div>

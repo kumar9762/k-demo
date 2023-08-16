@@ -115,7 +115,7 @@ const Brands = () => {
                             className="category-checkbox"
                             onClick={() => toggleCategory(cat.category_id)}
                           />
-                          {cat.category_name}
+                          <Link to='/all_prodshop' className="text-white ">{cat.category_name}</Link>
                         </label>
 
                         
