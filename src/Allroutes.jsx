@@ -27,6 +27,7 @@ const Allroutes = () => {
                     <Route path="/brands/:brand_id" element={ <Master Rcf={Brands}/>} />
 
                     <Route path="/all_prodshop/:page" element={ <Master Rcf={All_ProdShop}/>} />
+                    <Route path="/all_prodshop" element={ <Master Rcf={All_ProdShop}/>} />
 
 
                     <Route path="/cartdetails" element={ <Master Rcf={CartDetails}/>} />

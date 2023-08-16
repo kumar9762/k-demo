@@ -453,7 +453,7 @@ const SubCatView = () => {
                                   MRP
                                   <del className="text-danger">
                                     {item.mrp_price}
-                                  </del>{" "}
+                                  </del>
                                   <span className="text-success">
                                     {item.sale_price}
                                     <small>/only</small>

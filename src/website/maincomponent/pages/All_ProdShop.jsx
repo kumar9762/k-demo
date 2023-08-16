@@ -15,8 +15,23 @@ const All_ProdShop = () => {
   const [Count, setCount] = useState([]);
   const [Count1, setCount1] = useState([]);
 
+ 
+
   const getProduct = async (page) => {
     try {
+      if(page===0){
+        const res = await fetch('https://vsmart.ajspire.com/api/shop');
+        const data = await res.json();
+        setProduct(data.product.data);
+        setLinks(data.links);
+        setBrand(data.brand);
+        setCat(data.cat);
+        setCount(data.count);
+        setCount1(data.count1);
+  
+        setLoading(false);
+      }
+      else{
       const res = await fetch(`https://vsmart.ajspire.com/api/shop?page=${page}`);
       const data = await res.json();
       setProduct(data.product.data);
@@ -27,10 +42,11 @@ const All_ProdShop = () => {
       setCount1(data.count1);
 
       setLoading(false);
+      }
     } catch (error) {
       console.log("Error", error);
     }
-  };
+    };
   useEffect(() => {
     getProduct(page);
   }, [page]);
