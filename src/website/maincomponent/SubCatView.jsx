@@ -79,20 +79,23 @@ const SubCatView = () => {
                 style={{
                   height: "300px", // Adjust the height as needed
                   width: "100%",
-                   opacity: "0.9",
+                  opacity: "0.9",
                   color: "green",
                 }}
                 className="d-block w-100"
                 alt="Carousel Image"
               />
               <div className="carousel-caption d-flex flex-column align-items-center justify-content-center h-100">
-                <div className="container  text-dark font-weight-bold" style={{marginLeft:'-200px'}}>
+                <div
+                  className="container  text-dark font-weight-bold"
+                  style={{ marginLeft: "-200px" }}
+                >
                   <h1 style={{ fontWeight: "bold", fontSize: "35px" }}>
                     {Category_.category_name}
                   </h1>
                   <h3 style={{ fontWeight: "normal", fontSize: "30px" }}>
                     <Link to="/" style={{ color: "black" }}>
-                       Home
+                      Home
                     </Link>
                     /<b>{SubCategory_.subcategory_name}</b>
                   </h3>
@@ -136,29 +139,36 @@ const SubCatView = () => {
             />
           </AliceCarousel> */}
         </div>
-        <div className="container align-center carousel-inner" style={{ marginTop: "30px", marginLeft: "auto",backgroundColor:'darkgray' }}>
-          <AliceCarousel className='ms-2'
+        <div
+          className="container align-center carousel-inner"
+          style={{
+            marginTop: "30px",
+            marginLeft: "auto",
+            backgroundColor: "darkgray",
+          }}
+        >
+          <AliceCarousel
+            className="ms-2"
             mouseTracking
-            items={Sub.map((subslider) => (
+            items={Sub.map((subslider,index) => (
               <div
-                key={subslider.subcategory_image}
-                className="slider-image-container ms-5" 
+                key={index}
+                className="slider-image-container ms-5"
               >
                 <button className="btn btn-outline-success hover mt-5">
-                <img
-                  src={subslider.subcategory_image}
-                  alt={subslider.Iceream}
-                  height={"100px"}
-                  width={"150px"}
-                  className="slider-image  "
-                />
+                  <img
+                    src={subslider.subcategory_image}
+                    alt={subslider.Iceream}
+                    height={"100px"}
+                    width={"150px"}
+                    className="slider-image  "
+                  />
                 </button>
                 <div className="carousel-caption text-danger">
                   {subslider.subcategory_name}
                 </div>
               </div>
             ))}
-           
             responsive={{
               0: { items: 1 },
               576: { items: 2 },
@@ -170,7 +180,7 @@ const SubCatView = () => {
             autoPlayInterval={3000}
             infinite
             disableDotsControls
-              disableButtonsControls
+            disableButtonsControls
           />
         </div>
         {/* Breadcrumb Section Begin */}
@@ -241,9 +251,9 @@ const SubCatView = () => {
                     className="sidebar__item bg-info rounded-2"
                     style={{ maxHeight: "300px", overflowY: "auto" }}
                   >
-                    {Brand.map((brand) => (
-                      <ul>
-                      <li
+                    {Brand.map((brand,index) => (
+                      <ul key={index}>
+                        <li
                           className="btn btn-success"
                           style={{
                             display: "flex",
@@ -260,7 +270,7 @@ const SubCatView = () => {
                           />
                           <Link
                             to={`/brands/${brand.brand_id}`}
-                            style={{ flex: "1", }}
+                            style={{ flex: "1" }}
                           >
                             {brand.brand_name}
                           </Link>
@@ -276,7 +286,7 @@ const SubCatView = () => {
                         <div className="latest-prdouct__slider__item">
                           <a href="#" className="latest-product__item">
                             <div className="latest-product__item__pic">
-                              <img src="img/latest-product/lp-1.jpg" alt />
+                              <img src="img/latest-product/lp-1.jpg" alt='ok' />
                             </div>
                             <div className="latest-product__item__text">
                               <h6>Crab Pool Security</h6>
@@ -308,11 +318,14 @@ const SubCatView = () => {
                                       className="col-lg-4 col-lg-3 col-md-4 col-sm-4 mt-4 mb-3"
                                       key={index + subIndex}
                                     >
-                                      <div className="product__discount__item"  style={{
-                                              transform: "skewY(-1deg)",
-                                              border: "2px solid orange",
-                                              borderRadius: "10px",
-                                            }}>
+                                      <div
+                                        className="product__discount__item"
+                                        style={{
+                                          transform: "skewY(-1deg)",
+                                          border: "2px solid orange",
+                                          borderRadius: "10px",
+                                        }}
+                                      >
                                         <div
                                           className="product__discount__item__pic set-bg"
                                           data-setbg="img/product/discount/pd-1.jpg"
@@ -323,8 +336,8 @@ const SubCatView = () => {
                                           }}
                                         >
                                           <div className="product__discount__percent">
-                                            <i className="fa fa-inr"></i>{" "}
-                                            {item.mrp_price - item.sale_price}{" "}
+                                            <i className="fa fa-inr"></i>
+                                            {item.mrp_price - item.sale_price}
                                             Off
                                           </div>
                                           <ul className="product__item__pic__hover">
@@ -350,18 +363,19 @@ const SubCatView = () => {
                                           <h5>
                                             <a href="#">{item.english_name}</a>
                                           </h5>
-                                          <div className="product__item__price">
+                                          <h6 className="feature-price">
                                             <b>
+                                           
                                               MRP
                                               <del className="text-danger">
                                                 {item.mrp_price}
-                                              </del>{" "}
+                                              </del>
                                               <span className="text-success">
                                                 {item.sale_price}
                                                 <small>/only</small>
                                               </span>
                                             </b>
-                                          </div>
+                                          </h6>
                                         </div>
                                       </div>
                                     </div>
@@ -402,16 +416,19 @@ const SubCatView = () => {
                     </div>
                   </div>
                   <div className="row">
-                    {Category.map((item) => {
+                    {Category.map((item,index) => {
                       return (
-                        <div className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
-                          <div className="product__discount__item mt-5 mb-3"  style={{
+                        <div key={index} className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
+                          <div
+                            className="product__discount__item mt-5 mb-3"
+                            style={{
                               transform: "skewY(-3deg)",
                               border: "1px solid green",
                               width: "100%",
                               borderRadius: "20px",
                               boxShadow: "0px 4px 6px rgba(255, 105, 180, 0.3)",
-                            }}>
+                            }}
+                          >
                             <div
                               className="product__discount__item__pic set-bg"
                               data-setbg="img/product/discount/pd-1.jpg"
@@ -422,7 +439,7 @@ const SubCatView = () => {
                               }}
                             >
                               <div className="product__discount__percent">
-                                <i className="fa fa-inr"></i>{" "}
+                                <i className="fa fa-inr"></i>
                                 {item.mrp_price - item.sale_price} off
                               </div>
                               <ul className="product__item__pic__hover">
@@ -448,8 +465,9 @@ const SubCatView = () => {
                               <h5>
                                 <a href="#">{item.english_name}</a>
                               </h5>
-                              <div className="product__item__price">
+                              <h6 className="feature-price">
                                 <b>
+                                  
                                   MRP
                                   <del className="text-danger">
                                     {item.mrp_price}
@@ -459,7 +477,7 @@ const SubCatView = () => {
                                     <small>/only</small>
                                   </span>
                                 </b>
-                              </div>
+                              </h6>
                             </div>
                           </div>
                         </div>

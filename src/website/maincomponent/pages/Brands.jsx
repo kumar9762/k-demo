@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import { Carousel } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import Auth_user from "../../authentication/Auth_user";
 
 const Brands = () => {
+  const {http,user}=Auth_user();
+
   const [brand, setBrand] = useState([]);
   const [brands, setBrands] = useState([]);
   const [brands_, setBrands_] = useState({});
@@ -15,29 +18,29 @@ const Brands = () => {
   const [count1, setCount1] = useState({});
   let { brand_id } = useParams();
 
-  const getBrand = async () => {
-    try {
-      const response = await fetch(
-        `https://vsmart.ajspire.com/api/product-shop/${brand_id}`
-      );
-      const data = await response.json();
-      setBrand(data.brand);
-      setCat(data.cat);
-      setBrands_(data.brands_);
-      setBrandss(data.brandss);
-      setFeatured(data.featured);
+  
+  const getBrand =  () => {
+
+
+    http.get(`/product-shop/${brand_id}`).then((res) => {
+      //setproduct(response.data.products.data);
+      setBrand(res.data.brand);
+      setCat(res.data.cat);
+      setBrands_(res.data.brands_);
+      setBrandss(res.data.brandss);
+      setFeatured(res.data.featured);
       // console.log("brands:",data.brandss);
 
-      console.log("featured:", data.featured);
+      //console.log("featured:", data.featured);
 
       // console.log("id:", data.id);
       //console.log("count:", data.count);
       //  console.log("count1:", data.count1);
 
       //console.log(data.brand);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
+    }).catch(error => {
+      console.error('Error fetching products:', error);
+    });
   };
 
   const [expandedCategory, setExpandedCategory] = useState(null);
@@ -115,10 +118,10 @@ const Brands = () => {
                             className="category-checkbox"
                             onClick={() => toggleCategory(cat.category_id)}
                           />
-                          <Link to='/all_prodshop' className="text-white ">{cat.category_name}</Link>
+                          <Link to="/all_prodshop" className="text-white ">
+                            {cat.category_name}
+                          </Link>
                         </label>
-
-                        
                       </div>
                     ))}
                   </div>
@@ -146,7 +149,7 @@ const Brands = () => {
                           />
                           <Link
                             to={`/brands/${el.brand_id}`}
-                            style={{ flex: "1", }}
+                            style={{ flex: "1" }}
                           >
                             {el.brand_name}
                           </Link>
@@ -256,18 +259,19 @@ const Brands = () => {
                                                   {item.english_name}
                                                 </a>
                                               </h5>
-                                              <div className="product__item__price">
+                                              <h6 class="feature-price">
                                                 <b>
-                                                  MRP.
+                                                  {" "}
+                                                  MRP
                                                   <del className="text-danger">
                                                     {item.mrp_price}
-                                                  </del>
+                                                  </del>{" "}
                                                   <span className="text-success">
                                                     {item.sale_price}
                                                     <small>/only</small>
                                                   </span>
                                                 </b>
-                                              </div>
+                                              </h6>
                                             </div>
                                           </div>
                                         </div>
@@ -364,10 +368,9 @@ const Brands = () => {
                                   {item.english_name}
                                 </a>
                               </h5>
-                              <div className="product__item__price">
+                              <h6 class="feature-price">
                                 <b>
-                                  MRP.
-                                  <del className="text-danger">
+                                MRP  <del className="text-danger">
                                     {item.mrp_price}
                                   </del>
                                   <span className="text-success">
@@ -375,7 +378,7 @@ const Brands = () => {
                                     <small>/only</small>
                                   </span>
                                 </b>
-                              </div>
+                              </h6>
                             </div>
                           </div>
                         </div>
@@ -398,7 +401,6 @@ const Brands = () => {
         {/* Product Section End */}
       </div>
     </>
-    
   );
 };
 

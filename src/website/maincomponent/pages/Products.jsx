@@ -5,17 +5,14 @@ const Products = () => {
   const { http, user } = Auth_user();
   const [product, setproduct] = useState([]);
   // const[Cat,SetCat]=useState([]);
-  const getProd = () => {
-    http.get(`/products`).then((res) => {
-      if (Array.isArray(res.data.products)) {
-        setproduct(res.data.products);
-      } else {
-        console.error("API response is not an array:", res.data.products);
-      }
-    });
-  };
-  
 
+const getProd=()=>{
+  http.get('/products').then(response => {
+    setproduct(response.data.products.data);
+  }).catch(error => {
+    console.error('Error fetching products:', error);
+  });
+}
   useEffect(() => {
     getProd();
   }, []);

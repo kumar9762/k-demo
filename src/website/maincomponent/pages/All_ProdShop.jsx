@@ -6,7 +6,7 @@ import { Carousel } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 
 const All_ProdShop = () => {
-    const {page}=useParams();
+  const { page } = useParams();
   const [Product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [Links, setLinks] = useState([]);
@@ -15,12 +15,10 @@ const All_ProdShop = () => {
   const [Count, setCount] = useState([]);
   const [Count1, setCount1] = useState([]);
 
- 
-
   const getProduct = async (page) => {
     try {
-      if(page===0){
-        const res = await fetch('https://vsmart.ajspire.com/api/shop');
+      if (page === 0) {
+        const res = await fetch("https://vsmart.ajspire.com/api/shop");
         const data = await res.json();
         setProduct(data.product.data);
         setLinks(data.links);
@@ -28,25 +26,26 @@ const All_ProdShop = () => {
         setCat(data.cat);
         setCount(data.count);
         setCount1(data.count1);
-  
-        setLoading(false);
-      }
-      else{
-      const res = await fetch(`https://vsmart.ajspire.com/api/shop?page=${page}`);
-      const data = await res.json();
-      setProduct(data.product.data);
-      setLinks(data.links);
-      setBrand(data.brand);
-      setCat(data.cat);
-      setCount(data.count);
-      setCount1(data.count1);
 
-      setLoading(false);
+        setLoading(false);
+      } else {
+        const res = await fetch(
+          `https://vsmart.ajspire.com/api/shop?page=${page}`
+        );
+        const data = await res.json();
+        setProduct(data.product.data);
+        setLinks(data.links);
+        setBrand(data.brand);
+        setCat(data.cat);
+        setCount(data.count);
+        setCount1(data.count1);
+
+        setLoading(false);
       }
     } catch (error) {
       console.log("Error", error);
     }
-    };
+  };
   useEffect(() => {
     getProduct(page);
   }, [page]);
@@ -244,11 +243,16 @@ const All_ProdShop = () => {
                                             backgroundImage: `url(${item.product_image})`,
                                             border: "none",
                                             width: "300px",
-                                            borderRadius:'10px'
+                                            borderRadius: "10px",
                                           }}
                                         >
                                           <div className="product__discount__percent">
-                                          <button className='btn btn-primary  text-white'><i className='fa fa-inr'></i>{item.mrp_price - item.sale_price} Off</button>
+                                            <button className="btn btn-primary  text-white">
+                                              <i className="fa fa-inr"></i>
+                                              {item.mrp_price -
+                                                item.sale_price}{" "}
+                                              Off
+                                            </button>
                                           </div>
                                           <ul className="product__item__pic__hover">
                                             <li>
@@ -273,9 +277,9 @@ const All_ProdShop = () => {
                                           <h5>
                                             <a href="#">{item.english_name}</a>
                                           </h5>
-                                          <div className="product__item__price">
+                                          <h6 class="feature-price">
                                             <b>
-                                              MRP
+                                                                                        MRP
                                               <del className="text-danger">
                                                 {item.mrp_price}
                                               </del>
@@ -284,7 +288,7 @@ const All_ProdShop = () => {
                                                 <small>/only</small>
                                               </span>
                                             </b>
-                                          </div>
+                                          </h6>
                                         </div>
                                       </div>
                                     </div>
@@ -345,11 +349,14 @@ const All_ProdShop = () => {
                                 backgroundImage: `url(${item.product_image})`,
                                 border: "none",
                                 width: "300px",
-                                borderRadius:'10px'
+                                borderRadius: "10px",
                               }}
                             >
                               <div className="product__discount__percent">
-                              <button className='btn btn-primary  text-white'><i className='fa fa-inr'></i>{item.mrp_price - item.sale_price} Off</button>
+                                <button className="btn btn-primary  text-white">
+                                  <i className="fa fa-inr"></i>
+                                  {item.mrp_price - item.sale_price} Off
+                                </button>
                               </div>
                               <ul className="product__item__pic__hover">
                                 <li>
@@ -374,8 +381,9 @@ const All_ProdShop = () => {
                               <h5>
                                 <a href="#">{item.english_name}</a>
                               </h5>
-                              <div className="product__item__price">
+                              <h6 class="feature-price">
                                 <b>
+                              
                                   MRP
                                   <del className="text-danger">
                                     {item.mrp_price}
@@ -385,7 +393,7 @@ const All_ProdShop = () => {
                                     <small>/only</small>
                                   </span>
                                 </b>
-                              </div>
+                              </h6>
                             </div>
                           </div>
                         </div>
@@ -393,21 +401,17 @@ const All_ProdShop = () => {
                     })}
                   </div>
                   <div className="product__pagination">
-                  {/* {
+                    {/* {
                     Links.map((links)=>{
                       return(
                         <Link to='/'>1</Link>
                       )
                     })
                   } */}
-                  {/* <div>Showing {Product.from} to {Links.total}</div> */}
-                    <Link to="/all_prodshop/1">
-                      1
-                    </Link>
-                    
-                    <Link to="/all_prodshop/3">
-                      3
-                    </Link>
+                    {/* <div>Showing {Product.from} to {Links.total}</div> */}
+                    <Link to="/all_prodshop/1">1</Link>
+
+                    <Link to="/all_prodshop/3">3</Link>
                     <Link to="/https://vsmart.ajspire.com/api/shop?page=88">
                       <i className="fa fa-long-arrow-right" />
                     </Link>

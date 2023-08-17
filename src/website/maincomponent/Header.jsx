@@ -73,7 +73,9 @@ const Header = () => {
       res.data.categories.forEach((categories)=>{
         getSubcategories(categories.category_id);
       })
-    })
+    }).catch(error => {
+      console.error('Error fetching products:', error);
+    });
   };
 
   const getSubcategories =  (category_id) => {
@@ -98,6 +100,8 @@ const Header = () => {
     .then((res)=>{
       SetBrand(res.data.brands);
      
+    }).catch(error => {
+      console.error('Error fetching products:', error);
     });
   };
 
