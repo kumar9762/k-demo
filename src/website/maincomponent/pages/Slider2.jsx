@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Auth_user from '../../authentication/Auth_user';
 
 
 
 const Slider2 = () => {
+  const { http, user } = Auth_user();
   const [Sli2, SetSli2] = useState([]);
 
   const getSlid2 = async () => {
-    try {
-      const response = await fetch('https://vsmart.ajspire.com/api/products');
-      const data = await response.json();
-      SetSli2(data.products.data);
-      // console.log('hi');
-      //console.log(data.products.data);
-    } catch (error) {
-      console.error('Error fetching product.data:', error);
-    }
+    http.get(`/product`).then((res)=>{
+      SetSli2(res.data.products);
+    })
   };
 
   useEffect(() => {

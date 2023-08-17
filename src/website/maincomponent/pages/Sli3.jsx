@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import Auth_user from '../../authentication/Auth_user';
 
 const Sli3 = () => {
+  const { http, user } = Auth_user();
   const [Sli2, SetSli2] = useState([]);
 
-  const getSlid2 = async () => {
-    try {
-      const response = await fetch('https://vsmart.ajspire.com/api/categories');
-      const data = await response.json();
-      SetSli2(data.categories);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
+  const getSlid2 = () => {
+    http.get(`/categories`).then((res)=>{
+      SetSli2(res.data.categories);
+    })
   };
 
   useEffect(() => {

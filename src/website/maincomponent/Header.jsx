@@ -66,7 +66,7 @@ const Header = () => {
     setShowMegaWish(false);
   };
 
-  const getCategory = async () => {
+  const getCategory =  () => {
     http.get(`/categories`)
     .then((res)=>{
       setCategory(res.data.categories);
@@ -93,13 +93,11 @@ const Header = () => {
 
   const [Brand, SetBrand] = useState([]);
 
-  const getBrand = async () => {
-    http.get(`/categories`)
+  const getBrand = () => {
+    http.get(`/brands`)
     .then((res)=>{
-      setCategory(res.data.categories);
-      res.data.categories.forEach((categories)=>{
-        getSubcategories(categories.category_id);
-      })
+      SetBrand(res.data.brands);
+     
     });
   };
 

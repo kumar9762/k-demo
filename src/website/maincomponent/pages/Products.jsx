@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import Auth_user from '../../authentication/Auth_user';
 
 const Products = () => {
+  const { http, user } = Auth_user();
   const [product, setproduct] = useState([]);
   // const[Cat,SetCat]=useState([]);
-
-const getProd=()=>{
-  fetch('https://vsmart.ajspire.com/api/products').then(response => {
-      return response.json();
-
-    }).then(data => {
-      setproduct(data.products.data);
-      //console.log(data.products.data);
+  const getProd = () => {
+    http.get(`/products`).then((res) => {
+      if (Array.isArray(res.data.products)) {
+        setproduct(res.data.products);
+      } else {
+        console.error("API response is not an array:", res.data.products);
+      }
     });
-}
+  };
+  
+
   useEffect(() => {
     getProd();
   }, []);

@@ -121,7 +121,7 @@ const SubCatView = () => {
               <div className="col-lg-9 col-md-7 ps-1">
                 <div className="product__discount">
                   <div className="section-title product__discount__title">
-                    <h2>Sale Off</h2>
+                    <h2>Sale Offasdfghjkl;</h2>
                   </div>
 
                   <div className="row">
@@ -174,18 +174,9 @@ const SubCatView = () => {
                                           <h5>
                                             <a href="#">{item.english_name}</a>
                                           </h5>
-                                          <div className="product__item__price">
-                                            <b>
-                                              MRP
-                                              <del className="text-danger">
-                                                {item.mrp_price}
-                                              </del>{" "}
-                                              <span className="text-success">
-                                                {item.sale_price}
-                                                <small>/only</small>
-                                              </span>
-                                            </b>
-                                          </div>
+                                          <h6 class="feature-price">
+                                                    <b> MRP<del className='text-danger'>{item.mrp_price}</del>  <span className='text-success'>{item.sale_price}<small>/only</small></span></b>
+                                                </h6>
                                         </div>
                                       </div>
                                     </div>
