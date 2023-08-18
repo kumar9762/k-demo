@@ -6,6 +6,21 @@ const Products = () => {
   const { http, user } = Auth_user();
   const [product, setproduct] = useState([]);
   // const[Cat,SetCat]=useState([]);
+  const [productid, Setproductid] = useState([]);
+
+  //const { product_id } = useParams();
+
+  const GetproductId = (product_id_param) => {
+    console.log("cart" + product_id_param);
+    http.get(`/add-to-cart/${product_id_param}`).then((res) => {
+      Setproductid(res.data.products);
+    });
+    console.log("hi", product_id_param);
+  };
+
+  const handleAddToCart = (product_id) => {
+    GetproductId(product_id);
+  };
 
 const getProd=()=>{
   http.get('/products').then(response => {
@@ -16,6 +31,7 @@ const getProd=()=>{
 }
   useEffect(() => {
     getProd();
+    GetproductId();
   }, []);
   return (
     <div>
@@ -55,7 +71,13 @@ const getProd=()=>{
                         <ul className="featured__item__pic__hover">
                           <li><a href="#"><i className="fa fa-heart" /></a></li>
                           <li><a href="#"><i className="fa fa-retweet" /></a></li>
-                          <li><Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link></li>
+                          <li>
+  <Link to={`/all_prodshop/${item.product_id}`}>
+    <button className="btn" onClick={() => handleAddToCart(item.product_id)}>
+      <i className="fa fa-shopping-cart"></i>
+    </button>
+  </Link>
+</li>
                         </ul>
                       </div>
                       <div className="featured__item__text">
