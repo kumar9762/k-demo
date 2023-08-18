@@ -11,9 +11,9 @@ const CartDetails = () => {
 
   const getCart = () => {
     http
-      .get(`/add-to-cart/{product_id}`)
+      .get(`/get-cart-list`)
       .then((res) => {
-        SetCart(res.data.products.data);
+        SetCart(res.data.cart);
         console.log('hi');
       })
       .catch((error) => {
@@ -67,21 +67,21 @@ const CartDetails = () => {
                       </tr>
                     </thead>
                     <tbody>
-              {Cart.map((item) => (
-                <tr key={item.product_id}> {/* Use a unique key */}
+              {Cart.map((cart) => (
+                <tr key={cart.product_id}> {/* Use a unique key */}
                   <td className="shoping__cart__item">
-                    <img src={item.image_url} alt={item.product_name} />
-                    <h5>{item.product_name}</h5>
+                    <img src={"https://vsmart.ajspire.com/uploads/product_image/"+cart.product_image} alt={cart.product_name} />
+                    <h5>{cart.english_name}</h5>
                   </td>
-                  <td className="shoping__cart__price">${item.price}</td>
+                  <td className="shoping__cart__price">${cart.cart_price}</td>
                   <td className="shoping__cart__quantity">
                     <div className="quantity">
                       <div className="pro-qty">
-                        <input type="text" defaultValue={1} />
+                        <input type="text" value={cart.cart_product_qty} />
                       </div>
                     </div>
                   </td>
-                  <td className="shoping__cart__total">${item.total}</td>
+                  <td className="shoping__cart__total">${cart.cart_price*cart.cart_product_qty}</td>
                   <td className="shoping__cart__item__close">
                     <span className="icon_close" />
                   </td>
@@ -95,9 +95,9 @@ const CartDetails = () => {
             <div className="row">
               <div className="col-lg-12">
                 <div className="shoping__cart__btns">
-                  <a href="#" className="primary-btn cart-btn">
+                  <Link to="/all_prodshow" className="primary-btn cart-btn">
                     CONTINUE SHOPPING
-                  </a>
+                  </Link>
                   <a href="#" className="primary-btn cart-btn cart-btn-right">
                     <span className="icon_loading" />
                     Upadate Cart

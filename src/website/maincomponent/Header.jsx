@@ -12,6 +12,7 @@ import Auth_user from "../authentication/Auth_user";
 
 const Header = () => {
   const { http, user, logout, token } = Auth_user();
+  const [Cart, setCart] = useState([]);
   
   // console.log(user);
   const [Category, setCategory] = useState([]);
@@ -64,6 +65,14 @@ const Header = () => {
     setShowMegaWish(false);
   };
 
+  
+  const GetCartProduct=()=>{
+    http.get(`/get-cart-list`).then((res)=>{
+      console.log(res.data);
+      setCart(res.data.cart);
+    })
+  };
+
   const getCategory =  () => {
     http.get(`/categories`)
     .then((res)=>{
@@ -106,6 +115,7 @@ const Header = () => {
   useEffect(() => {
     getCategory();
     getBrand();
+    GetCartProduct();
   }, []);
 
   return (
@@ -458,31 +468,37 @@ const Header = () => {
                                 <table class="table table-image">
                                   <thead>
                                     <tr>
-                                      <th scope="col">Day</th>
+                                      <th scope="col">Sr.No</th>
                                       <th scope="col">Image</th>
-                                      <th scope="col">Article Name</th>
-                                      <th scope="col">Author</th>
-                                      <th scope="col">Words</th>
-                                      <th scope="col">Shares</th>
+                                      <th scope="col"> Name</th>
+                                      <th scope="col">Price</th>
+                                      <th scope="col">Quantity</th>
+                                      <th scope="col">Total</th>
                                     </tr>
                                   </thead>
                                   <tbody>
-                                    <tr>
-                                      <th scope="row">2</th>
+                                  {
+                                    Cart.map((cart,index)=>(
+
+                                  
+                                    <tr >
+                                      <th scope="row">{index++}</th>
                                       <td class="w-25">
                                         <img
-                                          src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
+                                          src={"https://vsmart.ajspire.com/uploads/product_image/"+cart.product_image}
                                           class="img-fluid img-thumbnail"
                                           alt="Sheep"
                                         />
                                       </td>
                                       <td>
-                                        Bootstrap 4 CDN and Starter Template
+                                        {cart.english_name}
                                       </td>
-                                      <td>Cristina</td>
-                                      <td>913</td>
-                                      <td>2.846</td>
+                                      <td>Rs.{cart.cart_price}</td>
+                                      <td>{cart.cart_product_qty}</td>
+                                      <td>{cart.cart_price*cart.cart_product_qty}</td>
                                     </tr>
+                                    ))
+                                  }
                                   </tbody>
                                 </table>
                                 <Link to='/cartdetails'> <button className="btn btn-info">View All</button></Link>

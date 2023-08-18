@@ -4,8 +4,10 @@ import { useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import { Carousel } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import Auth_user from "../../authentication/Auth_user";
 
 const All_ProdShop = () => {
+  const {http,user,logout,token}=Auth_user();
   const { page } = useParams();
   const [Product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +17,27 @@ const All_ProdShop = () => {
   const [Count, setCount] = useState([]);
   const [Count1, setCount1] = useState([]);
 
+  const[productid,Setproductid]=useState([]);
+
+const {product_id}=useParams();
+
+
+  const GetproductId = (product_id) =>{
+    console.log('cart'+product_id);
+    http.get(`/add-to-cart/${product_id}`).then((res)=>{
+      Setproductid(res.data.products);
+    })
+    console.log('hi',product_id);
+
+  }
+
+
   const getProduct = async (page) => {
+
+
+
+
+
     try {
       if (page === 0) {
         const res = await fetch("https://vsmart.ajspire.com/api/shop");
@@ -48,6 +70,7 @@ const All_ProdShop = () => {
   };
   useEffect(() => {
     getProduct(page);
+    GetproductId();
   }, [page]);
   return (
     <>
@@ -91,43 +114,7 @@ const All_ProdShop = () => {
           </div>
         </div>
 
-        {/* <div className="container align-center carousel-inner" style={{ marginTop: "30px", marginLeft: "auto",backgroundColor:'darkgray' }}>
-          <AliceCarousel className='ms-2'
-            mouseTracking
-            items={Product.map((subslider) => (
-              <div
-                key={subslider.subcategory_image}
-                className="slider-image-container ms-5" 
-              >
-                <button className="btn btn-outline-success hover mt-5">
-                <img
-                  src={subslider.subcategory_image}
-                  alt={subslider.Iceream}
-                  height={"100px"}
-                  width={"150px"}
-                  className="slider-image  "
-                />
-                </button>
-                <div className="carousel-caption text-danger">
-                  {subslider.subcategory_name}
-                </div>
-              </div>
-            ))}
-           
-            responsive={{
-              0: { items: 1 },
-              576: { items: 2 },
-              768: { items: 3 },
-              992: { items: 4 },
-              1200: { items: 5 },
-            }}
-            autoPlay
-            autoPlayInterval={3000}
-            infinite
-            disableDotsControls
-              disableButtonsControls
-          />
-        </div> */}
+      
 
         {/* Product Section Begin */}
         <section className="product spad">
@@ -266,7 +253,7 @@ const All_ProdShop = () => {
                                               </a>
                                             </li>
                                             <li>
-                                            <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
+                                            <Link to={`/all_prodshop/${item.product_id}`}><button className="fa fa-shopping-cart btn" onClick={()=>GetproductId()} /></Link>
                                             </li>
                                           </ul>
                                         </div>

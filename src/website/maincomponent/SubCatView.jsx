@@ -7,9 +7,12 @@ import Slider2 from "./pages/Slider2";
 import { FaHome } from "react-icons/fa";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
+import Auth_user from "../authentication/Auth_user";
 
 const SubCatView = () => {
   let { cat_id, sub_id } = useParams();
+  const { http, user, logout, token } = Auth_user();
+
 
   //Product
   const [Category, setCategory] = useState([]);
@@ -22,21 +25,21 @@ const SubCatView = () => {
   const [Count1, setCount1] = useState([]);
 
   const getSubCat = () => {
-    fetch(` https://vsmart.ajspire.com/api/product-shop/${cat_id}/${sub_id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        //console.log(data.categories);
-        setCategory(data.category.data);
-        setCategory_(data.category_);
-        setSubCategory_(data.subcategory_);
-        //console.log("hi");
-        //console.log(data.subcategory_);
-        setCat(data.cat);
-        setBrand(data.brand);
-        setSub(data.sub);
-        setCount(data.count);
-        setCount1(data.count1);
+    http.get(`/product-shop/${cat_id}/${sub_id}`)
+      .then((res) =>{
+         //console.log(data.categories);
+         setCategory(res.data.category.data);
+         setCategory_(res.data.category_);
+         setSubCategory_(res.data.subcategory_);
+         //console.log("hi");
+         //console.log(res.data.subcategory_);
+         setCat(res.data.cat);
+         setBrand(res.data.brand);
+         setSub(res.data.sub);
+         setCount(res.data.count);
+         setCount1(res.data.count1);
       })
+      
       .catch((error) => {
         console.log("Error", error);
       });
