@@ -6,7 +6,7 @@ const ContactUs = () => {
       {/* Breadcrumb Section Begin */}
       <section className="breadcrumb-sectio set-bg"   style={{
           backgroundImage: "url('img/breadcrumb.jpg')",
-          height: 400,
+          height: 400,marginTop:"200px"
         }}>
         <img src="" alt="breadcrumb" />
         <div className="container">

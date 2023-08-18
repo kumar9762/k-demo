@@ -47,7 +47,7 @@ const Shop_grid = () => {
 
   return (
     <>
-      <div>
+      <div style={{marginTop:"200px"}}>
         {/* <CatSlider /> */}
         <Slider2 />
 

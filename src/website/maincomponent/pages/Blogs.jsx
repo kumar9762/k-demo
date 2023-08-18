@@ -24,7 +24,7 @@ const Blogs = () => {
         <section className="breadcrumb-sectio set-bg"
           style={{
             backgroundImage: "url('img/breadcrumb.jpg')",
-            height: 400,
+            height: 400,marginTop:"200px"
           }}>
           <div className="container">
             <div className="row">

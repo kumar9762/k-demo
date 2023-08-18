@@ -21,17 +21,7 @@ const All_ProdShop = () => {
 
   const { product_id } = useParams();
 
-  const GetproductId = (product_id_param) => {
-    console.log("cart" + product_id_param);
-    http.get(`/add-to-cart/${product_id_param}`).then((res) => {
-      Setproductid(res.data.products);
-    });
-    console.log("hi", product_id_param);
-  };
-
-  const handleAddToCart = (product_id) => {
-    GetproductId(product_id);
-  };
+  
   const getProduct = async (page) => {
     try {
       if (page === 0) {
@@ -63,10 +53,24 @@ const All_ProdShop = () => {
       console.log("Error", error);
     }
   };
+
+  const GetproductId = (product_id) => {
+    console.log("cart",product_id);
+    http.get(`/add-to-cart/${product_id}`).then((res) => {
+      Setproductid(res.data.products);
+    });
+    console.log("hi",product_id);
+  };
+
+  const handleAddToCart = (product_id) => {
+    GetproductId(product_id);
+  };
+
+
   useEffect(() => {
     getProduct(page);
-    GetproductId();
-  }, [page]);
+    GetproductId(product_id);
+  }, [page,product_id]);
   return (
     <>
       <h1>Product List</h1>
@@ -74,7 +78,7 @@ const All_ProdShop = () => {
         <div
           id="header-carousel"
           className="carousel slide align-center"
-          data-ride="carousel"
+          data-ride="carousel" style={{marginTop:"200px"}}
         >
           <div className="carousel-inner">
             <div className="img">
@@ -360,7 +364,7 @@ const All_ProdShop = () => {
                                   </a>
                                 </li>
                                 <li>
-                                  <Link to={`/all_prodshop/${item.product_id}`}>
+                                  <a to={`/cartdetails/${item.product_id}`}>
                                     <button
                                       className="btn"
                                       onClick={() =>
@@ -369,7 +373,7 @@ const All_ProdShop = () => {
                                     >
                                       <i className="fa fa-shopping-cart"></i>
                                     </button>
-                                  </Link>
+                                  </a>
                                 </li>
                               </ul>
                             </div>

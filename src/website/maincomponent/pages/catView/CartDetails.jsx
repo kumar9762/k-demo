@@ -9,12 +9,22 @@ const CartDetails = () => {
   const [Cart, SetCart] = useState([]);
   const { product_id } = useParams();
 
+  let total = 0; // Initialize the total
+
+  // Calculate total by summing up cart_price for all items
+  Cart.forEach((cart) => {
+    total =total+ cart.cart_price;
+    console.log('Total',total);
+  });
+
+
   const getCart = () => {
+    
     http
       .get(`/get-cart-list`)
       .then((res) => {
         SetCart(res.data.cart);
-        console.log('hi'+res.data.cart);
+        console.log('hi',res.data.cart);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -29,10 +39,11 @@ const CartDetails = () => {
       <div>
         {/* Breadcrumb Section Begin */}
         <section
-          className="breadcrumb-section set-bg"
+          className="breadcrumb-section set-bg "
           style={{
             backgroundImage: "url('img/breadcrumb.jpg')",
             height: 400,
+            marginTop:"200px"
           }}
         >
           <div className="container">
@@ -68,6 +79,7 @@ const CartDetails = () => {
                     </thead>
                     <tbody>
               {Cart.map((cart) => (
+                
                 <tr key={cart.product_id}> {/* Use a unique key */}
                   <td className="shoping__cart__item">
                     <img src={"https://vsmart.ajspire.com/uploads/product_image/"+cart.product_image} alt={cart.product_name} />
@@ -125,7 +137,7 @@ const CartDetails = () => {
                       Subtotal <span>$454.98</span>
                     </li>
                     <li>
-                      Total <span>$454.98</span>
+                      Total <span>${total.toFixed(2)}</span>
                     </li>
                   </ul>
                   <a href="#" className="primary-btn">

@@ -12,6 +12,7 @@ const AboutUs = () => {
         style={{
           backgroundImage: "url('img/breadcrumb.jpg')",
           height: 400,
+          marginTop:"200px"
         }}
       >
         <div className="container text-center">

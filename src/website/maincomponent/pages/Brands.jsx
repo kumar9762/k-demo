@@ -62,6 +62,7 @@ const Brands = () => {
           id="header-carousel"
           className="carousel slide align-center"
           data-ride="carousel"
+          style={{marginTop:"200px"}}
         >
           <div className="carousel-inner">
             <div className="img">
