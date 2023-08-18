@@ -9,7 +9,7 @@ const Login = () => {
 
   const { http, setToken, token } = Auth_user();
   const navigate = useNavigate();
-  const [disable, setDisable] = useState();
+  const [disable, setDisable] = useState(0);
   useEffect(() => {
     // if (token != null) {
     //   navigate("/");
@@ -62,7 +62,7 @@ const Login = () => {
       } else {
         notify(res.data.message);
       }
-      setDisable(0);
+      setDisable();
     });
   };
   return (

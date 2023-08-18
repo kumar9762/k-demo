@@ -14,7 +14,8 @@ import "./Cart.css";
 import Auth_user from "../authentication/Auth_user";
 
 const Header = () => {
-  const { http, user } = Auth_user();
+  const { http, user, logout, token } = Auth_user();
+  
   
   const [Category, setCategory] = useState([]);
   const [SubCategory, setSubCategory] = useState([]);
@@ -135,7 +136,7 @@ const Header = () => {
             </li>
           </ul>
           <div className="header__cart__price">
-            item: <span>$150.00</span>
+            item: <span>$150.</span>
           </div>
         </div>
         <div className="humberger__menu__widget">
@@ -232,7 +233,11 @@ const Header = () => {
                   </div>
                   <div className="header__top__right__auth">
                     <Link to="/login">
-                      <i className="fa fa-user" /> Login
+                    {token ? (
+                        <Link onClick={logout} ><i class="fa "></i> Logout</Link>
+                      ) : (
+                        <Link to="/login"><i class="fa fa-lock"></i> Login</Link>
+                      )}
                     </Link>
                   </div>
                 </div>
@@ -354,6 +359,17 @@ const Header = () => {
                   </li>
                   <li>
                     <Link to="/aboutus">About</Link>
+                  </li>
+                  <li>
+                  {token ? (
+                  <a href="#">
+                    <i className="fa fa-user s_color " /> {user.name}
+                  </a>
+                ) : (
+                  <a href="#">
+                    <i className="fa fa-user s_color" /> My Account
+                  </a>
+                )}  
                   </li>
                 </ul>
               </nav>
