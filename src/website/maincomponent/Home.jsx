@@ -8,7 +8,9 @@ import FeaturedProducts from "./pages/FeaturedProducts";
 const Home = () => {
   return (
     <div>
-      <Slider />
+      <div style={{ marginTop: "200px" }}> {/* Apply margin-top directly */}
+        <Slider />
+      </div>
       <Sli3 />
       <FeaturedProducts />
       <Products />

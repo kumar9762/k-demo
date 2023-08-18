@@ -112,6 +112,7 @@ const Header = () => {
 
   return (
     <>
+    <div className="fixed-top">
       {/* Humberger Begin */}
       <div className="humberger__menu__overlay" />
       <div className="humberger__menu__wrapper">
@@ -248,7 +249,7 @@ const Header = () => {
                 </a>
               </div>
             </div>
-            <div className="col-lg-8 col-md-12 col-sm-12">
+            <div className="col-lg-7 col-md-12 col-sm-12">
               <nav className="header__menu d-md-flex align-items-center justify-content-md-between">
                 <ul className="d-flex align-items-center">
                   <li className=" nav-item">
@@ -357,7 +358,7 @@ const Header = () => {
                 </ul>
               </nav>
             </div>
-            <div className="col-lg-2 col-md-5 col-sm-6">
+            <div className="col-lg-3 col-md-5 col-sm-6">
               <div className="header__cart">
                 <ul>
                 <li>
@@ -608,6 +609,7 @@ const Header = () => {
         {/* ... Add your content here ... */}
       </div>
       {/* ... Other header content ... */}
+      </div>
     </>
   );
 };
