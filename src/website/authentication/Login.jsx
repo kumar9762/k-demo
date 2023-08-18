@@ -10,10 +10,11 @@ const Login = () => {
   const { http, setToken, token } = Auth_user();
   const navigate = useNavigate();
   const [disable, setDisable] = useState(0);
+  //console.log('hi',token);
   useEffect(() => {
-    // if (token != null) {
-    //   navigate("/");
-    // }
+    if (token != null) {
+      navigate("/");
+    }
     window.scrollTo({
       top: 0,
       behaviour: "smooth",
@@ -26,7 +27,7 @@ const Login = () => {
     //device_name:"Kumar"
   });
 
-  console.log(loginData);
+  console.log('hello',loginData);
 
   const onInputChange = (e) => {
     setloginData({ ...loginData, [e.target.name]: e.target.value }); //set values
@@ -55,9 +56,11 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     http.post(`/user/login`, loginData).then((res) => {
-      console.log(res.data.token);
+      // console.log('ok',res.data.user_data);
+
       if (res.data.token) {
         setToken(res.data.user_data,res.data.token);
+        // setUser();
         navigate("/");
       } else {
         notify(res.data.message);

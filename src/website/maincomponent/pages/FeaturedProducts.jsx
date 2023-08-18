@@ -49,8 +49,8 @@ const FeaturedProducts = () => {
 
                         <div className=''>
                             <div className="row featured__filter bordered">
-                                {product.slice(0, 20).filter((product) => product.featured === 0).map((item) => (
-                                    <div className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" key={item.id}>
+                                {product.slice(0, 20).filter((product) => product.featured === 0).map((item,index) => (
+                                    <div className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" key={index}>
                                         <div className="featured__item  border border-danger rounded-3">
                                             <div className="featured__item__pic set-bg" style={{
                                                 backgroundImage: `url(${item.product_image})`,

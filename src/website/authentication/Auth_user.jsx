@@ -16,13 +16,12 @@ const Auth_user = () => {
   };
 
   const saveToken = (user, token) => {
-    sessionStorage.getItem("token", JSON.stringify(token));
-    sessionStorage.getItem("user", JSON.stringify(user));
+    sessionStorage.setItem("token", JSON.stringify(token));
+    sessionStorage.setItem("user", JSON.stringify(user));
   };
 
-  const [token, setToken] = useState([getToken()]);
-  const [user, setUser] = useState([getUser()]);
-
+  const [token, setToken] = useState(getToken());
+  const [user, setUser] = useState(getUser());
   const http = axios.create({
     baseURL: "https://vsmart.ajspire.com/api",
     headers: {

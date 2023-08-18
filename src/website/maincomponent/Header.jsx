@@ -16,7 +16,7 @@ import Auth_user from "../authentication/Auth_user";
 const Header = () => {
   const { http, user, logout, token } = Auth_user();
   
-  
+  // console.log(user);
   const [Category, setCategory] = useState([]);
   const [SubCategory, setSubCategory] = useState([]);
   const [showMegaMenu, setShowMegaMenu] = useState(false);
@@ -247,14 +247,14 @@ const Header = () => {
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-lg-2 col-md-4 col-sm-6">
+            <div className="col-lg-1 col-md-4 col-sm-6">
               <div className="header__logo ms-2">
                 <a href="#">
-                  <img src="img/logo.png" alt  className="img-fluid"/>
+                  <img src="img/logo.png" alt='image'  className="img-fluid"/>
                 </a>
               </div>
             </div>
-            <div className="col-lg-7 col-md-12 col-sm-12">
+            <div className="col-lg-9 col-md-12 col-sm-12">
               <nav className="header__menu d-md-flex align-items-center justify-content-md-between">
                 <ul className="d-flex align-items-center">
                   <li className=" nav-item">
@@ -364,17 +364,19 @@ const Header = () => {
                   {token ? (
                   <a href="#">
                     <i className="fa fa-user s_color " /> {user.name}
+                    
                   </a>
                 ) : (
                   <a href="#">
                     <i className="fa fa-user s_color" /> My Account
                   </a>
-                )}  
+                )} 
+                {/* user show */}
                   </li>
                 </ul>
               </nav>
             </div>
-            <div className="col-lg-3 col-md-5 col-sm-6">
+            <div className="col-lg-2 col-md-5 col-sm-6">
               <div className="header__cart">
                 <ul>
                 <li>
