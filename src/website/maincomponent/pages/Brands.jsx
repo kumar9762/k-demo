@@ -239,9 +239,7 @@ const Brands = () => {
                                                   </a>
                                                 </li>
                                                 <li>
-                                                  <a href="#">
-                                                    <i className="fa fa-shopping-cart" />
-                                                  </a>
+                                                <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
                                                 </li>
                                               </ul>
                                             </div>

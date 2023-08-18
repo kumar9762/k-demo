@@ -6,6 +6,7 @@ import Slider2 from './Slider2';
 import Sli3 from './Sli3';
 import CatSlider from './catsli/CatSlider';
 import { Carousel } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Shop_grid = () => {
   const [Category, SetCategory] = useState([]);
@@ -158,9 +159,7 @@ const Shop_grid = () => {
                                             </a>
                                           </li>
                                           <li>
-                                            <a href="#">
-                                              <i className="fa fa-shopping-cart" />
-                                            </a>
+                                          <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
                                           </li>
                                         </ul>
                                       </div>
@@ -227,7 +226,7 @@ const Shop_grid = () => {
                               <ul className="product__item__pic__hover">
                                 <li><a href="#"><i className="fa fa-heart" /></a></li>
                                 <li><a href="#"><i className="fa fa-retweet" /></a></li>
-                                <li><a href="#"><i className="fa fa-shopping-cart" /></a></li>
+                                <li><Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link></li>
                               </ul>
                             </div>
                             <div className="product__item__text">

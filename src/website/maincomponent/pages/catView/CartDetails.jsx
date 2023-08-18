@@ -1,18 +1,39 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import Auth_user from "../../../authentication/Auth_user";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const CartDetails = () => {
+  const { http, user } = Auth_user();
+  const [Cart, SetCart] = useState([]);
+  const { product_id } = useParams();
+
+  const getCart = () => {
+    http
+      .get(`/add-to-cart/{product_id}`)
+      .then((res) => {
+        SetCart(res.data.products.data);
+        console.log('hi');
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
+  };
+
+  useEffect(()=>{
+    getCart();
+  },[product_id]);
   return (
     <>
       <div>
         {/* Breadcrumb Section Begin */}
         <section
           className="breadcrumb-section set-bg"
-         
           style={{
-          backgroundImage: "url('img/breadcrumb.jpg')",
-          height: 400,
-        }}
+            backgroundImage: "url('img/breadcrumb.jpg')",
+            height: 400,
+          }}
         >
           <div className="container">
             <div className="row">
@@ -46,26 +67,27 @@ const CartDetails = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="shoping__cart__item">
-                          <img src="img/cart/cart-1.jpg" alt />
-                          <h5>Vegetable’s Package</h5>
-                        </td>
-                        <td className="shoping__cart__price">$55.00</td>
-                        <td className="shoping__cart__quantity">
-                          <div className="quantity">
-                            <div className="pro-qty">
-                              <input type="text" defaultValue={1} />
-                            </div>
-                          </div>
-                        </td>
-                        <td className="shoping__cart__total">$110.00</td>
-                        <td className="shoping__cart__item__close">
-                          <span className="icon_close" />
-                        </td>
-                      </tr>
-                    
-                    </tbody>
+              {Cart.map((item) => (
+                <tr key={item.product_id}> {/* Use a unique key */}
+                  <td className="shoping__cart__item">
+                    <img src={item.image_url} alt={item.product_name} />
+                    <h5>{item.product_name}</h5>
+                  </td>
+                  <td className="shoping__cart__price">${item.price}</td>
+                  <td className="shoping__cart__quantity">
+                    <div className="quantity">
+                      <div className="pro-qty">
+                        <input type="text" defaultValue={1} />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="shoping__cart__total">${item.total}</td>
+                  <td className="shoping__cart__item__close">
+                    <span className="icon_close" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
                   </table>
                 </div>
               </div>

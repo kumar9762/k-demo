@@ -250,7 +250,7 @@ const All_ProdShop = () => {
                                             <button className="btn btn-primary  text-white">
                                               <i className="fa fa-inr"></i>
                                               {item.mrp_price -
-                                                item.sale_price}{" "}
+                                                item.sale_price}
                                               Off
                                             </button>
                                           </div>
@@ -266,9 +266,7 @@ const All_ProdShop = () => {
                                               </a>
                                             </li>
                                             <li>
-                                              <a href="#">
-                                                <i className="fa fa-shopping-cart" />
-                                              </a>
+                                            <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
                                             </li>
                                           </ul>
                                         </div>
@@ -370,9 +368,7 @@ const All_ProdShop = () => {
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="#">
-                                    <i className="fa fa-shopping-cart" />
-                                  </a>
+                                <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
                                 </li>
                               </ul>
                             </div>

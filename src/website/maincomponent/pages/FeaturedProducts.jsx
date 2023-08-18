@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Heart from './Heart';
+import { Link } from 'react-router-dom';
 
 const FeaturedProducts = () => {
     const [product, setproduct] = useState([]);
@@ -60,7 +61,7 @@ const FeaturedProducts = () => {
                                                 <ul className="featured__item__pic__hover">
                                                     <li><a href="#"><i className="fa fa-heart" /></a></li>
                                                     <li><a href="#"><i className="fa fa-retweet" /></a></li>
-                                                    <li><a href="#"><i className="fa fa-shopping-cart" /></a></li>
+                                                    <li><Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link></li>
                                                 </ul>
                                             </div>
                                             <div className="featured__item__text">
