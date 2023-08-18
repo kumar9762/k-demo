@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import Auth_user from "../../authentication/Auth_user";
 
 const All_ProdShop = () => {
-  const {http,user,logout,token}=Auth_user();
+  const { http, user, logout, token } = Auth_user();
   const { page } = useParams();
   const [Product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,27 +17,22 @@ const All_ProdShop = () => {
   const [Count, setCount] = useState([]);
   const [Count1, setCount1] = useState([]);
 
-  const[productid,Setproductid]=useState([]);
+  const [productid, Setproductid] = useState([]);
 
-const {product_id}=useParams();
+  const { product_id } = useParams();
 
-
-  const GetproductId = (product_id) =>{
-    console.log('cart'+product_id);
-    http.get(`/add-to-cart/${product_id}`).then((res)=>{
+  const GetproductId = (product_id_param) => {
+    console.log("cart" + product_id_param);
+    http.get(`/add-to-cart/${product_id_param}`).then((res) => {
       Setproductid(res.data.products);
-    })
-    console.log('hi',product_id);
+    });
+    console.log("hi", product_id_param);
+  };
 
-  }
-
-
+  const handleAddToCart = (product_id) => {
+    GetproductId(product_id);
+  };
   const getProduct = async (page) => {
-
-
-
-
-
     try {
       if (page === 0) {
         const res = await fetch("https://vsmart.ajspire.com/api/shop");
@@ -113,8 +108,6 @@ const {product_id}=useParams();
             </div>
           </div>
         </div>
-
-      
 
         {/* Product Section Begin */}
         <section className="product spad">
@@ -236,8 +229,7 @@ const {product_id}=useParams();
                                           <div className="product__discount__percent">
                                             <button className="btn btn-primary  text-white">
                                               <i className="fa fa-inr"></i>
-                                              {item.mrp_price -
-                                                item.sale_price}
+                                              {item.mrp_price - item.sale_price}
                                               Off
                                             </button>
                                           </div>
@@ -253,7 +245,20 @@ const {product_id}=useParams();
                                               </a>
                                             </li>
                                             <li>
-                                            <Link to={`/all_prodshop/${item.product_id}`}><button className="fa fa-shopping-cart btn" onClick={()=>GetproductId()} /></Link>
+                                              <Link
+                                                to={`/all_prodshop/${item.product_id}`}
+                                              >
+                                                <button
+                                                  className="btn"
+                                                  onClick={() =>
+                                                    handleAddToCart(
+                                                      item.product_id
+                                                    )
+                                                  }
+                                                >
+                                                  <i className="fa fa-shopping-cart"></i>
+                                                </button>
+                                              </Link>
                                             </li>
                                           </ul>
                                         </div>
@@ -264,7 +269,7 @@ const {product_id}=useParams();
                                           </h5>
                                           <h6 class="feature-price">
                                             <b>
-                                                                                        MRP
+                                              MRP
                                               <del className="text-danger">
                                                 {item.mrp_price}
                                               </del>
@@ -355,7 +360,16 @@ const {product_id}=useParams();
                                   </a>
                                 </li>
                                 <li>
-                                <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
+                                  <Link to={`/all_prodshop/${item.product_id}`}>
+                                    <button
+                                      className="btn"
+                                      onClick={() =>
+                                        handleAddToCart(item.product_id)
+                                      }
+                                    >
+                                      <i className="fa fa-shopping-cart"></i>
+                                    </button>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -366,7 +380,6 @@ const {product_id}=useParams();
                               </h5>
                               <h6 class="feature-price">
                                 <b>
-                              
                                   MRP
                                   <del className="text-danger">
                                     {item.mrp_price}

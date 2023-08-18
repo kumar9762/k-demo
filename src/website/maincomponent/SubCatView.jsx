@@ -287,7 +287,7 @@ const SubCatView = () => {
                       <h4>Latest Products</h4>
                       <div className="latest-product__slider ">
                         <div className="latest-prdouct__slider__item">
-                          <a href="#" className="latest-product__item">
+                          <Link to="#" className="latest-product__item">
                             <div className="latest-product__item__pic">
                               <img src="img/latest-product/lp-1.jpg" alt='ok' />
                             </div>
@@ -295,7 +295,7 @@ const SubCatView = () => {
                               <h6>Crab Pool Security</h6>
                               <span>$30.00</span>
                             </div>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
@@ -345,26 +345,26 @@ const SubCatView = () => {
                                           </div>
                                           <ul className="product__item__pic__hover">
                                             <li>
-                                              <a href="#">
+                                              <Link to="#">
                                                 <i className="fa fa-heart" />
-                                              </a>
+                                              </Link>
                                             </li>
                                             <li>
-                                              <a href="#">
+                                              <Link to="#">
                                                 <i className="fa fa-retweet" />
-                                              </a>
+                                              </Link>
                                             </li>
                                             <li>
-                                              <a href="#">
+                                              <Link to="#">
                                                 <i className="fa fa-shopping-cart" />
-                                              </a>
+                                              </Link>
                                             </li>
                                           </ul>
                                         </div>
                                         <div className="product__discount__item__text">
                                           <span>{item.category_name}</span>
                                           <h5>
-                                            <a href="#">{item.english_name}</a>
+                                            <Link to="#">{item.english_name}</Link>
                                           </h5>
                                           <h6 className="feature-price">
                                             <b>
@@ -447,14 +447,14 @@ const SubCatView = () => {
                               </div>
                               <ul className="product__item__pic__hover">
                                 <li>
-                                  <a href="#">
+                                  <Link to="#">
                                     <i className="fa fa-heart" />
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="#">
                                     <i className="fa fa-retweet" />
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
                                 <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
@@ -464,7 +464,7 @@ const SubCatView = () => {
                             <div className="product__discount__item__text">
                               <span>{item.category_name}</span>
                               <h5>
-                                <a href="#">{item.english_name}</a>
+                                <Link to="#">{item.english_name}</Link>
                               </h5>
                               <h6 className="feature-price">
                                 <b>
@@ -486,12 +486,12 @@ const SubCatView = () => {
                     })}
                   </div>
                   <div className="product__pagination">
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#">
+                    <Link to="#">1</Link>
+                    <Link to="#">2</Link>
+                    <Link to="#">3</Link>
+                    <Link to="#">
                       <i className="fa fa-long-arrow-right" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>

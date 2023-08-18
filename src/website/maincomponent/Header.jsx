@@ -65,11 +65,14 @@ const Header = () => {
     setShowMegaWish(false);
   };
 
-  
+  const [cartLength,SetcartLength]=useState(0);
+  const [Total,SetTotal]=useState(0);
   const GetCartProduct=()=>{
     http.get(`/get-cart-list`).then((res)=>{
       console.log(res.data);
       setCart(res.data.cart);
+      SetcartLength(res.data.cart.length);
+      SetTotal(res.data.total_amount);
     })
   };
 
@@ -125,21 +128,21 @@ const Header = () => {
       <div className="humberger__menu__overlay" />
       <div className="humberger__menu__wrapper">
         <div className="humberger__menu__logo">
-          <a href="#">
-            <img src="img/logo.png" alt />
-          </a>
+          <Link to="#">
+            <img src="img/logo.png" alt='logo' />
+          </Link>
         </div>
         <div className="humberger__menu__cart">
           <ul>
             <li>
-              <a href="#">
+              <Link to="#">
                 <i className="fa fa-heart" /> <span>1</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
+              <Link to="#">
                 <i className="fa fa-shopping-bag" /> <span>3</span>
-              </a>
+              </Link>
             </li>
           </ul>
           <div className="header__cart__price">
@@ -148,15 +151,15 @@ const Header = () => {
         </div>
         <div className="humberger__menu__widget">
           <div className="header__top__right__language">
-            <img src="img/language.png" alt />
+            <img src="img/language.png" alt='logo' />
             <div>English</div>
             <span className="arrow_carrot-down" />
             <ul>
               <li>
-                <a href="#">Spanis</a>
+                <Link to="#">Spanis</Link>
               </li>
               <li>
-                <a href="#">English</a>
+                <Link to="#">English</Link>
               </li>
             </ul>
           </div>
@@ -169,18 +172,18 @@ const Header = () => {
 
         <div id="mobile-menu-wrap" />
         <div className="header__top__right__social">
-          <a href="#">
+          <Link to="#">
             <i className="fa fa-facebook" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i className="fa fa-twitter" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i className="fa fa-linkedin" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i className="fa fa-pinterest-p" />
-          </a>
+          </Link>
         </div>
         <div className="humberger__menu__contact">
           <ul>
@@ -212,38 +215,38 @@ const Header = () => {
               <div className="col-lg-6 col-md-6">
                 <div className="header__top__right">
                   <div className="header__top__right__social">
-                    <a href="#">
+                    <Link to="#">
                       <i className="fa fa-facebook" />
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="#">
                       <i className="fa fa-twitter" />
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="#">
                       <i className="fa fa-linkedin" />
-                    </a>
-                    <a href="#">
+                    </Link>
+                    <Link to="#">
                       <i className="fa fa-pinterest-p" />
-                    </a>
+                    </Link>
                   </div>
                   <div className="header__top__right__language">
-                    <img src="img/language.png" alt />
+                    <img src="img/language.png" alt='logo' />
                     <div>English</div>
                     <span className="arrow_carrot-down" />
                     <ul>
                       <li>
-                        <a href="#">Spanis</a>
+                        <Link to="#">Spanis</Link>
                       </li>
                       <li>
-                        <a href="#">English</a>
+                        <Link to="#">English</Link>
                       </li>
                     </ul>
                   </div>
                   <div className="header__top__right__auth">
                     <Link to="/login">
                     {token ? (
-                        <Link onClick={logout} ><i class="fa "></i> Logout</Link>
+                        <Link onClick={logout} ><i className="fa "></i> Logout</Link>
                       ) : (
-                        <Link to="/login"><i class="fa fa-lock"></i> Login</Link>
+                        <Link to="/login"><i className="fa fa-lock"></i> Login</Link>
                       )}
                     </Link>
                   </div>
@@ -256,9 +259,9 @@ const Header = () => {
           <div className="row">
             <div className="col-lg-1 col-md-4 col-sm-6">
               <div className="header__logo ms-2">
-                <a href="#">
+                <Link to="#">
                   <img src="img/logo.png" alt='image'  className="img-fluid"/>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="col-lg-9 col-md-12 col-sm-12">
@@ -276,7 +279,7 @@ const Header = () => {
                       onMouseEnter={handleMouseEnter}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <a className="nav-link">Categories</a>
+                      <Link className="nav-link">Categories</Link>
                       <Dropdown.Menu
                         className="mega-menu"
                         style={{
@@ -320,7 +323,7 @@ const Header = () => {
                             </div>
                           ))}
                         </div>
-                        <a href="">Categories</a>
+                        <Link href="">Categories</Link>
                       </Dropdown.Menu>
                     </Dropdown>
                   </li>
@@ -335,7 +338,7 @@ const Header = () => {
                       onMouseEnter={handleBrandMouseEnter}
                       onMouseLeave={handleBrandMouseLeave}
                     >
-                      <a className="nav-link">Brands</a>
+                      <Link className="nav-link">Brands</Link>
                       <Dropdown.Menu
                         className="mega-menu"
                         style={{
@@ -369,14 +372,14 @@ const Header = () => {
                   </li>
                   <li>
                   {token ? (
-                  <a href="#">
+                  <Link to="#">
                     <i className="fa fa-user s_color " /> {user.name}
                     
-                  </a>
+                  </Link>
                 ) : (
-                  <a href="#">
+                  <Link to="#">
                     <i className="fa fa-user s_color" /> My Account
-                  </a>
+                  </Link>
                 )} 
                 {/* user show */}
                   </li>
@@ -387,7 +390,7 @@ const Header = () => {
               <div className="header__cart">
                 <ul>
                 <li>
-                    <a href="#">
+                    <Link to="#">
                       <li className="navbar-item dropdown-megamenu">
                         <Dropdown
                           show={showMegaWish}
@@ -404,9 +407,9 @@ const Header = () => {
                               paddingLeft: "30px",
                             }}
                           >
-                            <div class="row">
-                              <div class="">
-                                <table class="table table-image">
+                            <div className="row">
+                              <div className="">
+                                <table className="table table-image">
                                   <thead>
                                     <tr>
                                       <th scope="col">Day</th>
@@ -420,10 +423,10 @@ const Header = () => {
                                   <tbody>
                                     <tr>
                                       <th scope="row">1</th>
-                                      <td class="w-25">
+                                      <td className="w-25">
                                         <img
                                           src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
-                                          class="img-fluid img-thumbnail"
+                                          className="img-fluid img-thumbnail"
                                           alt="Sheep"
                                         />
                                       </td>
@@ -442,18 +445,18 @@ const Header = () => {
                           </Dropdown.Menu>
                         </Dropdown>
                       </li>
-                      <li></li> <span>3</span>
-                    </a>
+                      <li>hi</li> <span>3</span>
+                    </Link>
                   </li>
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <li className="navbar-item dropdown-megamenu">
                         <Dropdown
                           show={showMegaCart}
                           onClick={handleCartMouseEnter}
                           onMouseLeave={handleCartMouseLeave}
                         >
-                          <i className="fa fa-shopping-bag"/><li></li><span>3</span>
+                          <i className="fa fa-shopping-bag"/><li></li><span>{cartLength}</span>
                           <Dropdown.Menu
                             className="mega-menu"
                             style={{
@@ -463,9 +466,9 @@ const Header = () => {
                               paddingLeft: "30px",
                             }}
                           >
-                            <div class="row">
-                              <div class="">
-                                <table class="table table-image">
+                            <div className="row">
+                              <div className="">
+                                <table className="table table-image">
                                   <thead>
                                     <tr>
                                       <th scope="col">Sr.No</th>
@@ -481,12 +484,12 @@ const Header = () => {
                                     Cart.map((cart,index)=>(
 
                                   
-                                    <tr >
+                                    <tr key={cart.cart_id} >
                                       <th scope="row">{index++}</th>
-                                      <td class="w-25">
+                                      <td className="w-25">
                                         <img
                                           src={"https://vsmart.ajspire.com/uploads/product_image/"+cart.product_image}
-                                          class="img-fluid img-thumbnail"
+                                          className="img-fluid img-thumbnail"
                                           alt="Sheep"
                                         />
                                       </td>
@@ -508,11 +511,11 @@ const Header = () => {
                         </Dropdown>
                       </li>
                      
-                    </a>
+                    </Link>
                   </li>
                 </ul>
                 <div className="header__cart__price">
-                  item: <span>$150.00</span>
+                  item: <span>${Total}</span>
                 </div>
               </div>
             </div>
@@ -539,47 +542,111 @@ const Header = () => {
       >
         {/* Hamburger menu content */}
         <div className="humberger__menu__logo">
-          <a href="#">
-            <img src="img/logo.png" alt />
-          </a>
+          <Link to="#">
+            <img src="img/logo.png" alt='Logo' />
+          </Link>
         </div>
         <div className="humberger__menu__cart">
           <ul>
             <li>
-              <a href="#">
+              <Link to="#">
                 <i className="fa fa-heart" /> <span>1</span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">
-                <i className="fa fa-shopping-bag" /> <span>3</span>
-              </a>
-            </li>
+                    <Link to="#">
+                      <li className="navbar-item dropdown-megamenu">
+                        <Dropdown
+                          show={showMegaCart}
+                          onClick={handleCartMouseEnter}
+                          onMouseLeave={handleCartMouseLeave}
+                        >
+                          <i className="fa fa-shopping-bag"/><li></li><span>{cartLength}</span>
+                          <Dropdown.Menu
+                            className="mega-menu"
+                            style={{
+                              height: "auto",
+                              width: "auto",
+                              marginLeft: "-350px",
+                              paddingLeft: "30px",
+                            }}
+                          >
+                            <div className="row">
+                              <div className="">
+                                <table className="table table-image">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Sr.No</th>
+                                      <th scope="col">Image</th>
+                                      <th scope="col"> Name</th>
+                                      <th scope="col">Price</th>
+                                      <th scope="col">Quantity</th>
+                                      <th scope="col">Total</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                  {
+                                    Cart.map((cart,index)=>(
+
+                                  
+                                    <tr key={cart.cart_id} >
+                                      <th scope="row">{index++}</th>
+                                      <td className="w-25">
+                                        <img
+                                          src={"https://vsmart.ajspire.com/uploads/product_image/"+cart.product_image}
+                                          className="img-fluid img-thumbnail"
+                                          alt="Sheep"
+                                        />
+                                      </td>
+                                      <td>
+                                        {cart.english_name}
+                                      </td>
+                                      <td>Rs.{cart.cart_price}</td>
+                                      <td>{cart.cart_product_qty}</td>
+                                      <td>{cart.cart_price*cart.cart_product_qty}</td>
+                                    </tr>
+                                    ))
+                                  }
+                                  </tbody>
+                                </table>
+                                <Link to='/cartdetails'> <button className="btn btn-info">View All</button></Link>
+                              </div>
+                            </div>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </li>
+                     
+                    </Link>
+                  </li>
           </ul>
           <div className="header__cart__price">
-            item: <span>$150.00</span>
+            item: <span>${Total}</span>
           </div>
         </div>
 
         <div className="humberger__menu__widget">
           <div className="header__top__right__language">
-            <img src="img/language.png" alt />
+            <img src="img/language.png" alt='logo' />
             <div>English</div>
             <span className="arrow_carrot-down" />
             <ul>
               <li>
-                <a href="#">Spanis</a>
+                <Link to="#">Spanis</Link>
               </li>
               <li>
-                <a href="#">English</a>
+                <Link to="#">English</Link>
               </li>
             </ul>
           </div>
           <div className="header__top__right__auth">
-            <a href="#">
-              <i className="fa fa-user" /> Login
-            </a>
-          </div>
+                    <Link to="/login">
+                    {token ? (
+                        <Link onClick={logout} ><i className="fa "></i> Logout</Link>
+                      ) : (
+                        <Link to="/login"><i className="fa fa-lock"></i> Login</Link>
+                      )}
+                    </Link>
+                  </div>
 
           <div className="row">
             <div className="col-lg-6">
@@ -614,18 +681,18 @@ const Header = () => {
 
         <div id="mobile-menu-wrap" />
         <div className="header__top__right__social">
-          <a href="#">
+          <Link to="#">
             <i className="fa fa-facebook" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i className="fa fa-twitter" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i className="fa fa-linkedin" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <i className="fa fa-pinterest-p" />
-          </a>
+          </Link>
         </div>
         <div className="humberger__menu__contact">
           <ul>

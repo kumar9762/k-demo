@@ -14,7 +14,7 @@ const CartDetails = () => {
       .get(`/get-cart-list`)
       .then((res) => {
         SetCart(res.data.cart);
-        console.log('hi');
+        console.log('hi'+res.data.cart);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
