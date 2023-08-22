@@ -39,6 +39,7 @@ const CartDetails = () => {
       <div>
         {/* Breadcrumb Section Begin */}
         <section
+        
           className="breadcrumb-section set-bg "
           style={{
             backgroundImage: "url('img/breadcrumb.jpg')",
@@ -82,7 +83,7 @@ const CartDetails = () => {
                 
                 <tr key={cart.product_id}> {/* Use a unique key */}
                   <td className="shoping__cart__item">
-                    <img src={"https://vsmart.ajspire.com/uploads/product_image/"+cart.product_image} alt={cart.product_name} />
+                    <img src={"https://vsmart.ajspire.com/uploads/product_image/"+cart.product_image} alt={cart.product_name} style={{width:"100px"}} />
                     <h5>{cart.english_name}</h5>
                   </td>
                   <td className="shoping__cart__price">${cart.cart_price}</td>

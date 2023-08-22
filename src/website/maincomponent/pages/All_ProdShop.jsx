@@ -25,34 +25,35 @@ const All_ProdShop = () => {
   const getProduct = async (page) => {
     try {
       if (page === 0) {
-        const res = await fetch("https://vsmart.ajspire.com/api/shop");
-        const data = await res.json();
+        const response = await http.get("/shop");
+        const data = response.data;
+  
         setProduct(data.product.data);
         setLinks(data.links);
         setBrand(data.brand);
         setCat(data.cat);
         setCount(data.count);
         setCount1(data.count1);
-
+  
         setLoading(false);
       } else {
-        const res = await fetch(
-          `https://vsmart.ajspire.com/api/shop?page=${page}`
-        );
-        const data = await res.json();
+        const response = await http.get(`/shop?page=${page}`);
+        const data = response.data;
+  
         setProduct(data.product.data);
         setLinks(data.links);
         setBrand(data.brand);
         setCat(data.cat);
         setCount(data.count);
         setCount1(data.count1);
-
+  
         setLoading(false);
       }
     } catch (error) {
       console.log("Error", error);
     }
   };
+  
 
   const GetproductId = (product_id) => {
     console.log("cart",product_id);
@@ -249,7 +250,7 @@ const All_ProdShop = () => {
                                               </a>
                                             </li>
                                             <li>
-                                              <Link
+                                              <a
                                                 to={`/all_prodshop/${item.product_id}`}
                                               >
                                                 <button
@@ -262,7 +263,7 @@ const All_ProdShop = () => {
                                                 >
                                                   <i className="fa fa-shopping-cart"></i>
                                                 </button>
-                                              </Link>
+                                              </a>
                                             </li>
                                           </ul>
                                         </div>
