@@ -13,7 +13,6 @@ const SubCatView = () => {
   let { cat_id, sub_id } = useParams();
   const { http, user, logout, token } = Auth_user();
 
-
   //Product
   const [Category, setCategory] = useState([]);
   const [Category_, setCategory_] = useState([]);
@@ -25,21 +24,22 @@ const SubCatView = () => {
   const [Count1, setCount1] = useState([]);
 
   const getSubCat = () => {
-    http.get(`/product-shop/${cat_id}/${sub_id}`)
-      .then((res) =>{
-         //console.log(data.categories);
-         setCategory(res.data.category.data);
-         setCategory_(res.data.category_);
-         setSubCategory_(res.data.subcategory_);
-         //console.log("hi");
-         //console.log(res.data.subcategory_);
-         setCat(res.data.cat);
-         setBrand(res.data.brand);
-         setSub(res.data.sub);
-         setCount(res.data.count);
-         setCount1(res.data.count1);
+    http
+      .get(`/product-shop/${cat_id}/${sub_id}`)
+      .then((res) => {
+        //console.log(data.categories);
+        setCategory(res.data.category.data);
+        setCategory_(res.data.category_);
+        setSubCategory_(res.data.subcategory_);
+        //console.log("hi");
+        //console.log(res.data.subcategory_);
+        setCat(res.data.cat);
+        setBrand(res.data.brand);
+        setSub(res.data.sub);
+        setCount(res.data.count);
+        setCount1(res.data.count1);
       })
-      
+
       .catch((error) => {
         console.log("Error", error);
       });
@@ -62,10 +62,29 @@ const SubCatView = () => {
   //   <img src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg" onDragStart={handleDragStart} role="presentation" />,
   //   <img src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg" onDragStart={handleDragStart} role="presentation" />,
   // ];
+  const [productid, Setproductid] = useState([]);
+  const { product_id } = useParams();
 
-  useEffect(() => {
-    getSubCat();
-  }, [cat_id, sub_id]);
+  const GetproductId = (product_id) => {
+    console.log("cart", product_id);
+    http.get(`/add-to-cart/${product_id}`).then((res) => {
+      Setproductid(res.data.products);
+    });
+    console.log("hi", product_id);
+  };
+
+  const handleAddToCart = (product_id) => {
+    GetproductId(product_id);
+  };
+
+  useEffect(
+    () => {
+      getSubCat();
+      GetproductId(product_id);
+    },
+    [cat_id, sub_id],
+    product_id
+  );
 
   return (
     <>
@@ -74,7 +93,7 @@ const SubCatView = () => {
           id="header-carousel"
           className="carousel slide align-center"
           data-ride="carousel"
-          style={{marginTop:"200px"}}
+          style={{ marginTop: "200px" }}
         >
           <div className="carousel-inner">
             <div className="img">
@@ -154,11 +173,8 @@ const SubCatView = () => {
           <AliceCarousel
             className="ms-2"
             mouseTracking
-            items={Sub.map((subslider,index) => (
-              <div
-                key={index}
-                className="slider-image-container ms-5"
-              >
+            items={Sub.map((subslider, index) => (
+              <div key={index} className="slider-image-container ms-5">
                 <button className="btn btn-outline-success hover mt-5">
                   <img
                     src={subslider.subcategory_image}
@@ -255,7 +271,7 @@ const SubCatView = () => {
                     className="sidebar__item bg-info rounded-2"
                     style={{ maxHeight: "300px", overflowY: "auto" }}
                   >
-                    {Brand.map((brand,index) => (
+                    {Brand.map((brand, index) => (
                       <ul key={index}>
                         <li
                           className="btn btn-success"
@@ -290,7 +306,7 @@ const SubCatView = () => {
                         <div className="latest-prdouct__slider__item">
                           <Link to="#" className="latest-product__item">
                             <div className="latest-product__item__pic">
-                              <img src="img/latest-product/lp-1.jpg" alt='ok' />
+                              <img src="img/latest-product/lp-1.jpg" alt="ok" />
                             </div>
                             <div className="latest-product__item__text">
                               <h6>Crab Pool Security</h6>
@@ -356,20 +372,39 @@ const SubCatView = () => {
                                               </Link>
                                             </li>
                                             <li>
-                                              <Link to="#">
-                                                <i className="fa fa-shopping-cart" />
-                                              </Link>
+                                              <a
+                                                to={`/all_prodshop/${item.product_id}`}
+                                              >
+                                                {token ? (
+                                                  <button
+                                                    className="btn"
+                                                    onClick={() =>
+                                                      handleAddToCart(
+                                                        item.product_id
+                                                      )
+                                                    }
+                                                  >
+                                                    <i className="fa fa-shopping-cart"></i>{" "}
+                                                    {/* Add the icon here */}
+                                                  </button>
+                                                ) : (
+                                                  <Link to="/login">
+                                                    <i className="fa fa-shopping-cart"></i>
+                                                  </Link>
+                                                )}
+                                              </a>
                                             </li>
                                           </ul>
                                         </div>
                                         <div className="product__discount__item__text">
                                           <span>{item.category_name}</span>
                                           <h5>
-                                            <Link to="#">{item.english_name}</Link>
+                                            <Link to="#">
+                                              {item.english_name}
+                                            </Link>
                                           </h5>
                                           <h6 className="feature-price">
                                             <b>
-                                           
                                               MRP
                                               <del className="text-danger">
                                                 {item.mrp_price}
@@ -420,9 +455,12 @@ const SubCatView = () => {
                     </div>
                   </div>
                   <div className="row">
-                    {Category.map((item,index) => {
+                    {Category.map((item, index) => {
                       return (
-                        <div key={index} className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
+                        <div
+                          key={index}
+                          className="col-lg-4 col-lg-3 col-md-4 col-sm-4"
+                        >
                           <div
                             className="product__discount__item mt-5 mb-3"
                             style={{
@@ -458,7 +496,23 @@ const SubCatView = () => {
                                   </Link>
                                 </li>
                                 <li>
-                                <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
+                                  <a to={`/all_prodshop/${item.product_id}`}>
+                                    {token ? (
+                                      <button
+                                        className="btn"
+                                        onClick={() =>
+                                          handleAddToCart(item.product_id)
+                                        }
+                                      >
+                                        <i className="fa fa-shopping-cart"></i>
+                                        
+                                      </button>
+                                    ) : (
+                                      <Link to="/login">
+                                        <i className="fa fa-shopping-cart"></i>
+                                      </Link>
+                                    )}
+                                  </a>
                                 </li>
                               </ul>
                             </div>
@@ -469,7 +523,6 @@ const SubCatView = () => {
                               </h5>
                               <h6 className="feature-price">
                                 <b>
-                                  
                                   MRP
                                   <del className="text-danger">
                                     {item.mrp_price}

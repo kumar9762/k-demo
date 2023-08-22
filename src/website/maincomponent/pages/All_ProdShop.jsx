@@ -21,57 +21,54 @@ const All_ProdShop = () => {
 
   const { product_id } = useParams();
 
-  
   const getProduct = async (page) => {
     try {
       if (page === 0) {
         const response = await http.get("/shop");
         const data = response.data;
-  
+
         setProduct(data.product.data);
         setLinks(data.links);
         setBrand(data.brand);
         setCat(data.cat);
         setCount(data.count);
         setCount1(data.count1);
-  
+
         setLoading(false);
       } else {
         const response = await http.get(`/shop?page=${page}`);
         const data = response.data;
-  
+
         setProduct(data.product.data);
         setLinks(data.links);
         setBrand(data.brand);
         setCat(data.cat);
         setCount(data.count);
         setCount1(data.count1);
-  
+
         setLoading(false);
       }
     } catch (error) {
       console.log("Error", error);
     }
   };
-  
 
   const GetproductId = (product_id) => {
-    console.log("cart",product_id);
+    console.log("cart", product_id);
     http.get(`/add-to-cart/${product_id}`).then((res) => {
       Setproductid(res.data.products);
     });
-    console.log("hi",product_id);
+    console.log("hi", product_id);
   };
 
   const handleAddToCart = (product_id) => {
     GetproductId(product_id);
   };
 
-
   useEffect(() => {
     getProduct(page);
     GetproductId(product_id);
-  }, [page,product_id]);
+  }, [page, product_id]);
   return (
     <>
       <h1>Product List</h1>
@@ -79,7 +76,8 @@ const All_ProdShop = () => {
         <div
           id="header-carousel"
           className="carousel slide align-center"
-          data-ride="carousel" style={{marginTop:"200px"}}
+          data-ride="carousel"
+          style={{ marginTop: "200px" }}
         >
           <div className="carousel-inner">
             <div className="img">
@@ -253,16 +251,23 @@ const All_ProdShop = () => {
                                               <a
                                                 to={`/all_prodshop/${item.product_id}`}
                                               >
-                                                <button
-                                                  className="btn"
-                                                  onClick={() =>
-                                                    handleAddToCart(
-                                                      item.product_id
-                                                    )
-                                                  }
-                                                >
-                                                  <i className="fa fa-shopping-cart"></i>
-                                                </button>
+                                                {token ? (
+                                                  <button
+                                                    className="btn"
+                                                    onClick={() =>
+                                                      handleAddToCart(
+                                                        item.product_id
+                                                      )
+                                                    }
+                                                  >
+                                                    <i className="fa fa-shopping-cart"></i>{" "}
+                                                    {/* Add the icon here */}
+                                                  </button>
+                                                ) : (
+                                                  <Link to="/login">
+                                                    <i className="fa fa-shopping-cart"></i>
+                                                  </Link>
+                                                )}
                                               </a>
                                             </li>
                                           </ul>
@@ -365,15 +370,22 @@ const All_ProdShop = () => {
                                   </a>
                                 </li>
                                 <li>
-                                  <a to={`/cartdetails/${item.product_id}`}>
-                                    <button
-                                      className="btn"
-                                      onClick={() =>
-                                        handleAddToCart(item.product_id)
-                                      }
-                                    >
-                                      <i className="fa fa-shopping-cart"></i>
-                                    </button>
+                                  <a to={`/all_prodshop/${item.product_id}`}>
+                                    {token ? (
+                                      <button
+                                        className="btn"
+                                        onClick={() =>
+                                          handleAddToCart(item.product_id)
+                                        }
+                                      >
+                                        <i className="fa fa-shopping-cart"></i>{" "}
+                                        {/* Add the icon here */}
+                                      </button>
+                                    ) : (
+                                      <Link to="/login">
+                                        <i className="fa fa-shopping-cart"></i>
+                                      </Link>
+                                    )}
                                   </a>
                                 </li>
                               </ul>

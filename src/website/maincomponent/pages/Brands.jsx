@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import Auth_user from "../../authentication/Auth_user";
 
 const Brands = () => {
-  const {http,user}=Auth_user();
+  const {http,user,token}=Auth_user();
 
   const [brand, setBrand] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -52,9 +52,24 @@ const Brands = () => {
       setExpandedCategory(categoryId);
     }
   };
+  const [productid, Setproductid] = useState([]);
+  const { product_id } = useParams();
+
+  const GetproductId = (product_id) => {
+    console.log("cart", product_id);
+    http.get(`/add-to-cart/${product_id}`).then((res) => {
+      Setproductid(res.data.products);
+    });
+    console.log("hi", product_id);
+  };
+
+  const handleAddToCart = (product_id) => {
+    GetproductId(product_id);
+  };
   useEffect(() => {
     getBrand();
-  }, [brand_id]);
+    GetproductId(product_id);
+  }, [brand_id,product_id]);
   return (
     <>
       <div>
@@ -240,8 +255,24 @@ const Brands = () => {
                                                   </a>
                                                 </li>
                                                 <li>
-                                                <Link to={`/cartdetails/${item.product_id}`}><i className="fa fa-shopping-cart" /></Link>
-                                                </li>
+                                  <a to={`/all_prodshop/${item.product_id}`}>
+                                    {token ? (
+                                      <button
+                                        className="btn"
+                                        onClick={() =>
+                                          handleAddToCart(item.product_id)
+                                        }
+                                      >
+                                        <i className="fa fa-shopping-cart"></i>
+                                        
+                                      </button>
+                                    ) : (
+                                      <Link to="/login">
+                                        <i className="fa fa-shopping-cart"></i>
+                                      </Link>
+                                    )}
+                                  </a>
+                                </li>
                                               </ul>
                                             </div>
                                             <div className="product__discount__item__text">
