@@ -7,16 +7,18 @@ import Sli3 from './Sli3';
 import CatSlider from './catsli/CatSlider';
 import { Carousel } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Auth_user from '../../authentication/Auth_user';
 
 const Shop_grid = () => {
+  const {token,user,http,logout}=Auth_user();
   const [Category, SetCategory] = useState([]);
 
   const getCat = () => {
-    fetch(' https://vsmart.ajspire.com/api/categories')
-      .then(res => res.json())
-      .then(data => {
-        console.log(data.categories);
-        SetCategory(data.categories);
+    http.get('/categories')
+     
+      .then(response => {
+        console.log(response.data.categories);
+        SetCategory(response.data.categories);
       })
       .catch(error => {
         console.log('Error', error);
@@ -28,11 +30,9 @@ const Shop_grid = () => {
 
 
   const getPro = () => {
-    fetch('https://vsmart.ajspire.com/api/products').then(response => {
-      return response.json();
-
-    }).then(data => {
-      setproduct(data.products.data);
+    http.get('/products').then(response => {
+     
+      setproduct(response.data.products.data);
       //console.log(data.products.data);
     });
   };

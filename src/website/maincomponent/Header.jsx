@@ -481,7 +481,7 @@ const Header = () => {
                                   </thead>
                                   <tbody>
                                   {
-                                    Cart.map((cart,index)=>(
+                                    Cart.slice(0, 3).map((cart,index)=>(
 
                                   
                                     <tr key={cart.cart_id} >

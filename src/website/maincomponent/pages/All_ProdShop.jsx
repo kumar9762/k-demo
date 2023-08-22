@@ -53,22 +53,20 @@ const All_ProdShop = () => {
     }
   };
 
-  const GetproductId = (product_id) => {
-    console.log("cart", product_id);
-    http.get(`/add-to-cart/${product_id}`).then((res) => {
-      Setproductid(res.data.products);
+  const GetproductId = (pro_id) => {
+    
+    console.log("cart", pro_id);
+    http.get(`/add-to-cart/${pro_id}`).then((res) => {
+      console.log(res.data);
     });
-    console.log("hi", product_id);
+    console.log("hi", pro_id);
   };
 
-  const handleAddToCart = (product_id) => {
-    GetproductId(product_id);
-  };
+  
 
   useEffect(() => {
     getProduct(page);
-    GetproductId(product_id);
-  }, [page, product_id]);
+  }, [page]);
   return (
     <>
       <h1>Product List</h1>
@@ -255,7 +253,7 @@ const All_ProdShop = () => {
                                                   <button
                                                     className="btn"
                                                     onClick={() =>
-                                                      handleAddToCart(
+                                                      GetproductId(
                                                         item.product_id
                                                       )
                                                     }
@@ -375,7 +373,7 @@ const All_ProdShop = () => {
                                       <button
                                         className="btn"
                                         onClick={() =>
-                                          handleAddToCart(item.product_id)
+                                          GetproductId(item.product_id)
                                         }
                                       >
                                         <i className="fa fa-shopping-cart"></i>{" "}

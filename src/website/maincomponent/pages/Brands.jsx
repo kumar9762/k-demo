@@ -58,7 +58,6 @@ const Brands = () => {
   const GetproductId = (product_id) => {
     console.log("cart", product_id);
     http.get(`/add-to-cart/${product_id}`).then((res) => {
-      Setproductid(res.data.products);
     });
     console.log("hi", product_id);
   };
@@ -68,8 +67,7 @@ const Brands = () => {
   };
   useEffect(() => {
     getBrand();
-    GetproductId(product_id);
-  }, [brand_id,product_id]);
+  }, [brand_id]);
   return (
     <>
       <div>

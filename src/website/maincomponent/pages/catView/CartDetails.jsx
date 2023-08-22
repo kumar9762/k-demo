@@ -79,28 +79,28 @@ const CartDetails = () => {
                       </tr>
                     </thead>
                     <tbody>
-              {Cart.map((cart) => (
-                
-                <tr key={cart.product_id}> {/* Use a unique key */}
-                  <td className="shoping__cart__item">
-                    <img src={"https://vsmart.ajspire.com/uploads/product_image/"+cart.product_image} alt={cart.product_name} style={{width:"100px"}} />
-                    <h5>{cart.english_name}</h5>
-                  </td>
-                  <td className="shoping__cart__price">${cart.cart_price}</td>
-                  <td className="shoping__cart__quantity">
-                    <div className="quantity">
-                      <div className="pro-qty">
-                        <input type="text" value={cart.cart_product_qty} />
-                      </div>
-                    </div>
-                  </td>
-                  <td className="shoping__cart__total">${cart.cart_price*cart.cart_product_qty}</td>
-                  <td className="shoping__cart__item__close">
-                    <span className="icon_close" />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+  {Cart.map((cart, index) => (
+    <tr key={cart.product_id}> 
+      <td className="shoping__cart__item">
+        <img src={"https://vsmart.ajspire.com/uploads/product_image/" + cart.product_image} alt={cart.product_name} style={{width:"100px"}} />
+        <h5>{cart.english_name}</h5>
+      </td>
+      <td className="shoping__cart__price">${cart.cart_price}</td>
+      <td className="shoping__cart__quantity">
+        <div className="quantity">
+          <div className="pro-qty">
+            <input type="text" value={cart.cart_product_qty} />
+          </div>
+        </div>
+      </td>
+      <td className="shoping__cart__total">${cart.cart_price * cart.cart_product_qty}</td>
+      <td className="shoping__cart__item__close">
+        <span className="icon_close" />
+      </td>
+    </tr>
+  ))}
+</tbody>
+
                   </table>
                 </div>
               </div>

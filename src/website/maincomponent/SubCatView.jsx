@@ -55,20 +55,13 @@ const SubCatView = () => {
     }
   };
 
-  // const handleDragStart = (e) => e.preventDefault();
-
-  // const items = [
-  //   <img src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg" onDragStart={handleDragStart} role="presentation" />,
-  //   <img src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg" onDragStart={handleDragStart} role="presentation" />,
-  //   <img src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg" onDragStart={handleDragStart} role="presentation" />,
-  // ];
+ 
   const [productid, Setproductid] = useState([]);
   const { product_id } = useParams();
 
   const GetproductId = (product_id) => {
     console.log("cart", product_id);
     http.get(`/add-to-cart/${product_id}`).then((res) => {
-      Setproductid(res.data.products);
     });
     console.log("hi", product_id);
   };
@@ -80,10 +73,8 @@ const SubCatView = () => {
   useEffect(
     () => {
       getSubCat();
-      GetproductId(product_id);
     },
-    [cat_id, sub_id],
-    product_id
+    [cat_id, sub_id]
   );
 
   return (
@@ -128,40 +119,7 @@ const SubCatView = () => {
           </div>
         </div>
 
-        <div className="container-fluid mt-3 rounded-circle">
-          {/* <AliceCarousel mouseTracking items={items}
-         /> */}
-          {/* <AliceCarousel 
-            duration={400}
-            autoPlay={true}
-            startIndex={1}
-            fadeOutAnimation={true}
-            mouseDragEnabled={true}
-            playButtonEnabled={true}
-            autoPlayInterval={2000}
-          >
-            <img
-              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
-              className=" rounded-pill"
-            />
-            <img
-              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
-              className=" rounded-pill"
-            />
-            <img
-              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
-              className=" rounded-pill"
-            />
-            <img
-              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
-              className=" rounded-pill"
-            />
-            <img
-              src="https://www.consultancy.in/illustrations/news/spotlight/2020-11-01-190144635-food-beverage.jpg"
-              className=" rounded-pill"
-            />
-          </AliceCarousel> */}
-        </div>
+       
         <div
           className="container align-center carousel-inner"
           style={{

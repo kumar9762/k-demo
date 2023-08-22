@@ -24,7 +24,6 @@ const FeaturedProducts = () => {
   const GetproductId = (product_id) => {
     console.log("cart", product_id);
     http.get(`/add-to-cart/${product_id}`).then((res) => {
-      Setproductid(res.data.products);
     });
     console.log("hi", product_id);
   };
@@ -34,8 +33,7 @@ const FeaturedProducts = () => {
   };
   useEffect(() => {
     getPro();
-    GetproductId(product_id);
-  }, [product_id]);
+  }, []);
   return (
     <div>
       <div>

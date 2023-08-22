@@ -13,7 +13,6 @@ const Products = () => {
   const GetproductId = (product_id_param) => {
     console.log("cart" + product_id_param);
     http.get(`/add-to-cart/${product_id_param}`).then((res) => {
-      Setproductid(res.data.products);
     });
     console.log("hi", product_id_param);
   };
@@ -35,8 +34,7 @@ const Products = () => {
 
   useEffect(() => {
     getProd();
-    GetproductId(productid);
-  }, [productid]);
+  }, []);
   return (
     <div>
       <div>
