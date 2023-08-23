@@ -2,9 +2,11 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import AliceCarousel from "react-alice-carousel";
-import { Carousel } from "react-bootstrap";
+import { Carousel, ToastContainer } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Auth_user from "../../authentication/Auth_user";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const All_ProdShop = () => {
   const { http, user, logout, token } = Auth_user();
@@ -54,13 +56,19 @@ const All_ProdShop = () => {
   };
 
   const GetproductId = (pro_id) => {
-    
-    console.log("cart", pro_id);
     http.get(`/add-to-cart/${pro_id}`).then((res) => {
       console.log(res.data);
     });
-    console.log("hi", pro_id);
+    toast.success('Product added to cart!', {
+      position: 'bottom-right',
+      autoClose: 3000, // Duration in milliseconds
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
+
 
   
 
@@ -261,6 +269,7 @@ const All_ProdShop = () => {
                                                     <i className="fa fa-shopping-cart"></i>{" "}
                                                     {/* Add the icon here */}
                                                   </button>
+                                                  
                                                 ) : (
                                                   <Link to="/login">
                                                     <i className="fa fa-shopping-cart"></i>
@@ -269,6 +278,7 @@ const All_ProdShop = () => {
                                               </a>
                                             </li>
                                           </ul>
+                                        
                                         </div>
                                         <div className="product__discount__item__text">
                                           <span>{item.category_name}</span>
@@ -434,6 +444,7 @@ const All_ProdShop = () => {
         </section>
         {/* Product Section End */}
       </div>
+      <ToastContainer/>
     </>
   );
 };
