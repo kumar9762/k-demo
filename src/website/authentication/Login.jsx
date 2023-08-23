@@ -27,7 +27,7 @@ const Login = () => {
     //device_name:"Kumar"
   });
 
-  console.log('hello',loginData);
+  console.log("hello", loginData);
 
   const onInputChange = (e) => {
     setloginData({ ...loginData, [e.target.name]: e.target.value }); //set values
@@ -59,7 +59,7 @@ const Login = () => {
       // console.log('ok',res.data.user_data);
 
       if (res.data.token) {
-        setToken(res.data.user_data,res.data.token);
+        setToken(res.data.user_data, res.data.token);
         // setUser();
         navigate("/");
       } else {
@@ -164,9 +164,8 @@ const Login = () => {
                     </div>
                   </form>
                   <Link to="/register">
-                    {" "}
                     <p className="text-center">
-                      Not a member?{" "}
+                      Not a member?
                       <a data-toggle="tab" href="#signup">
                         Register
                       </a>

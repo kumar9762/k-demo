@@ -59,6 +59,7 @@ const All_ProdShop = () => {
     http.get(`/add-to-cart/${pro_id}`).then((res) => {
       console.log(res.data);
     });
+    alert('Product added to cart!');
     toast.success('Product added to cart!', {
       position: 'bottom-right',
       autoClose: 3000, // Duration in milliseconds

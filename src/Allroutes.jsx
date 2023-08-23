@@ -14,6 +14,8 @@ import CartDetails from './website/maincomponent/pages/catView/CartDetails';
 import All_ProdShop from './website/maincomponent/pages/All_ProdShop';
 import Login from './website/authentication/Login';
 import Register from './website/authentication/Register';
+import Search from './website/maincomponent/pages/Search';
+
 
 
 
@@ -32,6 +34,7 @@ const Allroutes = () => {
 
                     <Route path="/cartdetails/:product_id" element={ <Master Rcf={CartDetails}/>} />
 
+                    <Route path="/search" element={ <Master Rcf={Search}/>} />
 
 
                     <Route path="/cartdetails" element={ <Master Rcf={CartDetails}/>} />
