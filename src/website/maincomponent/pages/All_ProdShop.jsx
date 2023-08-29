@@ -57,21 +57,28 @@ const All_ProdShop = () => {
 
   const GetproductId = (pro_id) => {
     http.get(`/add-to-cart/${pro_id}`).then((res) => {
-      console.log(res.data);
+      //console.log(res.data);
     });
     alert('Product added to cart!');
-    toast.success('Product added to cart!', {
-      position: 'bottom-right',
-      autoClose: 3000, // Duration in milliseconds
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
+    // toast.success('Product added to cart!', {
+    //   position: 'bottom-right',
+    //   autoClose: 3000, // Duration in milliseconds
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    // });
+  };
+
+  const getWishlistId=(pro_id)=>{
+    http.get(`/add-to-wishlist/${pro_id}`).then((res)=>{
+      console.log(res.data);
+    })
   };
 
 
-  
+  const itemsPerPage = 6;
+  const currentPage = 1;
 
   useEffect(() => {
     getProduct(page);
@@ -244,9 +251,33 @@ const All_ProdShop = () => {
                                             </button>
                                           </div>
                                           <ul className="product__item__pic__hover">
-                                            <li>
+                                            {/* <li>
                                               <a href="#">
                                                 <i className="fa fa-heart" />
+                                              </a>
+                                            </li> */}
+                                            <li>
+                                              <a
+                                                to={`/all_prodshop/${item.product_id}`}
+                                              >
+                                                {token ? (
+                                                  <button
+                                                    className="btn"
+                                                    onClick={() =>
+                                                      getWishlistId(
+                                                        item.product_id
+                                                      )
+                                                    }
+                                                  >
+                                                    <i className="fa fa-heart"></i>
+                                                    {/* Add the icon here */}
+                                                  </button>
+                                                  
+                                                ) : (
+                                                  <Link to="/login">
+                                                    <i className="fa fa-heart"></i>
+                                                  </Link>
+                                                )}
                                               </a>
                                             </li>
                                             <li>
@@ -267,7 +298,7 @@ const All_ProdShop = () => {
                                                       )
                                                     }
                                                   >
-                                                    <i className="fa fa-shopping-cart"></i>{" "}
+                                                    <i className="fa fa-shopping-cart"></i>
                                                     {/* Add the icon here */}
                                                   </button>
                                                   
@@ -338,9 +369,9 @@ const All_ProdShop = () => {
                     </div>
                   </div>
                   <div className="row">
-                    {Product.map((item) => {
+                  {Product.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((item,index) => {
                       return (
-                        <div className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
+                        <div key={index} className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
                           <div
                             className="product__discount__item mt-5 mb-3"
                             style={{
@@ -368,11 +399,35 @@ const All_ProdShop = () => {
                                 </button>
                               </div>
                               <ul className="product__item__pic__hover">
-                                <li>
+                                {/* <li>
                                   <a href="#">
                                     <i className="fa fa-heart" />
                                   </a>
-                                </li>
+                                </li> */}
+                                <li>
+                                              <a
+                                                to={`/all_prodshop/${item.product_id}`}
+                                              >
+                                                {token ? (
+                                                  <button
+                                                    className="btn"
+                                                    onClick={() =>
+                                                      getWishlistId(
+                                                        item.product_id
+                                                      )
+                                                    }
+                                                  >
+                                                    <i className="fa fa-heart"></i>
+                                                    {/* Add the icon here */}
+                                                  </button>
+                                                  
+                                                ) : (
+                                                  <Link to="/login">
+                                                    <i className="fa fa-heart"></i>
+                                                  </Link>
+                                                )}
+                                              </a>
+                                            </li>
                                 <li>
                                   <a href="#">
                                     <i className="fa fa-retweet" />
@@ -421,23 +476,46 @@ const All_ProdShop = () => {
                         </div>
                       );
                     })}
-                  </div>
-                  <div className="product__pagination">
-                    {/* {
-                    Links.map((links)=>{
-                      return(
-                        <Link to='/'>1</Link>
-                      )
-                    })
-                  } */}
-                    {/* <div>Showing {Product.from} to {Links.total}</div> */}
-                    <Link to="/all_prodshop/1">1</Link>
+                  
+                    <div className="product__pagination">
+  {Array.from({ length: Math.ceil(Product.length / itemsPerPage) }).map((_, index) => {
+    const pageNumber = index + 1;
 
-                    <Link to="/all_prodshop/3">3</Link>
-                    <Link to="/https://vsmart.ajspire.com/api/shop?page=88">
-                      <i className="fa fa-long-arrow-right" />
-                    </Link>
+    if (pageNumber === currentPage) {
+      return (
+        <Link key={index} to={`/all_prodshop/${pageNumber}`} className="active">
+          {pageNumber}
+        </Link>
+      );
+    }
+
+    // Display a range of page links around the current page
+    if (
+      pageNumber >= currentPage - 2 &&
+      pageNumber <= currentPage + 2 &&
+      pageNumber !== 1 &&
+      pageNumber !== Math.ceil(Product.length / itemsPerPage)
+    ) {
+      return (
+        <Link key={index} to={`/all_prodshop/${pageNumber}`}>
+          {pageNumber}
+        </Link>
+      );
+    }
+
+    // Display ellipsis (...) for page gaps
+    if (
+      (pageNumber === currentPage - 3 && currentPage > 4) ||
+      (pageNumber === currentPage + 3 && currentPage < Math.ceil(Product.length / itemsPerPage) - 3)
+    ) {
+      return <span key={index}>...</span>;
+    }
+
+    return null;
+  })}
+</div>
                   </div>
+                  
                 </div>
               </div>
             </div>

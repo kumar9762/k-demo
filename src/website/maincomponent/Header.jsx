@@ -65,12 +65,25 @@ const Header = () => {
   const [Total, SetTotal] = useState(0);
   const GetCartProduct = () => {
     http.get(`/get-cart-list`).then((res) => {
-      console.log(res.data);
+      //console.log(res.data);
       setCart(res.data.cart);
       SetcartLength(res.data.cart.length);
       SetTotal(res.data.total_amount);
     });
   };
+
+  const [Wish,SetWish]=useState([]);
+  const [wishLength, SetwishLength] = useState(0);
+  const [WTotal, SetWTotal] = useState(0);
+  const GetWishProduct = () => {
+    http.get(`/get-wishlist`).then((res) => {
+      console.log('Wishlist',res.data);
+      SetWish(res.data);
+      SetwishLength(res.data);
+      SetWTotal(res.data.total_amount);
+    });
+  };
+
 
   const getCategory = () => {
     http
@@ -125,6 +138,7 @@ const Header = () => {
     getCategory();
     getBrand();
     GetCartProduct();
+    GetWishProduct();
   }, []);
 
   return (
@@ -422,6 +436,7 @@ const Header = () => {
                             onMouseLeave={handleWishMouseLeave}
                           >
                             <i className="fa fa-heart" />
+                            <span>{wishLength}</span>
                             <Dropdown.Menu
                               className="mega-menu"
                               style={{
@@ -436,35 +451,41 @@ const Header = () => {
                                   <table className="table table-image">
                                     <thead>
                                       <tr>
-                                        <th scope="col">Day</th>
+                                        <th scope="col">Sr.No</th>
                                         <th scope="col">Image</th>
-                                        <th scope="col">Article Name</th>
-                                        <th scope="col">Author</th>
-                                        <th scope="col">Words</th>
-                                        <th scope="col">Shares</th>
+                                        <th scope="col"> Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                      <tr>
-                                        <th scope="row">1</th>
-                                        <td className="w-25">
-                                          <img
-                                            src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
-                                            className="img-fluid img-thumbnail"
-                                            alt="Sheep"
-                                          />
-                                        </td>
-                                        <td>
-                                          Bootstrap 4 CDN and Starter Template
-                                        </td>
-                                        <td>Cristina</td>
-                                        <td>913</td>
-                                        <td>2.846</td>
-                                      </tr>
+                                      {Wish.slice(0, 3).map((cart, index) => (
+                                        <tr key={cart.cart_id}>
+                                          <th scope="row">{index++}</th>
+                                          <td className="w-25">
+                                            <img
+                                              src={
+                                                "https://vsmart.ajspire.com/uploads/product_image/" +
+                                                cart.product_image
+                                              }
+                                              className="img-fluid img-thumbnail"
+                                              alt="Sheep"
+                                            />
+                                          </td>
+                                          <td>{cart.english_name}</td>
+                                          <td>Rs.{cart.cart_price}</td>
+                                          <td>{cart.cart_product_qty}</td>
+                                          <td>
+                                            {cart.cart_price *
+                                              cart.cart_product_qty}
+                                          </td>
+                                        </tr>
+                                      ))}
                                     </tbody>
                                   </table>
                                   <Link to="/wishlistdetail">
-                                    {" "}
+                                    
                                     <button className="btn btn-info">
                                       View All
                                     </button>
@@ -474,7 +495,7 @@ const Header = () => {
                             </Dropdown.Menu>
                           </Dropdown>
                         </li>
-                        <li>hi</li> <span>3</span>
+                      
                       </Link>
                     </li>
                     <li>
@@ -536,7 +557,7 @@ const Header = () => {
                                     </tbody>
                                   </table>
                                   <Link to="/cartdetails">
-                                    {" "}
+                                    
                                     <button className="btn btn-info">
                                       View All
                                     </button>

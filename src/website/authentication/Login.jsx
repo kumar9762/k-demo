@@ -56,7 +56,7 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     http.post(`/user/login`, loginData).then((res) => {
-      // console.log('ok',res.data.user_data);
+       console.log('ok',res.data.user_data);
 
       if (res.data.token) {
         setToken(res.data.user_data, res.data.token);

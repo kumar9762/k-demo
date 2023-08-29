@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import Auth_user from "../../../authentication/Auth_user";
 
 const WishlistDetail = () => {
+  const { http, user, token } = Auth_user();
+  const [Wish, SetWish] = useState([]);
+  const { product_id } = useParams();
+  const getWishlist = () => {
+     http
+      .get(`/get-wish-list`)
+      .then((res) => {
+        SetWish(res.data);
+        console.log("Fetched Wishlist:", res.data); // Log fetched wishlist here
+      })
+      .catch((error) => {
+        console.error("Error fetching wishlist:", error);
+      });
+  };
+
+  useEffect(() => {
+   
+    getWishlist();
+  }, [product_id]);
+
   return (
     <>
       {/* Breadcrumb Section Begin */}
@@ -44,6 +66,7 @@ const WishlistDetail = () => {
                     </tr>
                   </thead>
                   <tbody>
+                  {Wish.slice(0.2).map((wish,index)=>{
                     <tr>
                       <td className="shoping__cart__item">
                         <img src="img/cart/cart-1.jpg" alt />
@@ -62,6 +85,8 @@ const WishlistDetail = () => {
                         <span className="icon_close" />
                       </td>
                     </tr>
+                  })}
+                    
                   </tbody>
                 </table>
               </div>

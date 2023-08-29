@@ -15,6 +15,7 @@ import All_ProdShop from './website/maincomponent/pages/All_ProdShop';
 import Login from './website/authentication/Login';
 import Register from './website/authentication/Register';
 import Search from './website/maincomponent/pages/Search';
+import WishlistDetail from './website/maincomponent/pages/catView/WishlistDetail';
 
 
 
@@ -29,14 +30,15 @@ const Allroutes = () => {
                     <Route path="/subcatview/:cat_id/:sub_id" element={ <Master Rcf={SubCatView}/>} />
                     <Route path="/brands/:brand_id" element={ <Master Rcf={Brands}/>} />
 
-                    <Route path="/all_prodshop/:page" element={ <Master Rcf={All_ProdShop}/>} />
+                    <Route path="/all_prodshop/:page" exact element={ <Master Rcf={All_ProdShop}/>} />
                     <Route path="/all_prodshop" element={ <Master Rcf={All_ProdShop}/>} />
 
                     <Route path="/cartdetails/:product_id" element={ <Master Rcf={CartDetails}/>} />
+                    <Route path="/wishlistdetail/:product_id" element={ <Master Rcf={WishlistDetail}/>} />
 
                     <Route path="/search" element={ <Master Rcf={Search}/>} />
 
-
+                    <Route path="/wishlistdetail" element={ <Master Rcf={WishlistDetail}/>} />
                     <Route path="/cartdetails" element={ <Master Rcf={CartDetails}/>} />
                     <Route path="/contactus" element={ <Master Rcf={ContactUs}/>} />
                     <Route path="/aboutus" element={ <Master Rcf={AboutUs}/>} />
