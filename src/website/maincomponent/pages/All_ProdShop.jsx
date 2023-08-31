@@ -28,9 +28,9 @@ const All_ProdShop = () => {
       if (page === 0) {
         const response = await http.get("/shop");
         const data = response.data;
-
+        console.log(data.product.links);
         setProduct(data.product.data);
-        setLinks(data.links);
+        setLinks(data.products.links);
         setBrand(data.brand);
         setCat(data.cat);
         setCount(data.count);
@@ -40,10 +40,11 @@ const All_ProdShop = () => {
       } else {
         const response = await http.get(`/shop?page=${page}`);
         const data = response.data;
-
+console.log(data.product.links);
         setProduct(data.product.data);
         setLinks(data.links);
         setBrand(data.brand);
+        console.log(data.links);
         setCat(data.cat);
         setCount(data.count);
         setCount1(data.count1);
@@ -76,9 +77,34 @@ const All_ProdShop = () => {
     })
   };
 
+  const itemsPerPage = 9; // Number of items per page
+  const currentPage = 3; // Current page number
+  const totalPages = Math.ceil(Product.length / itemsPerPage);
 
-  const itemsPerPage = 6;
-  const currentPage = 1;
+  const renderProductItems = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    return Product.slice(startIndex, endIndex).map((item, index) => (
+      <div key={index} className="col-lg-4 col-md-4 col-sm-4">
+        {/* Your product item code */}
+      </div>
+    ));
+  };
+
+  const renderPaginationLinks = () => {
+    const links = [];
+    for (let i = 1; i <= 88; i++) {
+      links.push(
+        <Link key={i} to={`/all_prodshop/${i}`} className={i === currentPage ? 'active' : ''}>
+          {i}
+        </Link>
+      );
+    }
+    return links;
+  };
+
+ 
 
   useEffect(() => {
     getProduct(page);
@@ -369,7 +395,7 @@ const All_ProdShop = () => {
                     </div>
                   </div>
                   <div className="row">
-                  {Product.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((item,index) => {
+                  {Product.map((item,index) => {
                       return (
                         <div key={index} className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
                           <div
@@ -477,43 +503,34 @@ const All_ProdShop = () => {
                       );
                     })}
                   
+                    {renderProductItems()}
+      <div className="product__pagination">
+        <Link to={`/all_prodshop/${currentPage - 1}`}>
+          <i className="fa fa-long-arrow-left" />
+        </Link>
+        {renderPaginationLinks()}
+        <Link to={`/all_prodshop/${totalPages}`}>
+          <i className="fa fa-long-arrow-right" />
+        </Link>
+      </div>
                     <div className="product__pagination">
-  {Array.from({ length: Math.ceil(Product.length / itemsPerPage) }).map((_, index) => {
-    const pageNumber = index + 1;
+                    {/* {
+                    Links.map((links)=>{
+                      return(
+                        <Link to='/'>1</Link>
+                      )
+                    })
+                  } */}
+                    {/* <div>Showing {Product.from} to {Links.total}</div> */}
+                    <Link to="/all_prodshop/1">1</Link>
 
-    if (pageNumber === currentPage) {
-      return (
-        <Link key={index} to={`/all_prodshop/${pageNumber}`} className="active">
-          {pageNumber}
-        </Link>
-      );
-    }
-
-    // Display a range of page links around the current page
-    if (
-      pageNumber >= currentPage - 2 &&
-      pageNumber <= currentPage + 2 &&
-      pageNumber !== 1 &&
-      pageNumber !== Math.ceil(Product.length / itemsPerPage)
-    ) {
-      return (
-        <Link key={index} to={`/all_prodshop/${pageNumber}`}>
-          {pageNumber}
-        </Link>
-      );
-    }
-
-    // Display ellipsis (...) for page gaps
-    if (
-      (pageNumber === currentPage - 3 && currentPage > 4) ||
-      (pageNumber === currentPage + 3 && currentPage < Math.ceil(Product.length / itemsPerPage) - 3)
-    ) {
-      return <span key={index}>...</span>;
-    }
-
-    return null;
-  })}
-</div>
+                    <Link to="/all_prodshop/3">3</Link>
+                    ....
+                    <Link to="/all_prodshop/88">
+                      <i className="fa fa-long-arrow-right" />
+                    </Link>
+                  </div>
+                  
                   </div>
                   
                 </div>
