@@ -1,62 +1,142 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react'
+import Auth_user from '../../authentication/Auth_user'
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const apiUrl = 'https://vsmart.ajspire.com/api/products';
+  const {http,token}=Auth_user();
+  const [product,SetProduct]=useState([]);
+  const location=useLocation();
+  const [SearchParams]=useSearchParams(location.search);
+  const query=SearchParams.get('query');
+console.log(query);
+  const getProduct=()=>{
 
-  const handleSearch = async () => {
-    try {
-      setSearchResults([]); // Clear existing results
-      
-      // Fetch data from all pages
-      const totalPages = 88;
-      const fetchPromises = [];
+http.get(`/products`).then((res)=>{
+// console.log(res.data.products.data);
+  const filtered=res.data.products.data.filter(record=>
+    record.english_name.toLowerCase().includes(query.toLowerCase())
+    );
+  // SetProduct(filter);
+  console.log(filtered);
+})
 
-      for (let page = 1; page <= totalPages; page++) {
-        fetchPromises.push(fetch(`${apiUrl}?english_name=${searchQuery}&page=${page}`));
-      }
+  }
+  useEffect(()=>{
+    getProduct();
+  },[])
+  console.log(product);
+  const GetproductId = (product_id_param) => {
+    console.log("cart" + product_id_param);
+    http.get(`/add-to-cart/${product_id_param}`).then((res) => {
+    });
+    console.log("hi", product_id_param);
+  };
 
-      const responses = await Promise.all(fetchPromises);
-      const dataPromises = responses.map(response => response.json());
-
-      const pageDataArray = await Promise.all(dataPromises);
-
-      // Flatten the data from all pages into a single array
-      const allProducts = pageDataArray.flatMap(pageData => pageData.products.data);
-
-      // Filter products based on the search query (case-insensitive)
-      const filteredProducts = allProducts.filter((product) =>
-        product.english_name.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-
-      setSearchResults(filteredProducts);
-
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
+  const handleAddToCart = (product_id) => {
+    GetproductId(product_id);
   };
 
   return (
-    <div style={{ marginTop: '300px', marginBottom: '300px' }} className='text-center'>
-      <h1>Product Search</h1>
-      <input
-        type="text"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search by English Name"
-      />
-      <button onClick={handleSearch}>Search</button>
-      <div>
-        <h2>Search Results</h2>
-        <ul>
-          {searchResults.map((product) => (
-            <li key={product.id}>{product.english_name}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
+    <div>
+ <section className="featured spad">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="section-title">
+                  <h2>Our Product</h2>
+                </div>
+                <div className="featured__controls">
+                  <ul>
+                    <li className="active" data-filter="*">
+                      All
+                    </li>
+                    {/* <li data-filter=".categories">Oranges</li>
+                    <li data-filter=".fresh-meat">Fresh Meat</li>
+                    <li data-filter=".vegetables">Vegetables</li>
+                    <li data-filter=".fastfood">Fastfood</li> */}
+                  </ul>
+                </div>
+              </div>
+            </div>
 
-export default Search;
+            <div className="">
+              <div className="row featured__filter bordered">
+                {product.map((item,index) => (
+                  <div
+                    className="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat"
+                    key={item.product_id}
+                  >
+                    <div className="featured__item  border border-danger rounded-3">
+                      <div
+                        className="featured__item__pic set-bg"
+                        style={{
+                          backgroundImage: `url(${item.product_image})`,
+                          border: "1px solid #ccc",
+                        }}
+                      >
+                        <button className="btn btn-primary  text-white">
+                          <i className="fa fa-inr"></i>
+                          {item.mrp_price - item.sale_price} Off
+                        </button>
+                        <ul className="featured__item__pic__hover">
+                          <li>
+                            <a href="#">
+                              <i className="fa fa-heart" />
+                            </a>
+                          </li>
+                          <li>
+                            <a href="#">
+                              <i className="fa fa-retweet" />
+                            </a>
+                          </li>
+                          <li>
+                            <a to={`/all_prodshop/${item.product_id}`}>
+                              {token ? (
+                                <button
+                                  className="btn"
+                                  onClick={() =>
+                                    handleAddToCart(item.product_id)
+                                  }
+                                >
+                                  <i className="fa fa-shopping-cart"></i>
+                                </button>
+                              ) : (
+                                <Link to="/login">
+                                  <i className="fa fa-shopping-cart"></i>
+                                </Link>
+                              )}
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="featured__item__text">
+                        <h6>
+                          <a href="#">{item.english_name}</a>
+                        </h6>
+                        <h5>P.V:${item.point_value}</h5>
+                        <h6 class="feature-price">
+                          <b>
+                            {" "}
+                            MRP
+                            <del className="text-danger">
+                              {item.mrp_price}
+                            </del>{" "}
+                            <span className="text-success">
+                              {item.sale_price}
+                              <small>/only</small>
+                            </span>
+                          </b>
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+    </div>
+  )
+}
+
+export default Search

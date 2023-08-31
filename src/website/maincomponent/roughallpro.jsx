@@ -6,25 +6,17 @@ import { Carousel, ToastContainer } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Auth_user from "../../authentication/Auth_user";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 
 const All_ProdShop = () => {
   const { http, user, logout, token } = Auth_user();
-
   const { page } = useParams();
-
   const [Product, setProduct] = useState([]);
-
   const [loading, setLoading] = useState(true);
-
   const [Links, setLinks] = useState([]);
-
   const [Brand, setBrand] = useState([]);
-
   const [Cat, setCat] = useState([]);
-
   const [Count, setCount] = useState([]);
-
   const [Count1, setCount1] = useState([]);
 
   const [productid, Setproductid] = useState([]);
@@ -33,50 +25,93 @@ const All_ProdShop = () => {
 
   const getProduct = async (page) => {
     try {
-      const response = await http.get(`/shop?page=${page}`);
+      if (page === 0) {
+        const response = await http.get("/shop");
+        const data = response.data;
+        console.log(data.product.links);
+        setProduct(data.product.data);
+        setLinks(data.product.links);
+        setBrand(data.brand);
+        setCat(data.cat);
+        setCount(data.count);
+        setCount1(data.count1);
 
-      const data = response.data;
+        setLoading(false);
+      } else {
+        const response = await http.get(`/shop?page=${page}`);
+        const data = response.data;
+console.log(data.product.links);
+        setProduct(data.product.data);
+        setLinks(data.product.links);
+        setBrand(data.brand);
+      
+        setCat(data.cat);
+        setCount(data.count);
+        setCount1(data.count1);
 
-      console.log(data.product.links);
-
-      setProduct(data.product.data);
-
-      setLinks(data.product.links);
-
-      setBrand(data.brand);
-
-      setCat(data.cat);
-
-      setCount(data.count);
-
-      setCount1(data.count1);
-
-      setLoading(false);
+        setLoading(false);
+      }
     } catch (error) {
       console.log("Error", error);
     }
   };
 
   const GetproductId = (pro_id) => {
-    http.get(`/add-to-cart/${pro_id}`).then((res) => {});
-
-    alert("Product added to cart!");
-  };
-
-  const getWishlistId = (pro_id) => {
-    http.get(`/add-to-wishlist/${pro_id}`).then((res) => {
-      console.log(res.data);
+    http.get(`/add-to-cart/${pro_id}`).then((res) => {
+      //console.log(res.data);
     });
+    alert('Product added to cart!');
+    // toast.success('Product added to cart!', {
+    //   position: 'bottom-right',
+    //   autoClose: 3000, // Duration in milliseconds
+    //   hideProgressBar: false,
+    //   closeOnClick: true,
+    //   pauseOnHover: true,
+    //   draggable: true,
+    // });
   };
+
+  const getWishlistId=(pro_id)=>{
+    http.get(`/add-to-wishlist/${pro_id}`).then((res)=>{
+      console.log(res.data);
+    })
+  };
+
+  const itemsPerPage = 9; // Number of items per page
+  const currentPage = 3; // Current page number
+  const totalPages = Math.ceil(Product.length / itemsPerPage);
+
+  const renderProductItems = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    return Product.slice(startIndex, endIndex).map((item, index) => (
+      <div key={index} className="col-lg-4 col-md-4 col-sm-4">
+        {/* Your product item code */}
+      </div>
+    ));
+  };
+
+  const renderPaginationLinks = () => {
+    const links = [];
+    for (let i = 1; i <= 88; i++) {
+      links.push(
+        <Link key={i} to={`/all_prodshop/${i}`} className={i === currentPage ? 'active' : ''}>
+          {i}
+        </Link>
+      );
+    }
+    return links;
+  };
+
+ 
 
   useEffect(() => {
     getProduct(page);
   }, [page]);
-
   return (
     <>
       <h1>Product List</h1>
-
       <div>
         <div
           id="header-carousel"
@@ -263,6 +298,7 @@ const All_ProdShop = () => {
                                                     <i className="fa fa-heart"></i>
                                                     {/* Add the icon here */}
                                                   </button>
+                                                  
                                                 ) : (
                                                   <Link to="/login">
                                                     <i className="fa fa-heart"></i>
@@ -291,6 +327,7 @@ const All_ProdShop = () => {
                                                     <i className="fa fa-shopping-cart"></i>
                                                     {/* Add the icon here */}
                                                   </button>
+                                                  
                                                 ) : (
                                                   <Link to="/login">
                                                     <i className="fa fa-shopping-cart"></i>
@@ -299,6 +336,7 @@ const All_ProdShop = () => {
                                               </a>
                                             </li>
                                           </ul>
+                                        
                                         </div>
                                         <div className="product__discount__item__text">
                                           <span>{item.category_name}</span>
@@ -357,12 +395,9 @@ const All_ProdShop = () => {
                     </div>
                   </div>
                   <div className="row">
-                    {Product.map((item, index) => {
+                  {Product.map((item,index) => {
                       return (
-                        <div
-                          key={index}
-                          className="col-lg-4 col-lg-3 col-md-4 col-sm-4"
-                        >
+                        <div key={index} className="col-lg-4 col-lg-3 col-md-4 col-sm-4">
                           <div
                             className="product__discount__item mt-5 mb-3"
                             style={{
@@ -396,24 +431,29 @@ const All_ProdShop = () => {
                                   </a>
                                 </li> */}
                                 <li>
-                                  <a to={`/all_prodshop/${item.product_id}`}>
-                                    {token ? (
-                                      <button
-                                        className="btn"
-                                        onClick={() =>
-                                          getWishlistId(item.product_id)
-                                        }
-                                      >
-                                        <i className="fa fa-heart"></i>
-                                        {/* Add the icon here */}
-                                      </button>
-                                    ) : (
-                                      <Link to="/login">
-                                        <i className="fa fa-heart"></i>
-                                      </Link>
-                                    )}
-                                  </a>
-                                </li>
+                                              <a
+                                                to={`/all_prodshop/${item.product_id}`}
+                                              >
+                                                {token ? (
+                                                  <button
+                                                    className="btn"
+                                                    onClick={() =>
+                                                      getWishlistId(
+                                                        item.product_id
+                                                      )
+                                                    }
+                                                  >
+                                                    <i className="fa fa-heart"></i>
+                                                    {/* Add the icon here */}
+                                                  </button>
+                                                  
+                                                ) : (
+                                                  <Link to="/login">
+                                                    <i className="fa fa-heart"></i>
+                                                  </Link>
+                                                )}
+                                              </a>
+                                            </li>
                                 <li>
                                   <a href="#">
                                     <i className="fa fa-retweet" />
@@ -462,26 +502,41 @@ const All_ProdShop = () => {
                         </div>
                       );
                     })}
+                  
+                    {renderProductItems()}
+      <div className="product__pagination">
+        <Link to={`/all_prodshop/${currentPage - 1}`}>
+          <i className="fa fa-long-arrow-left" />
+        </Link>
+        {renderPaginationLinks()}
+        <Link to={`/all_prodshop/${totalPages}`}>
+          <i className="fa fa-long-arrow-right" />
+        </Link>
+      </div>
 
-                    <hr />
+
+
+      <hr/>
                     <div className="product__pagination">
-                      {Links.map((items, index) => {
-                        const linkStyle = {
-                          color: items.active ? "green" : "black",
-                        };
+                    {/* {
+                    Links.map((links)=>{
+                      return(
+                        <Link to='/'>1</Link>
+                      )
+                    })
+                  } */}
+                    {/* <div>Showing {Product.from} to {Links.total}</div> */}
+                    <Link to="/all_prodshop/1">1</Link>
 
-                        return (
-                          <Link
-                            to={`/all_prodshop/${items.label}`}
-                            key={index}
-                            style={linkStyle}
-                          >
-                            {items.label}
-                          </Link>
-                        );
-                      })}
-                    </div>
+                    <Link to="/all_prodshop/3">3</Link>
+                    ....
+                    <Link to="/all_prodshop/88">
+                      <i className="fa fa-long-arrow-right" />
+                    </Link>
                   </div>
+                  
+                  </div>
+                  
                 </div>
               </div>
             </div>
@@ -489,7 +544,7 @@ const All_ProdShop = () => {
         </section>
         {/* Product Section End */}
       </div>
-      <ToastContainer />
+      <ToastContainer/>
     </>
   );
 };

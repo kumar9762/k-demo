@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaHome, FaShoppingCart, FaBlog, FaEnvelope } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Dropdown, Button } from "react-bootstrap";
 import "./Header.css";
 import "./Cart.css";
@@ -133,6 +133,15 @@ const Header = () => {
         console.error("Error fetching products:", error);
       });
   };
+
+const[search,Setsearch]=useState('');
+const[searchParam,Setsearchparam]=useSearchParams();
+  const onInputChange = (e) => {
+    Setsearch(e.target.value ); //set values
+
+  };
+  // console.log(search);
+
 
   useEffect(() => {
     getCategory();
@@ -289,17 +298,21 @@ const Header = () => {
                 </div>
               </div>
               <div className="col-lg-9 col-md-12 col-sm-12">
-                <form class="d-flex">
+                {/* <form class="d-flex"> */}
                   <input
                     class="form-control me-2"
                     type="search"
+                    onChange={(e)=>onInputChange(e)}
                     placeholder="Search"
                     aria-label="Search"
                   />
-                  <button class="btn btn-outline-success" type="submit">
+                  <button class="btn btn-outline-success" >
+                  <Link to={`/search?query=${encodeURIComponent(search)}`} 
+                  onChange={()=>Setsearchparam({query:search})}>
                     Search
+                    </Link>
                   </button>
-                </form>
+                {/* </form> */}
                 <nav className="header__menu d-md-flex align-items-center justify-content-md-between">
                   <ul className="d-flex align-items-center">
                     <li className=" nav-item">
