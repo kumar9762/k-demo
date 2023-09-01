@@ -72,15 +72,16 @@ const Header = () => {
     });
   };
 
-  const [Wish,SetWish]=useState([]);
-  const [wishLength, SetwishLength] = useState(0);
+  //const [Wish,SetWish]=useState([]);
+  //const [wishLength, SetwishLength] = useState(0);
   const [WTotal, SetWTotal] = useState(0);
   const GetWishProduct = () => {
     http.get(`/get-wishlist`).then((res) => {
-      console.log('Wishlist',res.data);
-      SetWish(res.data);
-      SetwishLength(res.data);
-      SetWTotal(res.data.total_amount);
+      console.log('Wishlist',res.data.total_products);
+     // SetWish(res.data);
+     // SetwishLength(res.data);
+      SetWTotal(res.data.total_products
+        );
     });
   };
 
@@ -297,7 +298,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
                   </Link>
                 </div>
               </div>
-              <div className="col-lg-9 col-md-12 col-sm-12">
+              <div className="col-lg-7 col-md-12 col-sm-12">
                 {/* <form class="d-flex"> */}
                   <input
                     class="form-control me-2"
@@ -379,7 +380,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
                     </li>
 
                     <li>
-                      <Link to="/all_prodshop">Shop</Link>
+                      <Link to="/all_prodshop/0">Shop</Link>
                     </li>
 
                     <li className="navbar-item dropdown-megamenu">
@@ -440,77 +441,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
               <div className="col-lg-2 col-md-5 col-sm-6">
                 <div className="header__cart">
                   <ul>
-                    <li>
-                      <Link to="#">
-                        <li className="navbar-item dropdown-megamenu">
-                          <Dropdown
-                            show={showMegaWish}
-                            onClick={handleWishMouseEnter}
-                            onMouseLeave={handleWishMouseLeave}
-                          >
-                            <i className="fa fa-heart" />
-                            <span>{wishLength}</span>
-                            <Dropdown.Menu
-                              className="mega-menu"
-                              style={{
-                                height: "auto",
-                                width: "auto",
-                                marginLeft: "-350px",
-                                paddingLeft: "30px",
-                              }}
-                            >
-                              <div className="row">
-                                <div className="">
-                                  <table className="table table-image">
-                                    <thead>
-                                      <tr>
-                                        <th scope="col">Sr.No</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col"> Name</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      {Wish.slice(0, 3).map((cart, index) => (
-                                        <tr key={cart.cart_id}>
-                                          <th scope="row">{index++}</th>
-                                          <td className="w-25">
-                                            <img
-                                              src={
-                                                "https://vsmart.ajspire.com/uploads/product_image/" +
-                                                cart.product_image
-                                              }
-                                              className="img-fluid img-thumbnail"
-                                              alt="Sheep"
-                                            />
-                                          </td>
-                                          <td>{cart.english_name}</td>
-                                          <td>Rs.{cart.cart_price}</td>
-                                          <td>{cart.cart_product_qty}</td>
-                                          <td>
-                                            {cart.cart_price *
-                                              cart.cart_product_qty}
-                                          </td>
-                                        </tr>
-                                      ))}
-                                    </tbody>
-                                  </table>
-                                  <Link to="/wishlistdetail">
-                                    
-                                    <button className="btn btn-info">
-                                      View All
-                                    </button>
-                                  </Link>
-                                </div>
-                              </div>
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </li>
-                      
-                      </Link>
-                    </li>
+                    <li><Link to="/wishlistdetail"><i class="fa fa-heart"></i> <span>{WTotal}</span></Link></li>
                     <li>
                       <Link to="#">
                         <li className="navbar-item dropdown-megamenu">

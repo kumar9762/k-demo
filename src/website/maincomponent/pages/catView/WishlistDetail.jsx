@@ -4,14 +4,14 @@ import Auth_user from "../../../authentication/Auth_user";
 
 const WishlistDetail = () => {
   const { http, user, token } = Auth_user();
-  const [Wish, SetWish] = useState([]);
+  const [Wishlist, SetWishlist] = useState([]);
   const { product_id } = useParams();
   const getWishlist = () => {
-     http
-      .get(`/get-wish-list`)
+    http
+      .get(`/get-wishlist`)
       .then((res) => {
-        SetWish(res.data);
-        console.log("Fetched Wishlist:", res.data); // Log fetched wishlist here
+        console.log("Fetched Wishlist:", res.data.wishlist); // Log fetched wishlist here
+        SetWishlist(res.data.wishlist);
       })
       .catch((error) => {
         console.error("Error fetching wishlist:", error);
@@ -19,7 +19,6 @@ const WishlistDetail = () => {
   };
 
   useEffect(() => {
-   
     getWishlist();
   }, [product_id]);
 
@@ -27,11 +26,11 @@ const WishlistDetail = () => {
     <>
       {/* Breadcrumb Section Begin */}
       <section
-        className="breadcrumb-section set-bg"
+        className="breadcrumb-section set-bg "
         style={{
           backgroundImage: "url('img/breadcrumb.jpg')",
           height: 400,
-          marginTop:"200px"
+          marginTop: "250px",
         }}
       >
         <div className="container">
@@ -66,33 +65,46 @@ const WishlistDetail = () => {
                     </tr>
                   </thead>
                   <tbody>
-                  {Wish.slice(0.2).map((wish,index)=>{
-                    <tr>
-                      <td className="shoping__cart__item">
-                        <img src="img/cart/cart-1.jpg" alt />
-                        <h5>Vegetable’s Package</h5>
-                      </td>
-                      <td className="shoping__cart__price">$55.00</td>
-                      <td className="shoping__cart__quantity">
-                        <div className="quantity">
-                          <div className="pro-qty">
-                            <input type="text" defaultValue={1} />
+                    {Wishlist.map((wish, index) => (
+                      <tr key={wish.wishe_id}>
+                        <td className="shoping__cart__item">
+                          <img
+                            src={
+                              "https://vsmart.ajspire.com/uploads/product_image/" +
+                              wish.product_image
+                            }
+                            alt={wish.product_name}
+                            style={{ width: "100px" }}
+                          />
+                          <h5>{wish.english_name}</h5>
+                        </td>
+                        <td className="shoping__cart__price">
+                          ${wish.wishe_price}
+                        </td>
+                        <td className="shoping__cart__quantity">
+                          <div className="quantity">
+                            <div className="pro-qty">
+                              <input
+                                type="text"
+                                value={wish.wishe_product_qty}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </td>
-                      <td className="shoping__cart__total">$110.00</td>
-                      <td className="shoping__cart__item__close">
-                        <span className="icon_close" />
-                      </td>
-                    </tr>
-                  })}
-                    
+                        </td>
+                        <td className="shoping__cart__total">
+                          ${wish.wishe_price * wish.wishe_product_qty}
+                        </td>
+                        <td className="shoping__cart__item__close">
+                          <span className="icon_close" />
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-lg-12">
               <div className="shoping__cart__btns">
                 <a href="#" className="primary-btn cart-btn">
@@ -107,11 +119,11 @@ const WishlistDetail = () => {
             <div className="col-lg-6">
               <div className="shoping__continue">
                 <div className="shoping__discount">
-                  {/* <h5>Discount Codes</h5> */}
+                 
                   <form action="#">
                     <input type="text" placeholder="Enter your coupon code" />
                     <button type="submit" className="site-btn">
-                      {/* APPLY COUPON */}
+                     
                     </button>
                   </form>
                 </div>
@@ -133,7 +145,7 @@ const WishlistDetail = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
       {/* Shoping Cart Section End */}
