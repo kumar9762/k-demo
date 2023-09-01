@@ -16,6 +16,8 @@ import Login from './website/authentication/Login';
 import Register from './website/authentication/Register';
 import Search from './website/maincomponent/pages/Search';
 import WishlistDetail from './website/maincomponent/pages/catView/WishlistDetail';
+import Search1 from './website/maincomponent/pages/Search1';
+import Search2 from './website/maincomponent/pages/Search2';
 
 
 
@@ -37,6 +39,10 @@ const Allroutes = () => {
                     <Route path="/wishlistdetail/:product_id" element={ <Master Rcf={WishlistDetail}/>} />
 
                     <Route path="/search" element={ <Master Rcf={Search}/>} />
+                    <Route path="/search1" element={ <Master Rcf={Search1}/>} />
+                    <Route path="/search2" element={ <Master Rcf={Search2}/>} />
+
+
 
                     <Route path="/wishlistdetail" element={ <Master Rcf={WishlistDetail}/>} />
                     <Route path="/cartdetails" element={ <Master Rcf={CartDetails}/>} />

@@ -3,27 +3,25 @@ import Auth_user from '../../authentication/Auth_user'
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 
 const Search = () => {
-  const {http,token}=Auth_user();
-  const [product,SetProduct]=useState([]);
-  const location=useLocation();
-  const [SearchParams]=useSearchParams(location.search);
-  const query=SearchParams.get('query');
-console.log(query);
-  const getProduct=()=>{
+  const { http, token } = Auth_user();
+  const [product, setProduct] = useState([]); // Change SetProduct to setProduct
+  const location = useLocation();
+  const [searchParams] = useSearchParams(location.search);
+  const query = searchParams.get('query');
 
-http.get(`/products`).then((res)=>{
-// console.log(res.data.products.data);
-  const filtered=res.data.products.data.filter(record=>
-    record.english_name.toLowerCase().includes(query.toLowerCase())
-    );
-  // SetProduct(filter);
-  console.log(filtered);
-})
+  const getProduct = () => {
+    http.get(`/products`).then((res) => {
+      // Update state with filtered products
+      const filtered = res.data.products.data.filter((record) =>
+        record.english_name.toLowerCase().includes(query.toLowerCase())
+      );
+      setProduct(filtered); // Update the product state with filtered data
+    });
+  };
 
-  }
-  useEffect(()=>{
+  useEffect(() => {
     getProduct();
-  },[])
+  }, [query]);
   console.log(product);
   const GetproductId = (product_id_param) => {
     console.log("cart" + product_id_param);
