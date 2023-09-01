@@ -18,26 +18,16 @@ const WishlistDetail = () => {
       });
   };
 
-const removeWishlist=(wishe_id)=>{
-  http.delete(`/remove-from-wishlist/${wishe_id}`).then((res)=>{
-    const wishlist = res.data.subcategories;
-    SetWishlist((previssubcat) => {
-      const filterwishlist = wishlist.filter(
-        (wishlist) =>
-          !previssubcat.some(
-            (previs) =>
-              previs.wishlist_id === wishlist.wishlist_id
-          )
-      );
-
-      return [...previssubcat, ...filterwishlist];
-    });
-  })
-  .catch((e) => {
-    console.log(e);
-  })
-}
-
+  const removeWishlist = (wishe_id) => {
+    http.get(`/remove-from-wishlist/${wishe_id}`)
+      .then((res) => {
+        const updatedWishlist = Wishlist.filter(item => item.wishe_id !== wishe_id);
+        SetWishlist(updatedWishlist);
+      })
+      .catch((error) => {
+        console.error('Error removing item from wishlist:', error);
+      });
+  };
   useEffect(() => {
     getWishlist();
   }, [product_id]);
@@ -116,7 +106,7 @@ const removeWishlist=(wishe_id)=>{
                         </td>
                         <td className="shoping__cart__item__close">
                           <span className="icon_close" />
-                          <button className="icon_close btn" onClick={()=>removeWishlist(wishe_id)}>Remove</button>
+                          <button className="icon_close btn" onClick={()=>removeWishlist(wish.wishe_id)}>Remove</button>
                         </td>
                       </tr>
                     ))}

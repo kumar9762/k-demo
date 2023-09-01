@@ -64,26 +64,42 @@ const Header = () => {
   const [cartLength, SetcartLength] = useState(0);
   const [Total, SetTotal] = useState(0);
   const GetCartProduct = () => {
-    http.get(`/get-cart-list`).then((res) => {
-      //console.log(res.data);
-      setCart(res.data.cart);
-      SetcartLength(res.data.cart.length);
-      SetTotal(res.data.total_amount);
-    });
+    if (!token) {
+      http.get(`/get-cart-list`).then((res) => {
+        //console.log(res.data);
+        setCart(res.data.cart);
+        SetcartLength(res.data.cart.length);
+        SetTotal(res.data.total_amount);
+      });
+     
+    } else {
+      http.get(`/get-cart-list`).then((res) => {
+        //console.log(res.data);
+        setCart(res.data.cart);
+        SetcartLength(res.data.cart.length);
+        SetTotal(res.data.total_amount);
+      });
+    }
   };
 
   //const [Wish,SetWish]=useState([]);
   //const [wishLength, SetwishLength] = useState(0);
   const [WTotal, SetWTotal] = useState(0);
+  
+  
   const GetWishProduct = () => {
-    http.get(`/get-wishlist`).then((res) => {
-      console.log('Wishlist',res.data.total_products);
-     // SetWish(res.data);
-     // SetwishLength(res.data);
-      SetWTotal(res.data.total_products
-        );
-    });
+    if (!token) {
+      // If there is no token, set WTotal to 0
+      SetWTotal(0);
+    } else {
+      // If there is a token, make the HTTP request
+      http.get(`/get-wishlist`).then((res) => {
+        console.log('Wishlist', res.data.total_products);
+        SetWTotal(res.data.total_products);
+      });
+    }
   };
+  
 
 
   const getCategory = () => {
@@ -611,7 +627,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
                               </tbody>
                             </table>
                             <Link to="/cartdetails">
-                              {" "}
+                            
                               <button className="btn btn-info">View All</button>
                             </Link>
                           </div>
