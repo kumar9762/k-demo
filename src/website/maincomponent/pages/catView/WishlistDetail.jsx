@@ -18,6 +18,26 @@ const WishlistDetail = () => {
       });
   };
 
+const removeWishlist=(wishe_id)=>{
+  http.delete(`/remove-from-wishlist/${wishe_id}`).then((res)=>{
+    const wishlist = res.data.subcategories;
+    SetWishlist((previssubcat) => {
+      const filterwishlist = wishlist.filter(
+        (wishlist) =>
+          !previssubcat.some(
+            (previs) =>
+              previs.wishlist_id === wishlist.wishlist_id
+          )
+      );
+
+      return [...previssubcat, ...filterwishlist];
+    });
+  })
+  .catch((e) => {
+    console.log(e);
+  })
+}
+
   useEffect(() => {
     getWishlist();
   }, [product_id]);
@@ -96,6 +116,7 @@ const WishlistDetail = () => {
                         </td>
                         <td className="shoping__cart__item__close">
                           <span className="icon_close" />
+                          <button className="icon_close btn" onClick={()=>removeWishlist(wishe_id)}>Remove</button>
                         </td>
                       </tr>
                     ))}

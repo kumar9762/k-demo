@@ -39,8 +39,8 @@ const Allroutes = () => {
                     <Route path="/wishlistdetail/:product_id" element={ <Master Rcf={WishlistDetail}/>} />
 
                     <Route path="/search" element={ <Master Rcf={Search}/>} />
-                    <Route path="/search1" element={ <Master Rcf={Search1}/>} />
-                    <Route path="/search2" element={ <Master Rcf={Search2}/>} />
+                    {/* <Route path="/search1" element={ <Master Rcf={Search1}/>} /> */}
+                    {/* <Route path="/search2" element={ <Master Rcf={Search2}/>} /> */}
 
 
 

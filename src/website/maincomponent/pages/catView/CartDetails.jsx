@@ -31,6 +31,8 @@ const CartDetails = () => {
       });
   };
 
+  
+
   useEffect(()=>{
     getCart();
   },[product_id]);
