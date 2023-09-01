@@ -21,11 +21,12 @@ const WishlistDetail = () => {
   const removeWishlist = (wishe_id) => {
     http.get(`/remove-from-wishlist/${wishe_id}`)
       .then((res) => {
+        console.log(res);
         const updatedWishlist = Wishlist.filter(item => item.wishe_id !== wishe_id);
         SetWishlist(updatedWishlist);
       })
       .catch((error) => {
-        console.error('Error removing item from wishlist:', error);
+        console.error( error);
       });
   };
   useEffect(() => {
