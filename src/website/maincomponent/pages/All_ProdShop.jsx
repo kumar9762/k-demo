@@ -58,14 +58,17 @@ const All_ProdShop = () => {
   };
 
   const GetproductId = (pro_id) => {
-    http.get(`/add-to-cart/${pro_id}`).then((res) => {});
+    http.get(`/add-to-cart/${pro_id}`).then((res) => {
+      console.log(res.data.cart);
+      alert(res.data.msg);});
 
-    alert("Product added to cart!");
+    
   };
 
   const getWishlistId = (pro_id) => {
     http.get(`/add-to-wishlist/${pro_id}`).then((res) => {
       console.log(res.data);
+      alert(res.data.msg);
     });
   };
 

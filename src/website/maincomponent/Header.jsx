@@ -65,12 +65,12 @@ const Header = () => {
   const [Total, SetTotal] = useState(0);
   const GetCartProduct = () => {
     if (!token) {
-      http.get(`/get-cart-list`).then((res) => {
+      
         //console.log(res.data);
-        setCart(res.data.cart);
-        SetcartLength(res.data.cart.length);
-        SetTotal(res.data.total_amount);
-      });
+        setCart([]);
+        SetcartLength(0);
+        SetTotal(0);
+      
      
     } else {
       http.get(`/get-cart-list`).then((res) => {

@@ -13,7 +13,7 @@ const CartDetails = () => {
 
   // Calculate total by summing up cart_price for all items
   Cart.forEach((cart) => {
-    total =total+ cart.cart_price;
+    total =total+ cart.cart_amount;
     console.log('Total',total);
   });
 
@@ -24,7 +24,7 @@ const CartDetails = () => {
       .get(`/get-cart-list`)
       .then((res) => {
         SetCart(res.data.cart);
-        //console.log('hi',res.data.cart);
+        console.log('hi',res.data.cart);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -137,10 +137,10 @@ const CartDetails = () => {
                   <h5>Cart Total</h5>
                   <ul>
                     <li>
-                      Subtotal <span>$454.98</span>
+                      Subtotal <span>${total}</span>
                     </li>
                     <li>
-                      Total <span>${total.toFixed(2)}</span>
+                      Total <span>$0000</span>
                     </li>
                   </ul>
                   <a href="#" className="primary-btn">
