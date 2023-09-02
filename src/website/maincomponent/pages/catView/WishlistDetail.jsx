@@ -48,10 +48,10 @@ const WishlistDetail = () => {
           <div className="row">
             <div className="col-lg-12 text-center">
               <div className="breadcrumb__text">
-                <h2>Whishlist Cart</h2>
+                <h2> My Whishlist</h2>
                 <div className="breadcrumb__option">
                   <Link to="/">Home</Link>
-                  <span>Whishlist Cart</span>
+                  <span> MyWhishlist</span>
                 </div>
               </div>
             </div>

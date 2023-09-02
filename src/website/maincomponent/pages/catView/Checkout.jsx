@@ -4,7 +4,7 @@ import Auth_user from "../../../authentication/Auth_user";
 import { useState } from "react";
 import { useEffect } from "react";
 
-const CartDetails = () => {
+const Checkout = () => {
   const { http, user } = Auth_user();
   const [Cart, SetCart] = useState([]);
   const { product_id } = useParams();
@@ -85,7 +85,7 @@ let dtotal=0;
                         {/* <th>Tax</th> */}
                         <th>PV</th>
                         <th>Total</th>
-                        <th>Action</th>
+                       
                       </tr>
                     </thead>
                     <tbody>
@@ -123,9 +123,7 @@ let dtotal=0;
                           <td className="shoping__cart__total">
                             ${cart.cart_price * cart.cart_product_qty}
                           </td>
-                          <td className="shoping__cart__item__close">
-                            <span className="fa fa-times-circle text-danger mx-5"  /><i className=""></i>
-                          </td>
+                          
                         </tr>
                       ))}
                     </tbody>
@@ -134,31 +132,8 @@ let dtotal=0;
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-12">
-                <div className="shoping__cart__btns">
-                  <Link to="/all_prodshow" className="primary-btn cart-btn">
-                    CONTINUE SHOPPING
-                  </Link>
-                  <a href="#" className="primary-btn cart-btn cart-btn-right">
-                    <span className="icon_loading" />
-                    Upadate Cart
-                  </a>
-                </div>
-              </div>
-              <div className="col-lg-6">
-                <div className="shoping__continue">
-                  <div className="shoping__discount">
-                    <h5>Discount Codes</h5>
-                    <form action="#">
-                      <input type="text" placeholder="Enter your coupon code" />
-                      <button type="submit" className="site-btn">
-                        APPLY COUPON
-                      </button>
-                    </form>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-6">
+              
+              <div className="col-lg-6" style={{marginLeft:"250px",marginTop:"-50px"}}>
                 <div className="shoping__checkout">
                   <h5>Cart Total</h5>
                   <ul>
@@ -174,17 +149,21 @@ let dtotal=0;
                     <li>
                       Discount Total <span>${dtotal}</span>
                     </li>
-                    <li>
-                      Total <span>${total}</span>
+                    <li className="text-success">
+                      Total<small>(incl.TAX)</small> <span>${total}</span>
                     </li>
                   </ul>
-                  <Link to="/checkout" className="btn btn-success ">
-                    PROCEED TO CHECKOUT <span style={{ marginLeft: '340px' }}>{total}</span>
-                  </Link>
+                  
                
                 </div>
               </div>
             </div>
+            
+          </div>
+          <div>
+          <Link to="#" className="btn btn-success w-100 ">
+                <b >ORDER NOW</b>
+                  </Link>
           </div>
         </section>
         {/* Shoping Cart Section End */}
@@ -193,4 +172,4 @@ let dtotal=0;
   );
 };
 
-export default CartDetails;
+export default Checkout;
