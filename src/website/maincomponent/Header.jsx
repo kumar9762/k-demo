@@ -169,7 +169,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
 
   return (
     <>
-      <div className="fixed-top">
+      <div className="fixed-top mb-5">
         {/* Humberger Begin */}
         <div className="humberger__menu__overlay" />
         <div className="humberger__menu__wrapper">
@@ -323,12 +323,12 @@ const[searchParam,Setsearchparam]=useSearchParams();
                     placeholder="Search"
                     aria-label="Search"
                   />
-                  <button class="btn btn-outline-success" >
+                  {/* <button class="btn btn-outline-success" >
                   <Link to={`/search?query=${encodeURIComponent(search)}`} 
                   onChange={()=>Setsearchparam({query:search})}>
                     Search
                     </Link>
-                  </button>
+                  </button> */}
                 {/* </form> */}
                 <nav className="header__menu d-md-flex align-items-center justify-content-md-between">
                   <ul className="d-flex align-items-center">

@@ -106,8 +106,8 @@ const WishlistDetail = () => {
                           ${wish.wishe_price * wish.wishe_product_qty}
                         </td>
                         <td className="shoping__cart__item__close">
-                          <span className="icon_close" />
-                          <button className="icon_close btn" onClick={()=>removeWishlist(wish.wishe_id)}>Remove</button>
+                          <span className="" />
+                          <button className=" btn btn-danger " onClick={()=>removeWishlist(wish.wishe_id)}>Remove</button>
                         </td>
                       </tr>
                     ))}
