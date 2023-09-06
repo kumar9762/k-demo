@@ -20,6 +20,7 @@ import Search1 from './website/maincomponent/pages/Search1';
 import Search2 from './website/maincomponent/pages/Search2';
 import Checkout from './website/maincomponent/pages/catView/Checkout';
 import Check from './website/maincomponent/pages/catView/Check';
+import UserView from './website/maincomponent/pages/catView/UserView';
 
 
 
@@ -42,19 +43,15 @@ const Allroutes = () => {
                     <Route path="/checkout" element={ <Master Rcf={Checkout}/>} />
                     <Route path="/check" element={ <Master Rcf={Check}/>} />
 
-
-
                     <Route path="/search" element={ <Master Rcf={Search}/>} />
-                    {/* <Route path="/search1" element={ <Master Rcf={Search1}/>} /> */}
-                    {/* <Route path="/search2" element={ <Master Rcf={Search2}/>} /> */}
-
-
-
+                   
                     <Route path="/wishlistdetail" element={ <Master Rcf={WishlistDetail}/>} />
                     <Route path="/cartdetails" element={ <Master Rcf={CartDetails}/>} />
                     <Route path="/contactus" element={ <Master Rcf={ContactUs}/>} />
                     <Route path="/aboutus" element={ <Master Rcf={AboutUs}/>} />
                     <Route path="/blogs" element={ <Master Rcf={Blogs}/>} />
+                    <Route path="/userview" element={ <Master Rcf={UserView}/>} />
+
 
                     <Route path="/login" element={ <Login/>} />
                     <Route path="/register" element={ <Register/>} />

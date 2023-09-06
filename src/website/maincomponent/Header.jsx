@@ -376,13 +376,13 @@ const[searchParam,Setsearchparam]=useSearchParams();
           <div className="container">
             <div className="row">
               <div className="col-lg-1 col-md-4 col-sm-6">
-                <div className="header__logo ms-2">
+                <div className="header__logo ">
                   <Link to="#">
                     <img src="img/logo.png" alt="image" className="img-fluid" />
                   </Link>
                 </div>
               </div>
-              <div className="col-lg-7 col-md-12 col-sm-12">
+              <div className="col-lg-10 col-md-12 col-sm-12">
                 <form class="d-flex">
                   <input
                     class="form-control me-2"
@@ -398,7 +398,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
                     </Link>
                   </button>
                 </form>
-                <nav className="header__menu d-md-flex align-items-center justify-content-md-between">
+                <nav className="header__menu d-md-flex align-items-center justify-content-between btn ">
                   <ul className="d-flex align-items-center ">
                     <li className=" nav-item">
                       <Link className="nav-link" to="/">
@@ -508,24 +508,23 @@ const[searchParam,Setsearchparam]=useSearchParams();
                       <Link to="/aboutus">About</Link>
                     </li>
                     <li>
-                      {token ? (
-                        <Link to="#">
-                          <i className="fa fa-user s_color " /> {user.name}
-                        </Link>
-                      ) : (
-                        <Link to="#">
-                          <i className="fa fa-user s_color" /> My Account
-                        </Link>
-                      )}
-                      {/* user show */}
-                    </li>
+  {token ? (
+    <Link to="/userview">
+      <i className="fa fa-user s_color " /> {user.name}
+    </Link>
+  ) : (
+    <Link to="#">
+      <i className="fa fa-user s_color" /> My Account
+    </Link>
+  )}
+</li>
                   </ul>
                 </nav>
               </div>
-              <div className="col-lg-2 col-md-5 col-sm-6">
-                <div className="header__cart">
+              <div className="col-lg-1 col-md-5 col-sm-6">
+                <div className="header__cart d-flex">
                   <ul>
-                    <li><Link to="/wishlistdetail"><i class="fa fa-heart"></i> <span>{WTotal}</span></Link></li>
+                    <li><Link to="/wishlistdetail"><i className="fa fa-heart"></i> <span>{WTotal}</span></Link></li>
                     <li>
                       <Link to="#">
                         <li className="navbar-item dropdown-megamenu">

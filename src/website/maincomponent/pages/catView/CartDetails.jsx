@@ -52,7 +52,7 @@ let dtotal=0;
           style={{
             backgroundImage: "url('img/breadcrumb.jpg')",
             height: 400,
-            marginTop: "200px",
+            marginTop: "250px",
           }}
         >
           <div className="container">
