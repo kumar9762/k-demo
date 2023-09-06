@@ -74,12 +74,18 @@ const Login = () => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-6 text-center mb-5">
-              <h2 className="heading-section">Login</h2>
+              <h2 className="heading-section">Login Form </h2>
             </div>
           </div>
-          <div className="row justify-content-center">
+          <div className="row justify-content-center ">
             <div className="col-md-7 col-lg-5">
-              <div className="wrap">
+              <div className="wrap border"  style={{
+                              transform: "skewX(-3deg)",
+                              border: "1px solid green",
+                              width: "100%",
+                              borderRadius: "20px",
+                              boxShadow: "10px 0px 190px rgba(125, 10, 180, 0.5)",
+                            }}>
                 <div
                   className="img"
                   style={{ backgroundImage: "url(images/bg-1.jpg)" }}
@@ -151,26 +157,21 @@ const Login = () => {
                         Sign In
                       </button>
                     </div>
-                    <div className="form-group d-md-flex">
-                      {/* <div className="w-50 text-left">
-                  <label className="checkbox-wrap checkbox-primary mb-0">Remember Me
-                    <input type="checkbox" defaultChecked />
-                    <span className="checkmark" />
-                  </label>
-                </div> */}
-                      <div className="w-50 text-md-right">
-                        <a href="#">Forgot Password</a>
+                    <div className="form-group ">
+                      <div className="w-100  ">
+                        <a href="#" className="">Forgot Password</a>
+                        <Link to="/register">
+                          <p className="text-center" style={{marginLeft:"100px",marginTop:"-20px"}}>
+                            Not a member?
+                            <a data-toggle="tab" href="#signup">
+                             Register
+                             </a>
+                           </p>
+                         </Link>
                       </div>
                     </div>
                   </form>
-                  <Link to="/register">
-                    <p className="text-center">
-                      Not a member?
-                      <a data-toggle="tab" href="#signup">
-                        Register
-                      </a>
-                    </p>
-                  </Link>
+                  
                 </div>
               </div>
             </div>
