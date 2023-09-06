@@ -7,9 +7,27 @@ const Check = () => {
     const [Oredr ,SetOrder]=useState([]);
 
 const PlaceOrder=()=>{
-    http.post(`/order_now`).then((res)=>{
+    const data={
+        product_id: '',
+        product_qty: '',
+        online_price: '',
+        discount: '',
+        pv_value: '',
+        order_address: '',
+        paymentmode: '',
+        prototal: '',
+        totalgst: '',
+        gst: '',
+        total: '',
+        total_discount: '',
+        totalpv: '',
+    };
+    http.post(`/order_now`,data).then((res) => {
         console.log(res);
     })
+    .catch((error) => {
+        console.error('Error placing order:', error);
+    });
 };
 
 useEffect(()=>{
