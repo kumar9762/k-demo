@@ -169,7 +169,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
 
   return (
     <>
-      <div className="fixed-top mb-5">
+      <div className="fixed-top mb-5 headbackground " style={{height:"237px"}}>
         {/* Humberger Begin */}
         <div className="humberger__menu__overlay" />
         <div className="humberger__menu__wrapper">
@@ -182,17 +182,85 @@ const[searchParam,Setsearchparam]=useSearchParams();
             <ul>
               <li>
                 <Link to="#">
-                  <i className="fa fa-heart" /> <span>1</span>
+                  <i className="fa fa-heart" /> <span>{WTotal}</span>
                 </Link>
               </li>
               <li>
-                <Link to="#">
-                  <i className="fa fa-shopping-bag" /> <span>3</span>
-                </Link>
+              <li>
+                      <Link to="#">
+                        <li className="navbar-item dropdown-megamenu">
+                          <Dropdown
+                            show={showMegaCart}
+                            onClick={handleCartMouseEnter}
+                            onMouseLeave={handleCartMouseLeave}
+                          >
+                            <i className="fa fa-shopping-bag" />
+                            <li></li>
+                            <span>{cartLength}</span>
+                            <Dropdown.Menu
+                              className="mega-menu"
+                              style={{
+                                height: "auto",
+                                width: "auto",
+                                marginLeft: "-350px",
+                                paddingLeft: "30px",
+                              }}
+                            >
+                              <div className="row">
+                                <div className="">
+                                  <table className="table table-image">
+                                    <thead>
+                                      <tr>
+                                        <th scope="col">Sr.No</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col"> Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {Cart.slice(0, 3).map((cart, index) => (
+                                        <tr key={cart.cart_id}>
+                                          <th scope="row">{index++}</th>
+                                          <td className="w-25">
+                                            <img
+                                              src={
+                                                "https://vsmart.ajspire.com/uploads/product_image/" +
+                                                cart.product_image
+                                              }
+                                              className="img-fluid img-thumbnail"
+                                              alt="Sheep"
+                                            />
+                                          </td>
+                                          <td>{cart.english_name}</td>
+                                          <td>Rs.{cart.cart_price}</td>
+                                          <td>{cart.cart_product_qty}</td>
+                                          <td>
+                                            {cart.cart_price *
+                                              cart.cart_product_qty}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                  <Link to="/cartdetails">
+                                    
+                                    <button className="btn btn-info">
+                                      View All
+                                    </button>
+                                  </Link>
+                                </div>
+                              </div>
+                            </Dropdown.Menu>
+                          </Dropdown>
+                        </li>
+                      </Link>
+                    </li>
               </li>
             </ul>
             <div className="header__cart__price">
-              item: <span>$150.</span>
+            <b> item:</b> <span>${Total}</span>
             </div>
           </div>
           <div className="humberger__menu__widget">
@@ -315,7 +383,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
                 </div>
               </div>
               <div className="col-lg-7 col-md-12 col-sm-12">
-                {/* <form class="d-flex"> */}
+                <form class="d-flex">
                   <input
                     class="form-control me-2"
                     type="search"
@@ -323,15 +391,15 @@ const[searchParam,Setsearchparam]=useSearchParams();
                     placeholder="Search"
                     aria-label="Search"
                   />
-                  {/* <button class="btn btn-outline-success" >
+                  <button className="btn btn-success text-white" >
                   <Link to={`/search?query=${encodeURIComponent(search)}`} 
-                  onChange={()=>Setsearchparam({query:search})}>
+                  onChange={()=>Setsearchparam({query:search})} >
                     Search
                     </Link>
-                  </button> */}
-                {/* </form> */}
+                  </button>
+                </form>
                 <nav className="header__menu d-md-flex align-items-center justify-content-md-between">
-                  <ul className="d-flex align-items-center">
+                  <ul className="d-flex align-items-center ">
                     <li className=" nav-item">
                       <Link className="nav-link" to="/">
                         Home
@@ -531,7 +599,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
                     </li>
                   </ul>
                   <div className="header__cart__price">
-                    item: <span>${Total}</span>
+                   <b> item:</b> <span>${Total}</span>
                   </div>
                 </div>
               </div>

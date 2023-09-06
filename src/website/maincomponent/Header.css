@@ -12,3 +12,9 @@
 .header-menu:hover {
   color: #ff5733; /* Change color on hover */
 }
+.headbackground{
+  background-color: blueviolet;
+}
+.height{
+  height: '200px';
+}
