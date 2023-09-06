@@ -70,6 +70,13 @@ const SubCatView = () => {
     GetproductId(product_id);
   };
 
+  const getWishlistId = (pro_id) => {
+    http.get(`/add-to-wishlist/${pro_id}`).then((res) => {
+      console.log(res.data);
+      alert(res.data.msg);
+    });
+  };
+
   useEffect(
     () => {
       getSubCat();
@@ -84,7 +91,7 @@ const SubCatView = () => {
           id="header-carousel"
           className="carousel slide align-center"
           data-ride="carousel"
-          style={{ marginTop: "200px" }}
+          style={{ marginTop: "250px" }}
         >
           <div className="carousel-inner">
             <div className="img">
@@ -320,9 +327,27 @@ const SubCatView = () => {
                                           </div>
                                           <ul className="product__item__pic__hover">
                                             <li>
-                                              <Link to="#">
-                                                <i className="fa fa-heart" />
-                                              </Link>
+                                            <a
+                                                to={`/all_prodshop/${item.product_id}`}
+                                              >
+                                                {token ? (
+                                                  <button
+                                                    className="btn"
+                                                    onClick={() =>
+                                                      getWishlistId(
+                                                        item.product_id
+                                                      )
+                                                    }
+                                                  >
+                                                    <i className="fa fa-heart"></i>
+                                                    {/* Add the icon here */}
+                                                  </button>
+                                                ) : (
+                                                  <Link to="/login">
+                                                    <i className="fa fa-heart"></i>
+                                                  </Link>
+                                                )}
+                                              </a>
                                             </li>
                                             <li>
                                               <Link to="#">
@@ -444,9 +469,27 @@ const SubCatView = () => {
                               </div>
                               <ul className="product__item__pic__hover">
                                 <li>
-                                  <Link to="#">
-                                    <i className="fa fa-heart" />
-                                  </Link>
+                                <a
+                                                to={`/all_prodshop/${item.product_id}`}
+                                              >
+                                                {token ? (
+                                                  <button
+                                                    className="btn"
+                                                    onClick={() =>
+                                                      getWishlistId(
+                                                        item.product_id
+                                                      )
+                                                    }
+                                                  >
+                                                    <i className="fa fa-heart"></i>
+                                                    {/* Add the icon here */}
+                                                  </button>
+                                                ) : (
+                                                  <Link to="/login">
+                                                    <i className="fa fa-heart"></i>
+                                                  </Link>
+                                                )}
+                                              </a>
                                 </li>
                                 <li>
                                   <Link to="#">

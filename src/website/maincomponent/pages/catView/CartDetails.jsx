@@ -39,6 +39,10 @@ let dtotal=0;
   useEffect(() => {
     getCart();
   }, [product_id]);
+
+
+
+  
   return (
     <>
       <div>

@@ -21,6 +21,14 @@ const Products = () => {
     GetproductId(product_id);
   };
 
+
+  const getWishlistId = (pro_id) => {
+    http.get(`/add-to-wishlist/${pro_id}`).then((res) => {
+      console.log(res.data);
+      alert(res.data.msg);
+    });
+  };
+
   const getProd = () => {
     http
       .get("/products")
@@ -82,9 +90,27 @@ const Products = () => {
                         </button>
                         <ul className="featured__item__pic__hover">
                           <li>
-                            <a href="#">
-                              <i className="fa fa-heart" />
-                            </a>
+                          <a
+                                                to={`/all_prodshop/${item.product_id}`}
+                                              >
+                                                {token ? (
+                                                  <button
+                                                    className="btn"
+                                                    onClick={() =>
+                                                      getWishlistId(
+                                                        item.product_id
+                                                      )
+                                                    }
+                                                  >
+                                                    <i className="fa fa-heart"></i>
+                                                    {/* Add the icon here */}
+                                                  </button>
+                                                ) : (
+                                                  <Link to="/login">
+                                                    <i className="fa fa-heart"></i>
+                                                  </Link>
+                                                )}
+                                              </a>
                           </li>
                           <li>
                             <a href="#">

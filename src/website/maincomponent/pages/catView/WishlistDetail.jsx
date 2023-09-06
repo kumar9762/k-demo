@@ -19,19 +19,30 @@ const WishlistDetail = () => {
   };
 
   const removeWishlist = (wishe_id) => {
-    http.get(`/remove-from-wishlist/${wishe_id}`)
+    http
+      .get(`/remove-from-wishlist/${wishe_id}`)
       .then((res) => {
         console.log(res);
-        const updatedWishlist = Wishlist.filter(item => item.wishe_id !== wishe_id);
+        const updatedWishlist = Wishlist.filter(
+          (item) => item.wishe_id !== wishe_id
+        );
         SetWishlist(updatedWishlist);
+        alert('ok',res.updatedWishlist.data.msg);
       })
       .catch((error) => {
-        console.error( error);
+        console.error(error);
       });
   };
   useEffect(() => {
     getWishlist();
   }, [product_id]);
+
+  const getCartId = (pro_id) => {
+    http.get(`/add-to-cart/${pro_id}`).then((res) => {
+      console.log(res.data);
+      alert(res.data.msg);
+    });
+  };
 
   return (
     <>
@@ -72,7 +83,7 @@ const WishlistDetail = () => {
                       <th>Price</th>
                       <th>Quantity</th>
                       <th>Total</th>
-                      <th />
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -107,7 +118,18 @@ const WishlistDetail = () => {
                         </td>
                         <td className="shoping__cart__item__close">
                           <span className="" />
-                          <button className=" btn btn-danger " onClick={()=>removeWishlist(wish.wishe_id)}>Remove</button>
+                          <button
+                            className=" btn btn-danger "
+                            onClick={() => removeWishlist(wish.wishe_id)}
+                          >
+                            Remove
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            className=" btn btn-success "
+                            onClick={() => getCartId(wish.product_id)}
+                          >AddToCart</button>
                         </td>
                       </tr>
                     ))}
