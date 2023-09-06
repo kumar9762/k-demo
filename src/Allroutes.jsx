@@ -50,7 +50,7 @@ const Allroutes = () => {
                     <Route path="/contactus" element={ <Master Rcf={ContactUs}/>} />
                     <Route path="/aboutus" element={ <Master Rcf={AboutUs}/>} />
                     <Route path="/blogs" element={ <Master Rcf={Blogs}/>} />
-                    <Route path="/userview" element={ <Master Rcf={UserView}/>} />
+                    <Route path="/userview" element={ <UserView/>} />
 
 
                     <Route path="/login" element={ <Login/>} />
