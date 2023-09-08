@@ -21,6 +21,7 @@ import Search2 from './website/maincomponent/pages/Search2';
 import Checkout from './website/maincomponent/pages/catView/Checkout';
 import Check from './website/maincomponent/pages/catView/Check';
 import UserView from './website/maincomponent/pages/catView/UserView';
+import UserUpdate from './website/maincomponent/pages/catView/UserUpdate';
 
 
 
@@ -51,6 +52,8 @@ const Allroutes = () => {
                     <Route path="/aboutus" element={ <Master Rcf={AboutUs}/>} />
                     <Route path="/blogs" element={ <Master Rcf={Blogs}/>} />
                     <Route path="/userview" element={ <UserView/>} />
+                    <Route path="/userupdate" element={ <UserUpdate/>} />
+
 
 
                     <Route path="/login" element={ <Login/>} />

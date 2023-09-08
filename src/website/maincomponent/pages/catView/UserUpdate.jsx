@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Auth_user from "../../../authentication/Auth_user";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../../images/download (1).png";
 import Header from "../../Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const UserView = () => {
+const UserUpdate = () => {
   const { http, token } = Auth_user();
   const [User, SetUser] = useState([]);
-
+ const navigate=useNavigate();
   const getUser = () => {
     http.get(`/user/profile`).then((res) => {
       SetUser(res.data.user);
@@ -17,29 +17,33 @@ const UserView = () => {
     });
   };
 
-  //   const OnInputs = ((e) => {
-  //     SetUser({ ...User, [e.target.name]: e.target.value, })
-  //   })
+  const OnInputs = (e) => {
+    SetUser({ ...User, [e.target.name]: e.target.value });
+  };
 
-  // const handleEditProfile = () => {
-
-  //   console.log("clicked");
-  //   toast.success("Profile edited successfully!", {
-  //     position: "top-right",
-  //     autoClose: 3000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //   });
-  // };
+  const handleEditProfile = () => {
+    console.log("clicked");
+    http.post(`/user/profile/update`, User).then((res) => {
+      console.log('update', res.data.user);
+      console.log("clicked");
+      navigate('/userview');
+    //   toast.success("Profile edited successfully!", {
+    //     position: "top-right",
+    //     autoClose: 3000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //   });
+    });
+  };
   useEffect(() => {
     getUser();
   }, []);
 
   return (
     <>
-    <Header/>
+      <Header />
       <div style={{ backgroundColor: "#fff" }}>
         <section
           className="breadcrumb-section set-bg "
@@ -55,7 +59,7 @@ const UserView = () => {
                 <div className="breadcrumb__text">
                   <h2>User Profile</h2>
                   <div className="breadcrumb__option">
-                  <h2>UserId:{User.id}</h2>
+                    <h2>UserId:{User.id}</h2>
                     {/* <Link to="/">Home</Link>
                     <span>My Cart</span> */}
                   </div>
@@ -64,47 +68,16 @@ const UserView = () => {
             </div>
           </div>
         </section>
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <div
-                className="card p-3"
-                style={{
-                  height: "150px",
-                  borderColor: "green",
-                  backgroundColor: "rgba(0, 128, 0, 0.2)",
-                }}
-              >
-                <h5>Total point value</h5>
-                0.00
-              </div>
-            </div>
-            <div className="col">
-              <div
-                className="card p-3"
-                style={{
-                  height: "150px",
-                  borderColor: "green",
-                  backgroundColor: "rgba(0, 128, 0, 0.2)",
-                }}
-              >
-                <h5>Total reward value</h5>
-                0.00
-              </div>
-            </div>
-          </div>
-        </div>
+        
       </div>
       <section className="bg-light">
         <div className="container">
           <div className="card p-5" style={{ height: "300px" }}>
             <div className=" justify-content-between">
-              <h3> Your Profile</h3>
-              <button className="btn btn-outline-success me-0" >
-               <Link to='/userupdate'>Edit Profile</Link> 
-              </button>
+              <h3>Update Your Profile</h3>
+              
               <hr />
-              <ToastContainer />
+              {/* <ToastContainer /> */}
             </div>
 
             <form class="row g-3 justify-content-between">
@@ -131,14 +104,15 @@ const UserView = () => {
                   Name
                 </label>
                 <input
-                  type="text"
-                  className="form-control "
-                  id="name"
-                  placeholder=""
-                  value={User.name}
-                  style={{ width: "300px" }}
-                  readOnly
-                />
+  type="text"
+  className="form-control"
+  id="name"
+  name="name" // Make sure the name attribute matches the state key
+  placeholder=""
+  value={User.name}
+  style={{ width: "300px" }}
+  onChange={(e) => OnInputs(e)}
+/>
               </div>
               <div className="col-auto">
                 <label
@@ -151,10 +125,12 @@ const UserView = () => {
                 <input
                   type="email"
                   className="form-control"
-                  id="email"
+                  id="text"
                   placeholder=""
+                  name="email"
                   value={User.email}
                   style={{ width: "300px" }}
+                 onChange={(e) => OnInputs(e)}
                 />
               </div>
               <div className="col-auto">
@@ -169,8 +145,8 @@ const UserView = () => {
             </form>
           </div>
         </div>
-      </section>
-      <section className="bg-light">
+      {/* </section>
+      <section className="bg-light"> */}
         <div className="container">
           <div className="card p-5" style={{ height: "300px" }}>
             <div className=" justify-content-between">
@@ -180,23 +156,32 @@ const UserView = () => {
               </button> */}
               <hr />
               <div className="col-4">
-              <div
-                className="card p-3"
-                style={{
-                  height: "100px",
-                  borderColor: "green",
-                  backgroundColor: "rgba(0, 128, 0, 0.2)",
-                }}
-              >
-                <h5>{User.mob_no}</h5>
-                
+                <div
+                  className="card p-3"
+                  style={{
+                    height: "100px",
+                    borderColor: "green",
+                    backgroundColor: "rgba(0, 128, 0, 0.2)",
+                  }}
+                >
+                <input
+                  type="number"
+                  className="form-control"
+                  id="number"
+                  placeholder=""
+                  name="mob_no"
+                  value={User.mob_no}
+                  style={{ width: "300px" }}
+                 onChange={(e) => OnInputs(e)}
+                />
+                  
+                </div>
               </div>
-            </div>
             </div>
           </div>
         </div>
-      </section>
-      <section className="bg-light">
+      {/* </section>
+      <section className="bg-light"> */}
         <div className="container">
           <div className="card p-5" style={{ height: "300px" }}>
             <div className=" justify-content-between">
@@ -206,25 +191,36 @@ const UserView = () => {
               </button> */}
               <hr />
               <div className="col-4">
-              <div
-                className="card p-3"
-                style={{
-                  height: "100px",
-                  borderColor: "green",
-                  backgroundColor: "rgba(0, 128, 0, 0.2)",
-                }}
-              >
-                <h5>{User.address}</h5>
-                
+                <div
+                  className="card p-3"
+                  style={{
+                    height: "100px",
+                    borderColor: "green",
+                    backgroundColor: "rgba(0, 128, 0, 0.2)",
+                  }}
+                >
+               <input
+  type="text"
+  className="form-control"
+  id="text"
+  name="address" // Make sure the name attribute matches the state key
+  placeholder=""
+  value={User.address}
+  style={{ width: "300px" }}
+  onChange={(e) => OnInputs(e)}
+/>
+                 
+                </div>
               </div>
             </div>
-            </div>
           </div>
-          
         </div>
+
+        <button className="btn btn-success" onClick={handleEditProfile}>Update</button>
       </section>
+     
     </>
   );
 };
 
-export default UserView;
+export default UserUpdate;
