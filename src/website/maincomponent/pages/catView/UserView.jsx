@@ -17,22 +17,7 @@ const UserView = () => {
     });
   };
 
-  //   const OnInputs = ((e) => {
-  //     SetUser({ ...User, [e.target.name]: e.target.value, })
-  //   })
-
-  // const handleEditProfile = () => {
-
-  //   console.log("clicked");
-  //   toast.success("Profile edited successfully!", {
-  //     position: "top-right",
-  //     autoClose: 3000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //   });
-  // };
+  
   useEffect(() => {
     getUser();
   }, []);
@@ -76,7 +61,7 @@ const UserView = () => {
                 }}
               >
                 <h5>Total point value</h5>
-                0.00
+                {User.point_value}
               </div>
             </div>
             <div className="col">
@@ -89,7 +74,7 @@ const UserView = () => {
                 }}
               >
                 <h5>Total reward value</h5>
-                0.00
+               {User.reward}
               </div>
             </div>
           </div>
@@ -104,7 +89,7 @@ const UserView = () => {
                <Link to='/userupdate'>Edit Profile</Link> 
               </button>
               <hr />
-              <ToastContainer />
+              
             </div>
 
             <form class="row g-3 justify-content-between">

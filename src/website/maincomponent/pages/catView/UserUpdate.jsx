@@ -22,19 +22,19 @@ const UserUpdate = () => {
   };
 
   const handleEditProfile = () => {
-    console.log("clicked");
+    
     http.post(`/user/profile/update`, User).then((res) => {
       console.log('update', res.data.user);
-      console.log("clicked");
+     console.log("clicked");
       navigate('/userview');
-    //   toast.success("Profile edited successfully!", {
-    //     position: "top-right",
-    //     autoClose: 3000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //   });
+      toast.success("Profile edited successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
     });
   };
   useEffect(() => {
@@ -77,7 +77,7 @@ const UserUpdate = () => {
               <h3>Update Your Profile</h3>
               
               <hr />
-              {/* <ToastContainer /> */}
+              <ToastContainer />
             </div>
 
             <form class="row g-3 justify-content-between">
