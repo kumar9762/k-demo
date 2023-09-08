@@ -23,8 +23,7 @@ const FeaturedProducts = () => {
   const { product_id } = useParams();
   const GetproductId = (product_id) => {
     console.log("cart", product_id);
-    http.get(`/add-to-cart/${product_id}`).then((res) => {
-    });
+    http.get(`/add-to-cart/${product_id}`).then((res) => {});
     console.log("hi", product_id);
   };
 
@@ -94,27 +93,23 @@ const FeaturedProducts = () => {
                           </button>
                           <ul className="featured__item__pic__hover">
                             <li>
-                            <a
-                                                to={`/all_prodshop/${item.product_id}`}
-                                              >
-                                                {token ? (
-                                                  <button
-                                                    className="btn"
-                                                    onClick={() =>
-                                                      getWishlistId(
-                                                        item.product_id
-                                                      )
-                                                    }
-                                                  >
-                                                    <i className="fa fa-heart"></i>
-                                                    {/* Add the icon here */}
-                                                  </button>
-                                                ) : (
-                                                  <Link to="/login">
-                                                    <i className="fa fa-heart"></i>
-                                                  </Link>
-                                                )}
-                                              </a>
+                              <a to={`/all_prodshop/${item.product_id}`}>
+                                {token ? (
+                                  <button
+                                    className="btn"
+                                    onClick={() =>
+                                      getWishlistId(item.product_id)
+                                    }
+                                  >
+                                    <i className="fa fa-heart"></i>
+                                    {/* Add the icon here */}
+                                  </button>
+                                ) : (
+                                  <Link to="/login">
+                                    <i className="fa fa-heart"></i>
+                                  </Link>
+                                )}
+                              </a>
                             </li>
                             <li>
                               <a href="#">

@@ -36,11 +36,23 @@ let dtotal=0;
       });
   };
 
+  const removeCart = (cart_id) => {
+    http.get(`/remove-to-cart/${cart_id}`).then((res) => {
+      console.log(res);
+      const updatedCart = Cart.filter((item) => item.cart_id !== cart_id);
+      SetCart(updatedCart);
+      console.log(res.data.msg,updatedCart); // This should work if 'res' contains 'updatedCart'
+      alert(res.data.msg);
+    });
+  
+  };
+
+
   useEffect(() => {
     getCart();
   }, [product_id]);
 
-
+  
 
   
   return (
@@ -128,7 +140,7 @@ let dtotal=0;
                             ${cart.cart_price * cart.cart_product_qty}
                           </td>
                           <td className="shoping__cart__item__close">
-                            <span className="fa fa-times-circle text-danger mx-5"  /><i className=""></i>
+                            <button className="btn btn-danger" onClick={()=>removeCart(cart.cart_id)}>Remove</button>
                           </td>
                         </tr>
                       ))}
