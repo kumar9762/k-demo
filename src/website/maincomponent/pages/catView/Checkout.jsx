@@ -6,52 +6,98 @@ const Checkout = () => {
   const { http, user } = Auth_user();
   const [Cart, SetCart] = useState([]);
   const { product_id } = useParams();
+  const [productIds, setProductIds] = useState([]);
+  const [productQty, setProductQty] = useState([]);
+  const [productPrice, setProductPrice] = useState([]);
+
+
+
+  const [Order, setOrder] = useState({
+    product_id: [], // An array of product IDs
+    product_qty: [], // An array of product quantities
+    online_price: [], // An array of product prices
+    discount: [], // An array of discounts
+    pv_value: [], // An array of point values
+
+    prototal: [], // An array of subtotals
+
+    gst: [], // An array of GST values
+    total: "", // Total order amount
+
+    totalgst: "", // Total GST
+    total_discount: "", // Total order discount
+    totalpv: "", // Total point value
+    order_address: user.address, // Address for the order
+    paymentmode: "CashOnDelivery", // Payment mode (adjust as needed)
+  });
+  // const [product_id, setproduct_id] = useState([]);
+  // console.log('ids',product_id);
+
+  console.log(Order);
 
   let total = 0; // Initialize the total
   let ptotal = 0;
-  let ttotal = 0;
+  let gtotal = 0;
   let dtotal = 0;
+  const newProductIds = [];
+  const newProductQty = [];
+  const newProductPrice = [];
+
 
   // Calculate total by summing up cart_price for all items
   Cart.forEach((cart) => {
     total = total + cart.cart_amount;
     ptotal = ptotal + cart.point_value;
-    ttotal = ttotal + cart.point_value;
+    gtotal = gtotal + parseInt((cart.online_price * cart.cart_product_qty * cart.tax_per) /
+    (100 + cart.tax_per));
     dtotal = dtotal + parseFloat(cart.total_discount);
+    
   });
 
   const getCart = () => {
     http
       .get(`/get-cart-list`)
       .then((res) => {
-        console.log("cartitem",res.data.cart);
+        console.log("cartitem", res.data.cart);
         SetCart(res.data.cart);
+       
+  
+        res.data.cart.forEach((cartItem) => {
+          newProductIds.push(cartItem.product_id);
+          newProductQty.push(cartItem.product_qty);
+          newProductPrice.push(cartItem.online_price);
+
+        });
+  
+        setProductIds(newProductIds);
+        setProductQty(newProductQty);
+        setProductPrice(newProductPrice);
+
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
       });
   };
-
   useEffect(() => {
     getCart();
   }, [product_id]);
 
   const PlaceOrder = () => {
-    const orderItems = Cart.map((cartItem, index) => ({
-      product_id: cartItem.product_id, 
-      product_qty: cartItem.product_qty,
-      online_price: cartItem.online_price,
-      discount: cartItem.discount,
-      pv_value: cartItem.pv_value,
-      prototal: cartItem.prototal,
-      gst: cartItem.gst,
-      total: cartItem.total,
-      total_discount: cartItem.total_discount,
-      totalpv: cartItem.totalpv,
-      totalgst: cartItem.totalgst,
-      order_address: "Hello",
+    const orderItems = {
+      product_id:productIds, 
+       product_qty: productQty,
+       online_price: productPrice,
+      // discount: cartItem.discount,
+      // pv_value: cartItem.pv_value,
+      // prototal: cartItem.prototal,
+       gst: gtotal,
+      total: total,
+      total_discount: dtotal,
+      totalpv: ptotal,
+      // totalgst: cartItem.totalgst,
+      order_address: user.address,
       paymentmode: "CashOnDelivery",
-    }));
+    }
 
    
 
@@ -59,19 +105,21 @@ const Checkout = () => {
       items: orderItems,
      
     };
+    console.log("dataaaa",data);
+    setOrder("dataaaa",data);
 
     // Send the order data to the API using axios
-    http
-      .post(`/order_now`, data)
-      .then((res) => {
-        console.log(res);
-        // Optionally, you can perform some action after a successful response
-        // For example, you can redirect the user to a confirmation page.
-      })
-      .catch((error) => {
-        console.error("Error placing order:", error);
-        // Handle errors here, such as showing an error message to the user.
-      });
+    // http
+    //   .post(`/order_now`, data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     // Optionally, you can perform some action after a successful response
+    //     // For example, you can redirect the user to a confirmation page.
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error placing order:", error);
+    //     // Handle errors here, such as showing an error message to the user.
+    //   });
   };
 
   return (
@@ -180,7 +228,7 @@ const Checkout = () => {
                       PV Total <span>${ptotal}</span>
                     </li>
                     <li>
-                      Tax Total <span>${ttotal}</span>
+                      GST Total <span>${gtotal}</span>
                     </li>
                     <li>
                       Discount Total <span>${dtotal}</span>
@@ -213,7 +261,7 @@ const Checkout = () => {
                     }}
                   >
                     <label>
-                      <input type="radio" name="paymentMethod" />
+                      <input type="radio" name="paymentmod" value="COD" />
                       Cash on Delivery
                     </label>
                     <i className="fa fa-inr" />
@@ -231,7 +279,7 @@ const Checkout = () => {
                     }}
                   >
                     <label>
-                      <input type="radio" name="paymentMethod" />
+                      <input type="radio" name="paymentmod" />
                       Online Transfer
                     </label>
                     <i className="fa fa-inr" />
@@ -248,7 +296,7 @@ const Checkout = () => {
                     }}
                   >
                     <label>
-                      <input type="radio" name="paymentMethod" />
+                      <input type="radio" name="paymentmod" />
                       Use wallet balance current month
                     </label>
                     <i className="fa fa-inr" />
@@ -265,7 +313,7 @@ const Checkout = () => {
                     }}
                   >
                     <label>
-                      <input type="radio" name="paymentMethod" />
+                      <input type="radio" name="paymentmod" />
                       Repurchase amount
                     </label>
                     <i className="fa fa-inr" />

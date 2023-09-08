@@ -22,6 +22,7 @@ import Checkout from './website/maincomponent/pages/catView/Checkout';
 import Check from './website/maincomponent/pages/catView/Check';
 import UserView from './website/maincomponent/pages/catView/UserView';
 import UserUpdate from './website/maincomponent/pages/catView/UserUpdate';
+import Rough from './website/maincomponent/pages/Rough';
 
 
 
@@ -42,7 +43,7 @@ const Allroutes = () => {
                     <Route path="/cartdetails/:product_id" element={ <Master Rcf={CartDetails}/>} />
                     <Route path="/wishlistdetail/:product_id" element={ <Master Rcf={WishlistDetail}/>} />
                     <Route path="/checkout" element={ <Master Rcf={Checkout}/>} />
-                    <Route path="/check" element={ <Master Rcf={Check}/>} />
+                    <Route path="/rough" element={ <Master Rcf={Rough}/>} />
 
                     <Route path="/search" element={ <Master Rcf={Search}/>} />
                    
