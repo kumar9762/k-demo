@@ -561,7 +561,7 @@ const[searchParam,Setsearchparam]=useSearchParams();
                                     <tbody>
                                       {Cart.slice(0, 3).map((cart, index) => (
                                         <tr key={cart.cart_id}>
-                                          <th scope="row">{index++}</th>
+                                          <th scope="row">{index+1}</th>
                                           <td className="w-25">
                                             <img
                                               src={

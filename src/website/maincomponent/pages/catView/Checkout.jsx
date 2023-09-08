@@ -49,8 +49,8 @@ const Checkout = () => {
       total_discount: cartItem.total_discount,
       totalpv: cartItem.totalpv,
       totalgst: cartItem.totalgst,
-      order_address: cartItem.order_address,
-      paymentmode: cartItem.paymentmode,
+      order_address: "Hello",
+      paymentmode: "CashOnDelivery",
     }));
 
    
