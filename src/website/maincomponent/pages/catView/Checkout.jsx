@@ -3,37 +3,31 @@ import { Link, useParams } from "react-router-dom";
 import Auth_user from "../../../authentication/Auth_user";
 
 const Checkout = () => {
-  const { http, user } = Auth_user();
+  const { http, user,token } = Auth_user();
   const [Cart, SetCart] = useState([]);
   const { product_id } = useParams();
   const [productIds, setProductIds] = useState([]);
   const [productQty, setProductQty] = useState([]);
   const [productPrice, setProductPrice] = useState([]);
 
-
-
   const [Order, setOrder] = useState({
-    product_id: [], // An array of product IDs
-    product_qty: [], // An array of product quantities
-    online_price: [], // An array of product prices
-    discount: [], // An array of discounts
-    pv_value: [], // An array of point values
+    product_id: [],
+    product_qty: [],
+    online_price: [],
+    discount: [],
+    pv_value: [],
+    prototal: [],
+    gst: [],
+    total: "",
 
-    prototal: [], // An array of subtotals
-
-    gst: [], // An array of GST values
-    total: "", // Total order amount
-
-    totalgst: "", // Total GST
-    total_discount: "", // Total order discount
-    totalpv: "", // Total point value
-    order_address: user.address, // Address for the order
-    paymentmode: "CashOnDelivery", // Payment mode (adjust as needed)
+    totalgst: "",
+    total_discount: "",
+    totalpv: "",
+    order_address: user.address,
+    paymentmode: "",
   });
-  // const [product_id, setproduct_id] = useState([]);
-  // console.log('ids',product_id);
 
-  console.log(Order);
+  //console.log(Order);
 
   let total = 0; // Initialize the total
   let ptotal = 0;
@@ -43,15 +37,13 @@ const Checkout = () => {
   const newProductQty = [];
   const newProductPrice = [];
 
-
   // Calculate total by summing up cart_price for all items
   Cart.forEach((cart) => {
     total = total + cart.cart_amount;
     ptotal = ptotal + cart.point_value;
-    gtotal = gtotal + parseInt((cart.online_price * cart.cart_product_qty * cart.tax_per) /
-    (100 + cart.tax_per));
+    gtotal = gtotal +parseInt((cart.online_price * cart.cart_product_qty * cart.tax_per) /
+          (100 + cart.tax_per));
     dtotal = dtotal + parseFloat(cart.total_discount);
-    
   });
 
   const getCart = () => {
@@ -60,19 +52,16 @@ const Checkout = () => {
       .then((res) => {
         console.log("cartitem", res.data.cart);
         SetCart(res.data.cart);
-       
-  
+
         res.data.cart.forEach((cartItem) => {
           newProductIds.push(cartItem.product_id);
           newProductQty.push(cartItem.product_qty);
           newProductPrice.push(cartItem.online_price);
-
         });
-  
+
         setProductIds(newProductIds);
         setProductQty(newProductQty);
         setProductPrice(newProductPrice);
-
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -80,34 +69,42 @@ const Checkout = () => {
   };
   useEffect(() => {
     getCart();
-  }, [product_id]);
+  }, [token]);
 
+  useEffect(() => {
+    console.log(Order);
+  }, []);
+
+  const onInputChange = (e) => {
+    console.log(e);
+
+    setOrder((prevOrder) => ({
+      ...prevOrder,
+      [e.target.name]: [e.target.value],
+    }));
+  };
   const PlaceOrder = () => {
     const orderItems = {
-      product_id:productIds, 
-       product_qty: productQty,
-       online_price: productPrice,
+      product_id: productIds,
+      product_qty: productQty,
+      online_price: productPrice,
       // discount: cartItem.discount,
       // pv_value: cartItem.pv_value,
       // prototal: cartItem.prototal,
-       gst: gtotal,
+      gst: gtotal,
       total: total,
       total_discount: dtotal,
       totalpv: ptotal,
       // totalgst: cartItem.totalgst,
       order_address: user.address,
-      paymentmode: "CashOnDelivery",
-    }
-
-   
+      paymentmode: Order.paymentmode,
+    };
 
     const data = {
       items: orderItems,
-     
     };
-    console.log("dataaaa",data);
-    setOrder("dataaaa",data);
 
+    console.log("dataaaa", data.items);
     // Send the order data to the API using axios
     // http
     //   .post(`/order_now`, data)
@@ -261,7 +258,12 @@ const Checkout = () => {
                     }}
                   >
                     <label>
-                      <input type="radio" name="paymentmod" value="COD" />
+                      <input
+                        type="radio"
+                        name="paymentmode"
+                        value="COD"
+                        onClick={(e) => onInputChange(e)}
+                      />
                       Cash on Delivery
                     </label>
                     <i className="fa fa-inr" />
@@ -279,7 +281,12 @@ const Checkout = () => {
                     }}
                   >
                     <label>
-                      <input type="radio" name="paymentmod" />
+                      <input
+                        type="radio"
+                        name="paymentmode"
+                        value="Online Transfer"
+                        onClick={(e) => onInputChange(e)}
+                      />
                       Online Transfer
                     </label>
                     <i className="fa fa-inr" />
@@ -322,10 +329,13 @@ const Checkout = () => {
               </div>
             </div>
           </div>
-         <input type="checkbox"/> By making this purchase you agree to our Terms and Conditions
+          <input type="checkbox" /> By making this purchase you agree to our
+          Terms and Conditions
         </div>
         <button className="btn btn-outline-success w-100 " onClick={PlaceOrder}>
-          <Link to="#" style={{ textDecoration: 'none' }}>ORDER NOW</Link>
+          <Link to="#" style={{ textDecoration: "none" }}>
+            ORDER NOW
+          </Link>
         </button>
         {/* Shoping Cart Section End */}
       </div>
