@@ -17,12 +17,12 @@ const Checkout = () => {
 
   const [Order, setOrder] = useState({
     product_id: [],
-    product_qty: [''],
+    product_qty: [],
     online_price: [],
     discount: [],
     pv_value: [],
     prototal: [],
-    gst: [''],
+    gst: [],
     total: "",
 
     totalgst: "",
@@ -69,18 +69,12 @@ const Checkout = () => {
 
         res.data.cart.forEach((cartItem) => {
           newProductIds.push(cartItem.product_id);
-          newProductQty.push(cartItem.product_qty);
+          newProductQty.push(cartItem.cart_product_qty);
           newProductPrice.push(cartItem.online_price);
           newProductDiscount.push(cartItem.discount);
           newProductTotal.push(cartItem.cart_price);
           newProductPV.push(cartItem.point_value);
-         // newProductGST.push(cartItem.gst);
-         if (typeof cartItem.gst === 'number') {
           newProductGST.push(cartItem.gst);
-        } else {
-          // Handle the case where 'gst' is not a number (you can set a default value or handle it accordingly)
-          newProductGST.push(0); // For example, setting it to 0 as a default value
-        }
 
         });
 
@@ -129,7 +123,7 @@ const Checkout = () => {
       order_address: user.address,
       paymentmode: Order.paymentmode,
     };
-
+console.log(productIds);
     const data = {
       items: orderItems,
     };
@@ -291,7 +285,7 @@ const Checkout = () => {
                       <input
                         type="radio"
                         name="paymentmode"
-                        value="COD"
+                        value="Cash On Delivery"
                         onClick={(e) => onInputChange(e)}
                       />
                       Cash on Delivery
@@ -333,7 +327,8 @@ const Checkout = () => {
                     }}
                   >
                     <label>
-                      <input type="radio" name="paymentmod" />
+                      <input type="radio" name="paymentmod"  value="wallet"
+                        onClick={(e) => onInputChange(e)}/>
                       Use wallet balance current month
                     </label>
                     <i className="fa fa-inr" />
@@ -350,7 +345,7 @@ const Checkout = () => {
                     }}
                   >
                     <label>
-                      <input type="radio" name="paymentmod" />
+                      <input type="radio" name="paymentmod"  />
                       Repurchase amount
                     </label>
                     <i className="fa fa-inr" />
