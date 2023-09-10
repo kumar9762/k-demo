@@ -3,21 +3,26 @@ import { Link, useParams } from "react-router-dom";
 import Auth_user from "../../../authentication/Auth_user";
 
 const Checkout = () => {
-  const { http, user,token } = Auth_user();
+  const { http, user, token } = Auth_user();
   const [Cart, SetCart] = useState([]);
   const { product_id } = useParams();
   const [productIds, setProductIds] = useState([]);
   const [productQty, setProductQty] = useState([]);
   const [productPrice, setProductPrice] = useState([]);
+  const [productDiscount, setProductDiscount] = useState([]);
+  const [productTotal, setProductTotal] = useState([]);
+  const [productPV, setProductPV] = useState([]);
+  const [productGST, setProductGST] = useState([]);
+
 
   const [Order, setOrder] = useState({
     product_id: [],
-    product_qty: [],
+    product_qty: [''],
     online_price: [],
     discount: [],
     pv_value: [],
     prototal: [],
-    gst: [],
+    gst: [''],
     total: "",
 
     totalgst: "",
@@ -36,13 +41,22 @@ const Checkout = () => {
   const newProductIds = [];
   const newProductQty = [];
   const newProductPrice = [];
+  const newProductDiscount = [];
+  const newProductTotal = [];
+  const newProductPV = [];
+  const newProductGST = [];
+
 
   // Calculate total by summing up cart_price for all items
   Cart.forEach((cart) => {
     total = total + cart.cart_amount;
     ptotal = ptotal + cart.point_value;
-    gtotal = gtotal +parseInt((cart.online_price * cart.cart_product_qty * cart.tax_per) /
-          (100 + cart.tax_per));
+    gtotal =
+      gtotal +
+      parseInt(
+        (cart.online_price * cart.cart_product_qty * cart.tax_per) /
+          (100 + cart.tax_per)
+      );
     dtotal = dtotal + parseFloat(cart.total_discount);
   });
 
@@ -57,11 +71,27 @@ const Checkout = () => {
           newProductIds.push(cartItem.product_id);
           newProductQty.push(cartItem.product_qty);
           newProductPrice.push(cartItem.online_price);
+          newProductDiscount.push(cartItem.discount);
+          newProductTotal.push(cartItem.cart_price);
+          newProductPV.push(cartItem.point_value);
+         // newProductGST.push(cartItem.gst);
+         if (typeof cartItem.gst === 'number') {
+          newProductGST.push(cartItem.gst);
+        } else {
+          // Handle the case where 'gst' is not a number (you can set a default value or handle it accordingly)
+          newProductGST.push(0); // For example, setting it to 0 as a default value
+        }
+
         });
 
         setProductIds(newProductIds);
         setProductQty(newProductQty);
         setProductPrice(newProductPrice);
+        setProductDiscount(newProductDiscount);
+        setProductTotal(newProductTotal);
+        setProductPV(newProductPV);
+        setProductGST(newProductGST);
+
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -88,14 +118,14 @@ const Checkout = () => {
       product_id: productIds,
       product_qty: productQty,
       online_price: productPrice,
-      // discount: cartItem.discount,
-      // pv_value: cartItem.pv_value,
-      // prototal: cartItem.prototal,
-      gst: gtotal,
+      discount: productDiscount,
+      pv_value: productPV,
+      prototal: productTotal,
+      gst:productGST ,
       total: total,
       total_discount: dtotal,
       totalpv: ptotal,
-      // totalgst: cartItem.totalgst,
+       totalgst: gtotal,
       order_address: user.address,
       paymentmode: Order.paymentmode,
     };
@@ -104,7 +134,7 @@ const Checkout = () => {
       items: orderItems,
     };
 
-    console.log("dataaaa", data.items);
+    console.log("OrderPlaced", data.items);
     // Send the order data to the API using axios
     // http
     //   .post(`/order_now`, data)
