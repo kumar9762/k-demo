@@ -14,7 +14,6 @@ const Checkout = () => {
   const [productPV, setProductPV] = useState([]);
   const [productGST, setProductGST] = useState([]);
 
-
   const [Order, setOrder] = useState({
     product_id: [],
     product_qty: [],
@@ -38,25 +37,18 @@ const Checkout = () => {
   let ptotal = 0;
   let gtotal = 0;
   let dtotal = 0;
-  const newProductIds = [];
-  const newProductQty = [];
-  const newProductPrice = [];
-  const newProductDiscount = [];
-  const newProductTotal = [];
-  const newProductPV = [];
-  const newProductGST = [];
-
+ 
 
   // Calculate total by summing up cart_price for all items
   Cart.forEach((cart) => {
     total = total + cart.cart_amount;
     ptotal = ptotal + cart.point_value;
     gtotal =
-      gtotal +
-      parseInt(
-        (cart.online_price * cart.cart_product_qty * cart.tax_per) /
-          (100 + cart.tax_per)
-      );
+    gtotal +
+    parseFloat(
+      ((cart.online_price * cart.cart_product_qty * cart.tax_per) /
+        (100 + cart.tax_per)).toFixed(2)
+    );
     dtotal = dtotal + parseFloat(cart.total_discount);
   });
 
@@ -67,25 +59,37 @@ const Checkout = () => {
         console.log("cartitem", res.data.cart);
         SetCart(res.data.cart);
 
+        const newProductIds = [];
+        const newProductQty = [];
+        const newProductPrice = [];
+        const newProductDiscount = [];
+        const newProductTotal = [];
+        const newProductPV = [];
+        const newProductGST = [];
+
         res.data.cart.forEach((cartItem) => {
+          const onlinePrice = parseInt(cartItem.online_price);
+          const cartProductQty = parseInt(cartItem.cart_product_qty);
+          const taxPer = parseInt(cartItem.tax_per);
+
           newProductIds.push(cartItem.product_id);
           newProductQty.push(cartItem.cart_product_qty);
           newProductPrice.push(cartItem.online_price);
           newProductDiscount.push(cartItem.discount);
           newProductTotal.push(cartItem.cart_price);
           newProductPV.push(cartItem.point_value);
-          newProductGST.push(cartItem.gst);
-
+           newProductGST.push(parseInt(onlinePrice * cartProductQty * taxPer / (100 + taxPer)));
         });
 
-        setProductIds(newProductIds);
+       
+         setProductIds(newProductIds);
         setProductQty(newProductQty);
         setProductPrice(newProductPrice);
         setProductDiscount(newProductDiscount);
         setProductTotal(newProductTotal);
         setProductPV(newProductPV);
         setProductGST(newProductGST);
-
+        console.log('gstar',newProductGST);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -115,20 +119,21 @@ const Checkout = () => {
       discount: productDiscount,
       pv_value: productPV,
       prototal: productTotal,
-      gst:productGST ,
+      gst: productGST,
+
       total: total,
       total_discount: dtotal,
       totalpv: ptotal,
-       totalgst: gtotal,
+      totalgst: gtotal,
       order_address: user.address,
       paymentmode: Order.paymentmode,
     };
-console.log(productIds);
+    console.log(productIds);
     const data = {
       items: orderItems,
     };
 
-    console.log("OrderPlaced", data.items);
+    console.log("OrderPlaced", data);
     // Send the order data to the API using axios
     // http
     //   .post(`/order_now`, data)
@@ -263,106 +268,150 @@ console.log(productIds);
             </div>
           </div>
         </section>
+
         <div className="container">
-          <div className="card p-1 ms-2" style={{ height: "220px" }}>
-            <div className=" justify-content-between">
-              <h3> Payment Option</h3>
-              {/* <button className="btn btn-outline-success me-0">
-                Edit Number
-              </button> */}
-              <hr />
-              <div className="row">
-                <div className="col-3">
-                  <div
-                    className="card p-3"
-                    style={{
-                      height: "100px",
-                      borderColor: "pink",
-                      backgroundColor: "rgba(0, 128, 0, 0.2)",
-                    }}
-                  >
-                    <label>
-                      <input
-                        type="radio"
-                        name="paymentmode"
-                        value="Cash On Delivery"
-                        onClick={(e) => onInputChange(e)}
-                      />
-                      Cash on Delivery
-                    </label>
-                    <i className="fa fa-inr" />
-                    {total}
-                  </div>
-                </div>
+          <div className="card">
+            <h1>Delivery Address</h1>
+            <hr />
 
-                <div className="col-3">
-                  <div
-                    className="card p-3"
-                    style={{
-                      height: "100px",
-                      borderColor: "pink",
-                      backgroundColor: "rgba(0, 128, 0, 0.2)",
-                    }}
-                  >
-                    <label>
-                      <input
-                        type="radio"
-                        name="paymentmode"
-                        value="Online Transfer"
-                        onClick={(e) => onInputChange(e)}
-                      />
-                      Online Transfer
-                    </label>
-                    <i className="fa fa-inr" />
-                    {total}
-                  </div>
+            <div className="row">
+              <div className="col">
+                <div
+                  className="card p-3"
+                  style={{
+                    height: "150px",
+                    borderColor: "green",
+                    backgroundColor: "rgba(0, 128, 0, 0.2)",
+                  }}
+                >
+                  <h5>Home</h5>
+                  {user.address}
                 </div>
-                <div className="col-3">
-                  <div
-                    className="card p-3"
-                    style={{
-                      height: "100px",
-                      borderColor: "pink",
-                      backgroundColor: "rgba(0, 128, 0, 0.2)",
-                    }}
-                  >
-                    <label>
-                      <input type="radio" name="paymentmod"  value="wallet"
-                        onClick={(e) => onInputChange(e)}/>
-                      Use wallet balance current month
-                    </label>
-                    <i className="fa fa-inr" />
-                  </div>
-                </div>
-
-                <div className="col-3">
-                  <div
-                    className="card p-3"
-                    style={{
-                      height: "100px",
-                      borderColor: "pink",
-                      backgroundColor: "rgba(0, 128, 0, 0.2)",
-                    }}
-                  >
-                    <label>
-                      <input type="radio" name="paymentmod"  />
-                      Repurchase amount
-                    </label>
-                    <i className="fa fa-inr" />
-                  </div>
+              </div>
+              <div className="col">
+                <div
+                  className="card p-3"
+                  style={{
+                    height: "150px",
+                    borderColor: "green",
+                    backgroundColor: "rgba(0, 128, 0, 0.2)",
+                  }}
+                >
+                  <h5>Contact Number</h5>
+                  {user.mob_no}
                 </div>
               </div>
             </div>
           </div>
-          <input type="checkbox" /> By making this purchase you agree to our
-          Terms and Conditions
+
+          <div className="container">
+            <div className="card p-1 ms-2" style={{ height: "220px" }}>
+              <div className=" justify-content-between">
+                <h3> Payment Option</h3>
+                {/* <button className="btn btn-outline-success me-0">
+                Edit Number
+              </button> */}
+                <hr />
+                <div className="row">
+                  <div className="col-3">
+                    <div
+                      className="card p-3"
+                      style={{
+                        height: "100px",
+                        borderColor: "pink",
+                        backgroundColor: "rgba(0, 128, 0, 0.2)",
+                      }}
+                    >
+                      <label>
+                        <input
+                          type="radio"
+                          name="paymentmode"
+                          value="Cash On Delivery"
+                          onClick={(e) => onInputChange(e)}
+                        />
+                        Cash on Delivery
+                      </label>
+                      <i className="fa fa-inr" />
+                      {total}
+                    </div>
+                  </div>
+
+                  <div className="col-3">
+                    <div
+                      className="card p-3"
+                      style={{
+                        height: "100px",
+                        borderColor: "pink",
+                        backgroundColor: "rgba(0, 128, 0, 0.2)",
+                      }}
+                    >
+                      <label>
+                        <input
+                          type="radio"
+                          name="paymentmode"
+                          value="Online Transfer"
+                          onClick={(e) => onInputChange(e)}
+                        />
+                        Online Transfer
+                      </label>
+                      <i className="fa fa-inr" />
+                      {total}
+                    </div>
+                  </div>
+                  <div className="col-3">
+                    <div
+                      className="card p-3"
+                      style={{
+                        height: "100px",
+                        borderColor: "pink",
+                        backgroundColor: "rgba(0, 128, 0, 0.2)",
+                      }}
+                    >
+                      <label>
+                        <input
+                          type="radio"
+                          name="paymentmod"
+                          value="wallet"
+                          onClick={(e) => onInputChange(e)}
+                        />
+                        Use wallet balance current month
+                      </label>
+                      <i className="fa fa-inr" />
+                    </div>
+                  </div>
+
+                  <div className="col-3">
+                    <div
+                      className="card p-3"
+                      style={{
+                        height: "100px",
+                        borderColor: "pink",
+                        backgroundColor: "rgba(0, 128, 0, 0.2)",
+                      }}
+                    >
+                      <label>
+                        <input type="radio" name="paymentmod" />
+                        Repurchase amount
+                      </label>
+                      <i className="fa fa-inr" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <input type="checkbox" /> By making this purchase you agree to our
+            Terms and Conditions
+          </div>
+          <button
+            className="btn btn-outline-success w-100 "
+            onClick={PlaceOrder}
+          >
+            <Link to="#" style={{ textDecoration: "none" }}>
+              ORDER NOW
+            </Link>
+          </button>
+          {/* Shoping Cart Section End */}
         </div>
-        <button className="btn btn-outline-success w-100 " onClick={PlaceOrder}>
-          <Link to="#" style={{ textDecoration: "none" }}>
-            ORDER NOW
-          </Link>
-        </button>
-        {/* Shoping Cart Section End */}
       </div>
     </>
   );
