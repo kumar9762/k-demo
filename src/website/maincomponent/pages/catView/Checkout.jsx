@@ -28,7 +28,7 @@ const Checkout = () => {
     total_discount: "",
     totalpv: "",
     order_address: user.address,
-    paymentmode: "",
+    paymentmode: "cod",
   });
 
   //console.log(Order);
@@ -68,9 +68,7 @@ const Checkout = () => {
         const newProductGST = [];
 
         res.data.cart.forEach((cartItem) => {
-          const onlinePrice = parseInt(cartItem.online_price);
-          const cartProductQty = parseInt(cartItem.cart_product_qty);
-          const taxPer = parseInt(cartItem.tax_per);
+          
 
           newProductIds.push(cartItem.product_id);
           newProductQty.push(cartItem.cart_product_qty);
@@ -78,7 +76,7 @@ const Checkout = () => {
           newProductDiscount.push(cartItem.discount);
           newProductTotal.push(cartItem.cart_price);
           newProductPV.push(cartItem.point_value);
-           newProductGST.push(parseInt(onlinePrice * cartProductQty * taxPer / (100 + taxPer)));
+           newProductGST.push(cartItem.tax_per);
         });
 
        
@@ -89,7 +87,7 @@ const Checkout = () => {
         setProductTotal(newProductTotal);
         setProductPV(newProductPV);
         setProductGST(newProductGST);
-        console.log('gstar',newProductGST);
+        
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -105,12 +103,13 @@ const Checkout = () => {
 
   const onInputChange = (e) => {
     console.log(e);
-
+  
     setOrder((prevOrder) => ({
       ...prevOrder,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     }));
   };
+  
   const PlaceOrder = () => {
     const orderItems = {
       product_id: productIds,
@@ -133,12 +132,12 @@ const Checkout = () => {
       items: orderItems,
     };
 
-    console.log("OrderPlaced", data);
+    console.log("OrderPlaced", data.items);
     // Send the order data to the API using axios
     // http
     //   .post(`/order_now`, data)
     //   .then((res) => {
-    //     console.log(res);
+    //     console.log("Ok",res);
     //     // Optionally, you can perform some action after a successful response
     //     // For example, you can redirect the user to a confirmation page.
     //   })
@@ -224,6 +223,7 @@ const Checkout = () => {
                                 <input
                                   type="text"
                                   value={cart.cart_product_qty}
+                                  readOnly
                                 />
                               </div>
                             </div>
